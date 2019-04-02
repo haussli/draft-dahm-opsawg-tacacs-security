@@ -76,6 +76,9 @@ SSH pubkeys:
 		- client performs key checks, sends pass/fail to server with
 		  optional error msg.
 
+	This could also be a more generic and/or extensible format/process.
+	I am fully open to suggestions.
+
 Additional topics:
 	- A way to link authen and author together.  I believe this came from
 	  Andrej, who will have to elaborate.
