@@ -1,0 +1,91 @@
+Conference on 20190402.
+
+Topics:
+	- Discuss future tacacs+ standards work, including
+		- TLS payload encryption
+		- ssh public key authentication (or more generic)
+		- removing old protocol features
+	- Discuss merit of progressing these topics as one or multiple drafts
+
+Multiple drafts:
+	Andrej believes that having the entire protocol, including new features
+	and deprecationg or removal of the old, in one RFC has benefit toward
+	the likelyhood that vendors will implement all features, rather than a
+	subset.  All agreed that this idea has merit.
+
+	The premise for multiple drafts is to either advance each in parallel,
+	under the premise that topics that might be hotly debated do not delay
+	others.  In particular, so that security improvements are not delayed.
+
+	Another approach is to advance security topics, as one or more drafts.
+	Afterward, remove old protocol features AND coalesce all previous RFCs
+	into one complete draft.
+
+	The conclusion was that multiple drafts would be adventageous, but that
+	the method of the TLS implementation might dictate that this is not
+	possible.  If it requires changes to the tacacs+ packet header, a single
+	draft may be required.  So, the final decision must wait for the TLS
+	design.  No conclusion was made about coalescing into a final complete
+	draft.
+
+TLS:
+	Two approaches are available for adding TLS to tacacs+ for payload
+	encryption.  One is the STARTLTS mechanism (so-called Application Layer
+	Protocol Negotiation (ALPN)), whereby a normal tacacs+ connection is
+	established and a command is sent to initiate the "upgrade" to TLS.  The
+	other is to use a separate well-known TCP port, on which TLS is
+	implicitly started immediately, followed by normal tacacs+ protocol
+	behavior.
+
+	A non-exhaustive discussion of pros and cons followed; from the
+	perspective of STARTTLS:
+	Pros:
+		- It was mentioned that in a previous OPSAWG meeting, it was
+		  suggested that some firewalls/proxies would prefer to inspect
+		  tacacs+ packets
+		- More easily allow older client.  XXX I'm not sure who said
+		  this, but it does not seem accurate.
+		- Easier to implement.  XXX Again, not sure who said this, but
+		  it does not seem accurate.
+	Cons:
+		- Proxying of tacacs+ MIGHT lose the NAS address, necessary for
+		  some forms of authen/author policy.  XXX Gash recalls that
+		  some clients fill the NAS address in the protocol packet, so
+		  this might not be a concern.  This requires verification.
+		- It is believed that IETF has taken the opinion that STARTTLS
+		  is harmful.  While I struggle to find an official position,
+		  rfc8314 and rfc7435 clearly argue against it.  The following
+		  references add supporting arguments for this:
+		  https://www.kb.cert.org/vuls/id/555316/
+		  https://www.agwa.name/blog/post/starttls_considered_harmful
+		  This clearly opposes the firewall argument above.
+
+SSH pubkeys:
+	The goal of this is specifically ssh authentication with public keys,
+	but not stored on the NAS, such as with JunOS and lacking in most other
+	platforms.  This would make key management easier.
+
+	Cocktail napkin outline:
+		- client connects (TLS required), sends an TAC_PLUS_AUTHEN type
+		  packet with a new authen_type of TAC_PLUS_AUTHEN_TYPE_SSHPK
+		- server responds with TAC_PLUS_AUTHEN_STATUS_GETUSER, or
+		  TAC_PLUS_AUTHEN_STATUS_ERROR if the type is not supported,
+		  which te client can cache.
+		- client responds with the user input
+		- server performs policy checks, responds with user's key(s)
+		- client performs key checks, sends pass/fail to server with
+		  optional error msg.
+
+Additional topics:
+	- A way to link authen and author together.  I believe this came from
+	  Andrej, who will have to elaborate.
+
+Future meetings:
+	Routine conference calls were proposed on a two week cadence with the
+	first being Thursday 20190418, sometime in the early evening.  Andrej
+	will choose a conference call techonology that suits him; others had
+	no limitations.  Skype, perhaps.  
+
+	Face to face meetings were suggested, though currently too soon to be
+	useful.  All agreed that this was possible, all or some subset can
+	be present.
