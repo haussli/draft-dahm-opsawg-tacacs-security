@@ -1,0 +1,37 @@
+- TLS via STARTTLS, separate well-known TCP port, or both
+	- All vote for a separate port.  A summary of intent should be sent to
+	  the WG and develop a document from there.
+	- should allow PSKs and certificates for client authentication
+		- certification server authenication too?
+	- list of mandatory ciphers, optional, extended
+		- must say something, but be future proof.  are living docs
+		  an adopted concept.  Doug will enquire
+
+- communication of real tacacs client address to the real tacacs server, with
+  an active middleman (firewall or proxy)
+	- AVPs could be used for authorization & accounting, but authentication
+	  does not have AVPs
+		- adding AVPs to authenication could be exploited for other
+		  uses and be more universal within tacacs, or
+	- a client address could be added to the tacacs header, or
+	- a client address could be added to each tacacs packet type, or
+	- can rem_addr be exploited to include the original client, by
+	  adding a separator in the field.  eg:
+	  "original rem_addr field/client address"
+		- Andrej feels that altering an existing field adds potential
+		  for error (and security holes)
+
+	- how should this protocol change be introduced?
+		- a new proto version, or
+		- a header packet type
+	  It is felt that this needs more thought; a topic for the next call.
+
+- SSH pubkey idea
+	- pushed to the next call
+
+- document approach; there is agreement to:
+	- drive TLS as a separate document
+	- drive other enhancements or deprecation in another
+	- finally, coelesce these into one cohesive document
+
+- Next call May 23 at 18:00 IST/10:00 PDT on Doug's Webex
