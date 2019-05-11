@@ -2,10 +2,11 @@
 	- All vote for a separate port.  A summary of intent should be sent to
 	  the WG and develop a document from there.
 	- should allow PSKs and certificates for client authentication
-		- certification server authenication too?
+		- certificate-based server authenication too?
 	- list of mandatory ciphers, optional, extended
-		- must say something, but be future proof.  are living docs
-		  an adopted concept.  Doug will enquire
+		- Must say something, but be future proof.  Perhaps point to a
+		  an external document with this information.  Are living docs
+		  an adopted concept at IETF?  Doug will enquire
 
 - communication of real tacacs client address to the real tacacs server, with
   an active middleman (firewall or proxy)
