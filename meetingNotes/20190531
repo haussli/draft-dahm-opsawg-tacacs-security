@@ -1,0 +1,15 @@
+- doug hasnt had much time for tacacs and will probably be wrapped-up in the
+  tacacs draft comments/responses for some time.
+
+- heasley will take the item to investigate the living document pointer
+  question from the previous meeting WRT TLS key/cyrpt algorithms.
+
+- heasley will take the item to craft a message to OPSWG describing our
+  intention WRT TLS and solicit comment.  And, begin a draft for TLS
+  support.
+
+  - doug noted, "For TLS, past comments indicated that we can not just rely
+    upon PSK, it must also support PKI."
+
+- Doug is OOT for next two weeks;  expecting the next call in roughly 3 weeks
+  time.
