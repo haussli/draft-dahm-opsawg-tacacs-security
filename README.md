@@ -1,6 +1,5 @@
 # draft-dahm-tacacs-security
 IETF draft for new tacacs+ security features
-# draft-snjiders-bgp-wk-lc
 
 Authoring Conventions
 ---------------------
