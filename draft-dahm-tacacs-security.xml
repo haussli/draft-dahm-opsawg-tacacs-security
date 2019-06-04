@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC2234 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2234.xml">
+<!ENTITY RFC2629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2629.xml">
+<!ENTITY RFC4234 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4234.xml">
+<!ENTITY nbsp    "&#160;">
+]>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<?rfc strict="yes" ?>
+<?rfc comments="no" ?>
+<?rfc inline="no" ?>
+<?rfc editing="no" ?>
+<?rfc toc="yes" ?>
+<?rfc tocompact="yes" ?>
+<?rfc tocdepth="3" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+
+<rfc category="std"
+    ipr="trust200902"
+    docName="draft-dahm-tacacs-security"
+    submissionType="IETF">
+
+    <front>
+        <title abbrev="TACACS+ TLS">
+            TACACS+ TLS Support
+        </title>
+
+        <author fullname="Thorsten Dahm" initials="T." surname="Dahm">
+            <organization>Google Inc.</organization>
+            <address>
+                <postal>
+                    <street></street>
+                    <code></code>
+                    <city></city>
+                    <country></country>
+                </postal>
+                <email>thorsten.dahm@gmail.com</email>
+            </address>
+        </author>
+
+        <author fullname="Douglas Gash" initials="D." surname="Gash">
+            <organization>Cisco Systems, Inc.</organization>
+            <address>
+                <postal>
+                    <street></street>
+                    <code></code>
+                    <city></city>
+                    <country></country>
+                </postal>
+                <email>dcmgash@cisco.com</email>
+            </address>
+        </author>
+
+        <author fullname="Andrej Ota" initials="A." surname="Ota">
+            <organization>Google Inc.</organization>
+            <address>
+                <postal>
+                    <street></street>
+                    <code></code>
+                    <city></city>
+                    <country></country>
+                </postal>
+                <email>andrej@ota.si</email>
+            </address>
+        </author>
+
+        <date />
+        <area>Operations and Management Area (ops)</area>
+        <workgroup>Operations and Management Area Working Group</workgroup>
+
+        <keyword>TACACS+</keyword>
+
+        <abstract>
+            <t>
+		<xref target="draft-dahm-opsawg-tacacs">The TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+                This document adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) to TACACS+.
+            </t>
+        </abstract>
+        <note title="Requirements Language">
+            <t>
+                The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.
+            </t>
+        </note>
+    </front>
+    <middle>
+        <section title="Introduction">
+            <t>
+		<xref target="draft-dahm-opsawg-tacacs">The TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
+		While this information is highly sensitive, TACACS+ lacks modern and suitable privacy, integrity and authentication of the connection and network traffic between the server and client.
+		Its existing mechanism is weak, leaving the protocol highly susceptible to Man in the Middle (MitM) attacks.
+                This document describes Well-known <xref target="RFC8092">BGP Large Communities</xref>.
+            </t>
+            <t>
+		To address these flaws, this document updates <xref target="draft-dahm-opsawg-tacacs">The TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
+            </t>
+        </section>
+
+        <section title="Technical Definitions">
+            <t>
+		XXX
+            </t>
+        </section>
+
+        <section title="TACACS+ Connections">
+            <t>
+		XXX
+            </t>
+            <section title="Connection">
+                <t>
+		XXX
+		</t>
+	        <section title="Security Considerations">
+                    <t>
+		    XXX
+                    </t>
+                </section>
+	        <section title="Authentication">
+                    <t>
+		    XXX
+                    </t>
+                </section>
+	        <section title="Cypher Requirements">
+                    <t>
+		    XXX
+                    </t>
+                </section>
+            </section>
+        </section>
+
+        <section title="XXX">
+            <t>
+            <texttable anchor="table_XXX" title="XXXX" style="all">
+                    <ttcol align="center" width="20%">XXX</ttcol>
+                    <ttcol align="center" width="20%">XXX</ttcol>
+                    <ttcol align="center">XXX</ttcol>
+                    <c>XXX</c><c>XXX</c><c>XXX</c>
+                    <c>XXX</c><c>XXX</c><c>XXX</c>
+            </texttable>
+            </t>
+        </section>
+
+       <section title="Security Considerations">
+           <t>
+		This document improves the integrity and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.
+		This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
+		That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
+            </t>
+        </section>
+
+        <section title="IANA Considerations">
+            <t>
+		IANA is requested to allocate a new well-known TCP port number fore "tacacss", described as "TACACS over TLS/SSL".
+            </t>
+        </section>
+<!--
+        <section title="Acknowledgments">
+            <t>
+                The author(s) would like to thank XXXXXXXX for their support, insightful review, and comments.
+            </t>
+        </section>
+ -->
+    </middle>
+    <back>
+        <references title="Normative References">
+            <?rfc include="reference.RFC.8446"?>
+            <?rfc include="reference.RFC.5246"?>
+            <?rfc include="reference.RFC.4279"?>
+
+            <?rfc include="reference.RFC.2119"?>
+        </references>
+        <references title="Informative References">
+            <?rfc include="reference.RFC.XXXX"?>
+        </references>
+    </back>
+</rfc>
