@@ -77,7 +77,7 @@
 
         <abstract>
             <t>
-		<xref target="I-D.ietf-opsawg-tacacs">The TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
                 This document adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) to TACACS+.
             </t>
         </abstract>
@@ -90,13 +90,13 @@
     <middle>
         <section title="Introduction">
             <t>
-		<xref target="I-D.ietf-opsawg-tacacs">The TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
-		While this information is highly sensitive, TACACS+ lacks modern and suitable privacy, integrity and authentication of the connection and network traffic between the server and client.
+		While this information is highly sensitive, TACACS+ lacks modern and/or effective privacy, integrity, and authentication of the connection and network traffic between the server and client.
 		Its existing mechanism is weak, leaving the protocol highly susceptible to Man in the Middle (MitM) attacks.
             </t>
             <t>
-		To address these flaws, this document updates <xref target="I-D.ietf-opsawg-tacacs">The TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
+		To address these flaws, this document updates the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
             </t>
         </section>
 
@@ -129,6 +129,11 @@
 		    XXX
                     </t>
                 </section>
+	        <section title="Deprecation of MD5 and unencrypted">
+                    <t>
+		    XXX
+                    </t>
+                </section>
             </section>
         </section>
 
@@ -148,7 +153,7 @@
 
        <section title="Security Considerations">
            <t>
-		This document improves the integrity and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.
+		This document improves the privacy, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.
 		This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
 		That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
             </t>
