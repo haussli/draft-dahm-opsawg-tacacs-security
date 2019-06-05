@@ -3,12 +3,12 @@
 
 
 Operations and Management Area Working Group                     T. Dahm
-Internet-Draft                                               Google Inc.
+Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 6, 2019                            Cisco Systems, Inc.
+Expires: December 7, 2019                            Cisco Systems, Inc.
                                                                   A. Ota
                                                              Google Inc.
-                                                            June 4, 2019
+                                                            June 5, 2019
 
 
                           TACACS+ TLS Support
@@ -19,8 +19,10 @@ Abstract
    The TACACS+ Protocol [I-D.ietf-opsawg-tacacs] provides device
    administration for routers, network access servers and other
    networked computing devices via one or more centralized servers.
-   This document adds Transport Layer Security (TLS [RFC8446]) to
-   TACACS+.
+   This document, a companion to TACACS+ protocol
+   [I-D.ietf-opsawg-tacacs], adds Transport Layer Security (TLS
+   [RFC8446]) support and deprecates former inferior security
+   mechanisms.
 
 Requirements Language
 
@@ -45,15 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 6, 2019.
+   This Internet-Draft will expire on December 7, 2019.
 
 
 
 
 
-
-
-Dahm, et al.            Expires December 6, 2019                [Page 1]
+Dahm, et al.            Expires December 7, 2019                [Page 1]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -98,8 +98,7 @@ Table of Contents
    information for TACACS+ clients.  While this information is highly
    sensitive, TACACS+ lacks modern and/or effective privacy, integrity,
    and authentication of the connection and network traffic between the
-   server and client.  Its existing mechanism is weak, leaving the
-   protocol highly susceptible to Man in the Middle (MitM) attacks.
+   server and client.  Its existing mechanisms are extremely weak.
 
    To address these flaws, this document updates the TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] to support TLS [RFC8446] authentication and
@@ -109,7 +108,8 @@ Table of Contents
 
 
 
-Dahm, et al.            Expires December 6, 2019                [Page 2]
+
+Dahm, et al.            Expires December 7, 2019                [Page 2]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -165,7 +165,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-Dahm, et al.            Expires December 6, 2019                [Page 3]
+Dahm, et al.            Expires December 7, 2019                [Page 3]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -203,7 +203,6 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 Authors' Addresses
 
    Thorsten Dahm
-   Google Inc.
 
    Email: thorsten.dahm@gmail.com
 
@@ -221,4 +220,5 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires December 6, 2019                [Page 4]
+
+Dahm, et al.            Expires December 7, 2019                [Page 4]

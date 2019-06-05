@@ -31,7 +31,6 @@
         </title>
 
         <author fullname="Thorsten Dahm" initials="T." surname="Dahm">
-            <organization>Google Inc.</organization>
             <address>
                 <postal>
                     <street></street>
@@ -78,7 +77,7 @@
         <abstract>
             <t>
 		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-                This document adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) to TACACS+.
+                This document, a companion to <xref target="I-D.ietf-opsawg-tacacs">TACACS+ protocol</xref>, adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) support and deprecates former inferior security mechanisms.
             </t>
         </abstract>
         <note title="Requirements Language">
@@ -93,7 +92,7 @@
 		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
 		While this information is highly sensitive, TACACS+ lacks modern and/or effective privacy, integrity, and authentication of the connection and network traffic between the server and client.
-		Its existing mechanism is weak, leaving the protocol highly susceptible to Man in the Middle (MitM) attacks.
+		Its existing mechanisms are extremely weak.
             </t>
             <t>
 		To address these flaws, this document updates the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
