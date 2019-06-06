@@ -92,7 +92,10 @@
 		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
 		While this information is highly sensitive, TACACS+ lacks modern and/or effective privacy, integrity, and authentication of the connection and network traffic between the server and client.
-		Its existing mechanisms are extremely weak.
+            </t>
+            <t>
+		The existing privacy, integrity, and authentication mechanisms of TACACS+ are extremely weak.
+		The Security Considerations section of <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> adequately describes this and will not be repeated.
             </t>
             <t>
 		To address these flaws, this document updates the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
@@ -101,7 +104,13 @@
 
         <section title="Technical Definitions">
             <t>
-		XXX
+		The Technical Definitions section of <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> is fully applicable here and will not be repeated.
+            </t>
+            <t>
+		Peer
+            </t>
+            <t>
+		This refers to a Server or a Client.
             </t>
         </section>
 
@@ -136,6 +145,19 @@
             </section>
         </section>
 
+        <section title="Deprecation of TACACS+ PSK and Encryption">
+            <t>
+		The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
+		Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
+            </t>
+            <t>
+		Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.
+		A Peer that receives a Packet without the flag set, should immediately terminate the TCP connection.
+            </t>
+
+        </section>
+
         <section title="XXX">
             <t>
 <!--
@@ -163,13 +185,12 @@
 		IANA is requested to allocate a new well-known TCP port number fore "tacacss", described as "TACACS over TLS/SSL".
             </t>
         </section>
-<!--
+
         <section title="Acknowledgments">
             <t>
-                The author(s) would like to thank XXXXXXXX for their support, insightful review, and comments.
+                The author(s) would like to thank Steven M. Bellovin and Stephen Farrell for their support, insightful review, and/or comments.
             </t>
         </section>
- -->
     </middle>
     <back>
         <references title="Normative References">

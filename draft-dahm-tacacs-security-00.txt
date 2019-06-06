@@ -5,10 +5,10 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 7, 2019                            Cisco Systems, Inc.
+Expires: December 8, 2019                            Cisco Systems, Inc.
                                                                   A. Ota
                                                              Google Inc.
-                                                            June 5, 2019
+                                                            June 6, 2019
 
 
                           TACACS+ TLS Support
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 7, 2019.
+   This Internet-Draft will expire on December 8, 2019.
 
 
 
 
 
-Dahm, et al.            Expires December 7, 2019                [Page 1]
+Dahm, et al.            Expires December 8, 2019                [Page 1]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -83,11 +83,13 @@ Table of Contents
        3.1.2.  Authentication  . . . . . . . . . . . . . . . . . . .   3
        3.1.3.  Cypher Requirements . . . . . . . . . . . . . . . . .   3
        3.1.4.  Deprecation of MD5 and unencrypted  . . . . . . . . .   3
-   4.  XXX . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
-   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
+   4.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .   3
+   5.  XXX . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
+   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .   4
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
 
@@ -98,25 +100,33 @@ Table of Contents
    information for TACACS+ clients.  While this information is highly
    sensitive, TACACS+ lacks modern and/or effective privacy, integrity,
    and authentication of the connection and network traffic between the
-   server and client.  Its existing mechanisms are extremely weak.
+   server and client.
+
+   The existing privacy, integrity, and authentication mechanisms of
+   TACACS+ are extremely weak.  The Security Considerations section of
+   TACACS+ Protocol [I-D.ietf-opsawg-tacacs] adequately describes this
+   and will not be repeated.
+
+
+
+Dahm, et al.            Expires December 8, 2019                [Page 2]
+
+Internet-Draft                 TACACS+ TLS                     June 2019
+
 
    To address these flaws, this document updates the TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] to support TLS [RFC8446] authentication and
    encryption, and deprecates the use of its former mechanisms.
 
-
-
-
-
-
-Dahm, et al.            Expires December 7, 2019                [Page 2]
-
-Internet-Draft                 TACACS+ TLS                     June 2019
-
-
 2.  Technical Definitions
 
-   XXX
+   The Technical Definitions section of TACACS+ Protocol
+   [I-D.ietf-opsawg-tacacs] is fully applicable here and will not be
+   repeated.
+
+   Peer
+
+   This refers to a Server or a Client.
 
 3.  TACACS+ Connections
 
@@ -142,9 +152,35 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
    XXX
 
-4.  XXX
+4.  Deprecation of TACACS+ PSK and Encryption
 
-5.  Security Considerations
+   The original TACACS+ draft specified a form of encryption and Peer
+   authentication using a pre-shared key that is wholly inadequate by
+   modern standards and is diminutively referred to as data obfuscation
+   in TACACS+ Protocol [I-D.ietf-opsawg-tacacs].  The introduction of
+   TLS PSK and certificate Peer authentication and TLS encryption to
+   TACACS+ obsolesces these former mechanisms and so are hereby
+   deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in
+
+
+
+
+Dahm, et al.            Expires December 8, 2019                [Page 3]
+
+Internet-Draft                 TACACS+ TLS                     June 2019
+
+
+   the TACACS+ header, the least significant bit (LSB) of the flags
+   field, is also deprecated.
+
+   Peers compliant with this document and using TLS should set the
+   TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.  A Peer that
+   receives a Packet without the flag set, should immediately terminate
+   the TCP connection.
+
+5.  XXX
+
+6.  Security Considerations
 
    This document improves the privacy, integrity, and authentication of
    the connection and network traffic between the TACACS+ servers and
@@ -154,23 +190,17 @@ Internet-Draft                 TACACS+ TLS                     June 2019
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    IANA is requested to allocate a new well-known TCP port number fore
    "tacacss", described as "TACACS over TLS/SSL".
 
+8.  Acknowledgments
 
+   The author(s) would like to thank Steven M.  Bellovin and Stephen
+   Farrell for their support, insightful review, and/or comments.
 
-
-
-
-
-Dahm, et al.            Expires December 7, 2019                [Page 3]
-
-Internet-Draft                 TACACS+ TLS                     June 2019
-
-
-7.  Normative References
+9.  Normative References
 
    [I-D.ietf-opsawg-tacacs]
               Dahm, T., Ota, A., dcmgash@cisco.com, d., Carrel, D., and
@@ -186,6 +216,15 @@ Internet-Draft                 TACACS+ TLS                     June 2019
               Ciphersuites for Transport Layer Security (TLS)",
               RFC 4279, DOI 10.17487/RFC4279, December 2005,
               <https://www.rfc-editor.org/info/rfc4279>.
+
+
+
+
+
+Dahm, et al.            Expires December 8, 2019                [Page 4]
+
+Internet-Draft                 TACACS+ TLS                     June 2019
+
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
@@ -221,4 +260,21 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires December 7, 2019                [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires December 8, 2019                [Page 5]
