@@ -75,11 +75,10 @@ Table of Contents
        3.1.3.  Cypher Requirements
        3.1.4.  Deprecation of MD5 and unencrypted
    4.  Deprecation of TACACS+ PSK and Encryption
-   5.  XXX
-   6.  Security Considerations
-   7.  IANA Considerations
-   8.  Acknowledgments
-   9.  Normative References
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  Acknowledgments
+   8.  Normative References
    Authors' Addresses
 
 1.  Introduction
@@ -110,7 +109,7 @@ Table of Contents
 
    Peer
 
-   This refers to a Server or a Client.
+   This refers to a TACACS+ Server or Client.
 
 3.  TACACS+ Connections
 
@@ -153,9 +152,7 @@ Table of Contents
    receives a Packet without the flag set, should immediately terminate
    the TCP connection.
 
-5.  XXX
-
-6.  Security Considerations
+5.  Security Considerations
 
    This document improves the privacy, integrity, and authentication of
    the connection and network traffic between the TACACS+ servers and
@@ -165,17 +162,24 @@ Table of Contents
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
 
-7.  IANA Considerations
+6.  IANA Considerations
 
-   IANA is requested to allocate a new well-known TCP port number fore
-   "tacacss", described as "TACACS over TLS/SSL".
+   The authors request that, at draft acceptance time, the OPSAWG Chairs
+   submit a request to IANA for an early allocation, per [RFC4020], of a
+   new well-known system TCP port number for "tacacss", described as
+   "TACACS+ over TLS/SSL".  The name "tacacss" follows the common
+   practice of appending an "s" to the name given to the non-TLS well-
+   known port.
 
-8.  Acknowledgments
+   RFC EDITOR: this port number should be replace "[TBD]" within
+   thisdocument.
+
+7.  Acknowledgments
 
    The author(s) would like to thank Steven M.  Bellovin and Stephen
    Farrell for their support, insightful review, and/or comments.
 
-9.  Normative References
+8.  Normative References
 
    [I-D.ietf-opsawg-tacacs]
               Dahm, T., Ota, A., dcmgash@cisco.com, d., Carrel, D., and
@@ -186,6 +190,11 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
+              Standards Track Code Points", RFC 4020,
+              DOI 10.17487/RFC4020, February 2005,
+              <https://www.rfc-editor.org/info/rfc4020>.
 
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",

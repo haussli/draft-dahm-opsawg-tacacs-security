@@ -383,11 +383,10 @@
 <link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Cypher Requirements">
 <link href="#rfc.section.3.1.4" rel="Chapter" title="3.1.4 Deprecation of MD5 and unencrypted">
 <link href="#rfc.section.4" rel="Chapter" title="4 Deprecation of TACACS+ PSK and Encryption">
-<link href="#rfc.section.5" rel="Chapter" title="5 XXX">
-<link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations">
-<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations">
-<link href="#rfc.section.8" rel="Chapter" title="8 Acknowledgments">
-<link href="#rfc.references" rel="Chapter" title="9 Normative References">
+<link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations">
+<link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations">
+<link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgments">
+<link href="#rfc.references" rel="Chapter" title="8 Normative References">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -479,15 +478,13 @@
 </li>
 </ul></ul><li>4.   <a href="#rfc.section.4">Deprecation of TACACS+ PSK and Encryption</a>
 </li>
-<li>5.   <a href="#rfc.section.5">XXX</a>
+<li>5.   <a href="#rfc.section.5">Security Considerations</a>
 </li>
-<li>6.   <a href="#rfc.section.6">Security Considerations</a>
+<li>6.   <a href="#rfc.section.6">IANA Considerations</a>
 </li>
-<li>7.   <a href="#rfc.section.7">IANA Considerations</a>
+<li>7.   <a href="#rfc.section.7">Acknowledgments</a>
 </li>
-<li>8.   <a href="#rfc.section.8">Acknowledgments</a>
-</li>
-<li>9.   <a href="#rfc.references">Normative References</a>
+<li>8.   <a href="#rfc.references">Normative References</a>
 </li>
 <li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
@@ -504,7 +501,7 @@
 <a href="#rfc.section.2">2.</a> Technical Definitions</h1>
 <p id="rfc.section.2.p.1">The Technical Definitions section of <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> is fully applicable here and will not be repeated.  </p>
 <p id="rfc.section.2.p.2">Peer </p>
-<p id="rfc.section.2.p.3">This refers to a Server or a Client.  </p>
+<p id="rfc.section.2.p.3">This refers to a TACACS+ Server or Client.  </p>
 <h1 id="rfc.section.3">
 <a href="#rfc.section.3">3.</a> TACACS+ Connections</h1>
 <p id="rfc.section.3.p.1">XXX </p>
@@ -528,19 +525,17 @@
 <p id="rfc.section.4.p.1">The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.  </p>
 <p id="rfc.section.4.p.2">Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.  A Peer that receives a Packet without the flag set, should immediately terminate the TCP connection.  </p>
 <h1 id="rfc.section.5">
-<a href="#rfc.section.5">5.</a> XXX</h1>
-<p></p>
+<a href="#rfc.section.5">5.</a> Security Considerations</h1>
+<p id="rfc.section.5.p.1">This document improves the privacy, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.  This does not in itself protect the server nor clients; the operator and equipment vendors have a role.  That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.  </p>
 <h1 id="rfc.section.6">
-<a href="#rfc.section.6">6.</a> Security Considerations</h1>
-<p id="rfc.section.6.p.1">This document improves the privacy, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.  This does not in itself protect the server nor clients; the operator and equipment vendors have a role.  That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.  </p>
+<a href="#rfc.section.6">6.</a> IANA Considerations</h1>
+<p id="rfc.section.6.p.1">The authors request that, at draft acceptance time, the OPSAWG Chairs submit a request to IANA for an early allocation, per <a href="#RFC4020" class="xref">[RFC4020]</a>, of a new well-known system TCP port number for "tacacss", described as "TACACS+ over TLS/SSL".  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.  </p>
+<p id="rfc.section.6.p.2">RFC EDITOR: this port number should be replace "[TBD]" within thisdocument.  </p>
 <h1 id="rfc.section.7">
-<a href="#rfc.section.7">7.</a> IANA Considerations</h1>
-<p id="rfc.section.7.p.1">IANA is requested to allocate a new well-known TCP port number fore "tacacss", described as "TACACS over TLS/SSL".  </p>
-<h1 id="rfc.section.8">
-<a href="#rfc.section.8">8.</a> Acknowledgments</h1>
-<p id="rfc.section.8.p.1">The author(s) would like to thank Steven M. Bellovin and Stephen Farrell for their support, insightful review, and/or comments.  </p>
+<a href="#rfc.section.7">7.</a> Acknowledgments</h1>
+<p id="rfc.section.7.p.1">The author(s) would like to thank Steven M. Bellovin and Stephen Farrell for their support, insightful review, and/or comments.  </p>
 <h1 id="rfc.references">
-<a href="#rfc.references">9.</a> Normative References</h1>
+<a href="#rfc.references">8.</a> Normative References</h1>
 <table><tbody>
 <tr>
 <td class="reference"><b id="I-D.ietf-opsawg-tacacs">[I-D.ietf-opsawg-tacacs]</b></td>
@@ -551,6 +546,11 @@
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
 <td class="top">
 <a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4020">[RFC4020]</b></td>
+<td class="top">
+<a>Kompella, K.</a> and <a>A. Zinin</a>, "<a href="https://tools.ietf.org/html/rfc4020">Early IANA Allocation of Standards Track Code Points</a>", RFC 4020, DOI 10.17487/RFC4020, February 2005.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC4279">[RFC4279]</b></td>
