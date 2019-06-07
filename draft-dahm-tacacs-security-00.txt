@@ -237,17 +237,24 @@ Internet-Draft                 TACACS+ TLS                     June 2019
    Because determining a correct PSK value on the server side is a
    computationally intensive operation requiring multiple round trips, a
    mechanism for hitless key change must be defined.  During TLS
-   handshake, a client MUST use PSK identity as defined in RFC 4279
-   [RFC4279] to signal to the server which PSK value to use.  If server
-   does not recognize PSK identity it MUST respond with decrypt_error
-   alert and MUST NOT respond with unknown_psk_identity.  Process to
-   change pre-shared keys on server and client is then: 1.  Add new key
-   with new PSK identity on the server.  2.  Add new key with new PSK
-   identity on the client.  3.  Remove old key with old PSK identity
-   from the client.  4.  Remove old key with old PSK identity from the
-   server.  Note: PSK identity is transmitted in clear text and must not
-   contain information which could aid an attacker who can eavesdrop on
-   the connection.
+   handshake, a client MUST use PSK identity as defined in [RFC4279] to
+   signal to the server which PSK value to use.  If server does not
+   recognize PSK identity it MUST respond with decrypt_error alert and
+   MUST NOT respond with unknown_psk_identity.
+
+   Process to change pre-shared keys on server and client is then:
+
+   1  Add new key with new PSK identity on the server.
+
+   2  Add new key with new PSK identity on the client.
+
+   3  Remove old key with old PSK identity from the client.
+
+   4  Remove old key with old PSK identity from the server.
+
+   Note: PSK identity is transmitted in clear text and must not contain
+   information which could aid an attacker who can eavesdrop on the
+   connection.
 
 3.5.2.  TLS Certificate Identity Requirements
 
@@ -267,13 +274,6 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
    Peers compliant with this document and using TLS should set the
    TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header, indicating that
-   the data obfuscation is not used.  A Peer that receives a Packet
-   without the flag set, should immediately terminate the TCP/IP
-   connection.
-
-   A Client that is compliant with this document MUST NOT utilize these
-   deprecated authentication or encryption methods with a Server that is
-
 
 
 
@@ -282,6 +282,12 @@ Dahm, et al.            Expires December 9, 2019                [Page 5]
 Internet-Draft                 TACACS+ TLS                     June 2019
 
 
+   the data obfuscation is not used.  A Peer that receives a Packet
+   without the flag set, should immediately terminate the TCP/IP
+   connection.
+
+   A Client that is compliant with this document MUST NOT utilize these
+   deprecated authentication or encryption methods with a Server that is
    also compliant.  A TACACS+ implementation MAY, and is encouraged to,
    offer a configuration mechanism to disable them.
 
@@ -325,18 +331,15 @@ Internet-Draft                 TACACS+ TLS                     June 2019
    name "tacacss" follows the common practice of appending an "s" to the
    name given to the non-TLS well-known port.
 
-   RFC EDITOR: this port number should be replace "[TBD]" within this
-   document.
-
-
-
-
 
 
 Dahm, et al.            Expires December 9, 2019                [Page 6]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
+
+   RFC EDITOR: this port number should be replace "[TBD]" within this
+   document.
 
 7.  Acknowledgments
 
@@ -382,10 +385,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
               RFC 3365, DOI 10.17487/RFC3365, August 2002,
               <https://www.rfc-editor.org/info/rfc3365>.
 
-   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
-              Standards Track Code Points", RFC 4020,
-              DOI 10.17487/RFC4020, February 2005,
-              <https://www.rfc-editor.org/info/rfc4020>.
+
 
 
 
@@ -393,6 +393,11 @@ Dahm, et al.            Expires December 9, 2019                [Page 7]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
+
+   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
+              Standards Track Code Points", RFC 4020,
+              DOI 10.17487/RFC4020, February 2005,
+              <https://www.rfc-editor.org/info/rfc4020>.
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -422,11 +427,6 @@ Authors' Addresses
    Google Inc.
 
    Email: andrej@ota.si
-
-
-
-
-
 
 
 

@@ -204,17 +204,24 @@ Table of Contents
    Because determining a correct PSK value on the server side is a
    computationally intensive operation requiring multiple round trips, a
    mechanism for hitless key change must be defined.  During TLS
-   handshake, a client MUST use PSK identity as defined in RFC 4279
-   [RFC4279] to signal to the server which PSK value to use.  If server
-   does not recognize PSK identity it MUST respond with decrypt_error
-   alert and MUST NOT respond with unknown_psk_identity.  Process to
-   change pre-shared keys on server and client is then: 1.  Add new key
-   with new PSK identity on the server.  2.  Add new key with new PSK
-   identity on the client.  3.  Remove old key with old PSK identity
-   from the client.  4.  Remove old key with old PSK identity from the
-   server.  Note: PSK identity is transmitted in clear text and must not
-   contain information which could aid an attacker who can eavesdrop on
-   the connection.
+   handshake, a client MUST use PSK identity as defined in [RFC4279] to
+   signal to the server which PSK value to use.  If server does not
+   recognize PSK identity it MUST respond with decrypt_error alert and
+   MUST NOT respond with unknown_psk_identity.
+
+   Process to change pre-shared keys on server and client is then:
+
+   1  Add new key with new PSK identity on the server.
+
+   2  Add new key with new PSK identity on the client.
+
+   3  Remove old key with old PSK identity from the client.
+
+   4  Remove old key with old PSK identity from the server.
+
+   Note: PSK identity is transmitted in clear text and must not contain
+   information which could aid an attacker who can eavesdrop on the
+   connection.
 
 3.5.2.  TLS Certificate Identity Requirements
 

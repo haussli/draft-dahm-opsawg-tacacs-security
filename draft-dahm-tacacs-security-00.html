@@ -563,7 +563,22 @@
 <p id="rfc.section.3.5.p.1">XXX </p>
 <h1 id="rfc.section.3.5.1">
 <a href="#rfc.section.3.5.1">3.5.1.</a> PSK Identity Requirements</h1>
-<p id="rfc.section.3.5.1.p.1">Because determining a correct PSK value on the server side is a computationally intensive operation requiring multiple round trips, a mechanism for hitless key change must be defined.  During TLS handshake, a client MUST use PSK identity as defined in RFC 4279 [RFC4279] to signal to the server which PSK value to use.  If server does not recognize PSK identity it MUST respond with decrypt_error alert and MUST NOT respond with unknown_psk_identity.  Process to change pre-shared keys on server and client is then: 1.  Add new key with new PSK identity on the server.  2.  Add new key with new PSK identity on the client.  3.  Remove old key with old PSK identity from the client.  4.  Remove old key with old PSK identity from the server.  Note: PSK identity is transmitted in clear text and must not contain information which could aid an attacker who can eavesdrop on the connection.  </p>
+<p id="rfc.section.3.5.1.p.1">Because determining a correct PSK value on the server side is a computationally intensive operation requiring multiple round trips, a mechanism for hitless key change must be defined.  During TLS handshake, a client MUST use PSK identity as defined in <a href="#RFC4279" class="xref">[RFC4279]</a> to signal to the server which PSK value to use.  If server does not recognize PSK identity it MUST respond with decrypt_error alert and MUST NOT respond with unknown_psk_identity.  </p>
+<p id="rfc.section.3.5.1.p.2">Process to change pre-shared keys on server and client is then: </p>
+
+<dl>
+<dt>1   </dt>
+<dd>Add new key with new PSK identity on the server.</dd>
+<dt>2   </dt>
+<dd>Add new key with new PSK identity on the client.</dd>
+<dt>3   </dt>
+<dd>Remove old key with old PSK identity from the client.</dd>
+<dt>4   </dt>
+<dd>Remove old key with old PSK identity from the server.</dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.3.5.1.p.3">Note: PSK identity is transmitted in clear text and must not contain information which could aid an attacker who can eavesdrop on the connection.  </p>
 <h1 id="rfc.section.3.5.2">
 <a href="#rfc.section.3.5.2">3.5.2.</a> TLS Certificate Identity Requirements</h1>
 <p id="rfc.section.3.5.2.p.1">XXX </p>
