@@ -376,17 +376,22 @@
   <link href="#rfc.toc" rel="Contents">
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
 <link href="#rfc.section.2" rel="Chapter" title="2 Technical Definitions">
-<link href="#rfc.section.3" rel="Chapter" title="3 TACACS+ Connections">
-<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Connection">
-<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Security Considerations">
-<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Authentication">
-<link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Cypher Requirements">
-<link href="#rfc.section.3.1.4" rel="Chapter" title="3.1.4 Deprecation of MD5 and unencrypted">
+<link href="#rfc.section.3" rel="Chapter" title="3 TLS for TACACS+">
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Well-Known TCP/IP Port">
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Cypher Requirements">
+<link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 Mandatory Cipher Suites">
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 TLS Protocol Version">
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Deprecation of MD5 and unencrypted">
+<link href="#rfc.section.3.5" rel="Chapter" title="3.5 Authentication">
+<link href="#rfc.section.3.5.1" rel="Chapter" title="3.5.1 PSK Identity Requirements">
+<link href="#rfc.section.3.5.2" rel="Chapter" title="3.5.2 TLS Certificate Identity Requirements">
 <link href="#rfc.section.4" rel="Chapter" title="4 Deprecation of TACACS+ PSK and Encryption">
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations">
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations">
 <link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgments">
-<link href="#rfc.references" rel="Chapter" title="8 Normative References">
+<link href="#rfc.references" rel="Chapter" title="8 References">
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References">
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -395,7 +400,7 @@
 
   <meta name="dct.creator" content="Dahm, T., Gash, D., and A. Ota" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-dahm-tacacs-security" />
-  <meta name="dct.issued" scheme="ISO8601" content="2019-6-6" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-6-7" />
   <meta name="dct.abstract" content="The " />
   <meta name="description" content="The " />
 
@@ -419,7 +424,7 @@
 <td class="right">D. Gash</td>
 </tr>
 <tr>
-<td class="left">Expires: December 8, 2019</td>
+<td class="left">Expires: December 9, 2019</td>
 <td class="right">Cisco Systems, Inc.</td>
 </tr>
 <tr>
@@ -432,7 +437,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">June 6, 2019</td>
+<td class="right">June 7, 2019</td>
 </tr>
 
     	
@@ -450,7 +455,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 8, 2019.</p>
+<p>This Internet-Draft will expire on December 9, 2019.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -464,17 +469,23 @@
 </li>
 <li>2.   <a href="#rfc.section.2">Technical Definitions</a>
 </li>
-<li>3.   <a href="#rfc.section.3">TACACS+ Connections</a>
+<li>3.   <a href="#rfc.section.3">TLS for TACACS+</a>
 </li>
-<ul><li>3.1.   <a href="#rfc.section.3.1">Connection</a>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Well-Known TCP/IP Port</a>
 </li>
-<ul><li>3.1.1.   <a href="#rfc.section.3.1.1">Security Considerations</a>
+<li>3.2.   <a href="#rfc.section.3.2">Cypher Requirements</a>
 </li>
-<li>3.1.2.   <a href="#rfc.section.3.1.2">Authentication</a>
+<ul><li>3.2.1.   <a href="#rfc.section.3.2.1">Mandatory Cipher Suites</a>
 </li>
-<li>3.1.3.   <a href="#rfc.section.3.1.3">Cypher Requirements</a>
+</ul><li>3.3.   <a href="#rfc.section.3.3">TLS Protocol Version</a>
 </li>
-<li>3.1.4.   <a href="#rfc.section.3.1.4">Deprecation of MD5 and unencrypted</a>
+<li>3.4.   <a href="#rfc.section.3.4">Deprecation of MD5 and unencrypted</a>
+</li>
+<li>3.5.   <a href="#rfc.section.3.5">Authentication</a>
+</li>
+<ul><li>3.5.1.   <a href="#rfc.section.3.5.1">PSK Identity Requirements</a>
+</li>
+<li>3.5.2.   <a href="#rfc.section.3.5.2">TLS Certificate Identity Requirements</a>
 </li>
 </ul></ul><li>4.   <a href="#rfc.section.4">Deprecation of TACACS+ PSK and Encryption</a>
 </li>
@@ -484,9 +495,13 @@
 </li>
 <li>7.   <a href="#rfc.section.7">Acknowledgments</a>
 </li>
-<li>8.   <a href="#rfc.references">Normative References</a>
+<li>8.   <a href="#rfc.references">References</a>
 </li>
-<li><a href="#rfc.authors">Authors' Addresses</a>
+<ul><li>8.1.   <a href="#rfc.references.1">Normative References</a>
+</li>
+<li>8.2.   <a href="#rfc.references.2">Informative References</a>
+</li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
 
 
@@ -499,43 +514,72 @@
 <p id="rfc.section.1.p.3">To address these flaws, this document updates the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> to support <a href="#RFC8446" class="xref">TLS</a> authentication and encryption, and deprecates the use of its former mechanisms.  </p>
 <h1 id="rfc.section.2">
 <a href="#rfc.section.2">2.</a> Technical Definitions</h1>
-<p id="rfc.section.2.p.1">The Technical Definitions section of <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> is fully applicable here and will not be repeated.  </p>
+<p id="rfc.section.2.p.1">The Technical Definitions section of <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> is fully applicable here and will not be repeated.  The following terms are also used in this document.  </p>
 <p id="rfc.section.2.p.2">Peer </p>
 <p id="rfc.section.2.p.3">This refers to a TACACS+ Server or Client.  </p>
+<p id="rfc.section.2.p.4">Session </p>
+<p id="rfc.section.2.p.5">Defined in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+</a> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.  </p>
 <h1 id="rfc.section.3">
-<a href="#rfc.section.3">3.</a> TACACS+ Connections</h1>
-<p id="rfc.section.3.p.1">XXX </p>
+<a href="#rfc.section.3">3.</a> TLS for TACACS+</h1>
+<p id="rfc.section.3.p.1">TACACS+ connections are over TCP/IP, initiated by the Client to the Server.  The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+</a>.  A connection may be used for only a single Session or the multiplexing of multiple Sessions.  </p>
+<p id="rfc.section.3.p.2">It is mandatory to maintain the privacy, integrity, and authentication of these connections, as <a href="#RFC3365" class="xref">RFC3365</a> dictates the need for end-to-end security.  The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.  </p>
 <h1 id="rfc.section.3.1">
-<a href="#rfc.section.3.1">3.1.</a> Connection</h1>
-<p id="rfc.section.3.1.p.1">XXX </p>
-<h1 id="rfc.section.3.1.1">
-<a href="#rfc.section.3.1.1">3.1.1.</a> Security Considerations</h1>
-<p id="rfc.section.3.1.1.p.1">XXX </p>
-<h1 id="rfc.section.3.1.2">
-<a href="#rfc.section.3.1.2">3.1.2.</a> Authentication</h1>
-<p id="rfc.section.3.1.2.p.1">XXX </p>
-<h1 id="rfc.section.3.1.3">
-<a href="#rfc.section.3.1.3">3.1.3.</a> Cypher Requirements</h1>
-<p id="rfc.section.3.1.3.p.1">XXX </p>
-<h1 id="rfc.section.3.1.4">
-<a href="#rfc.section.3.1.4">3.1.4.</a> Deprecation of MD5 and unencrypted</h1>
-<p id="rfc.section.3.1.4.p.1">XXX </p>
+<a href="#rfc.section.3.1">3.1.</a> Well-Known TCP/IP Port</h1>
+<p id="rfc.section.3.1.p.1">All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.  Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.  For this reason, it is desirable to not use a "STARTTLS" command process that is a feature of some protocols, that once existed without TLS, use to maintain backward compatibility.  Instead, a different well-known TCP/IP port is assigned, port [TBD].  </p>
+<p id="rfc.section.3.1.p.2">A new port is considered appropriate and superior to "STARTTLS" because: </p>
+
+<ul>
+<li>easily block the unencrypted/inferiorly encrypted version by the port number,</li>
+<li>a passive Intrusion Detection System (IDS) can watch the unencrypted version,</li>
+<li>STARTTLS can be vulnerable to Man in the Middle (MitM) attacks,</li>
+<li>and can help prevent the accidental exposure of sensitive information due to misconfiguration.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.3.2">
+<a href="#rfc.section.3.2">3.2.</a> Cypher Requirements</h1>
+<p id="rfc.section.3.2.p.1">TACACS+ Servers supporting Transport encryption MUST utilise the TLS options described in the following sections.  </p>
+<h1 id="rfc.section.3.2.1">
+<a href="#rfc.section.3.2.1">3.2.1.</a> Mandatory Cipher Suites</h1>
+<p id="rfc.section.3.2.1.p.1">TLS 1.2 RFC 5246 [RFC5246] allows specifying application profiles prescribing which cipher suites to implement for interoperability purposes.  To maintain simplicity of current TACACS+ configuration using pre-shared secrets, the server implementation MUST implement: TLS_DHE_PSK_WITH_3DES_EDE_CBC_SHA TLS_DHE_PSK_WITH_AES_128_CBC_SHA TLS_DHE_PSK_WITH_AES_256_CBC_SHA Client MUST implement at least one of cipher suites which are implemented on the server, and it MAY implement all of them.  Both clients and servers MAY implement other cipher suites, but their interoperability is not guaranteed and their implementation is outside of scope of this document.  </p>
+<h1 id="rfc.section.3.3">
+<a href="#rfc.section.3.3">3.3.</a> TLS Protocol Version</h1>
+<p id="rfc.section.3.3.p.1">TACACS+ Servers supporting TLS encryption MUST implement at least TLS version 1.2.  They MAY implement higher TLS versions.  </p>
+<h1 id="rfc.section.3.4">
+<a href="#rfc.section.3.4">3.4.</a> Deprecation of MD5 and unencrypted</h1>
+<p></p>
+<h1 id="rfc.section.3.5">
+<a href="#rfc.section.3.5">3.5.</a> Authentication</h1>
+<p id="rfc.section.3.5.p.1">XXX </p>
+<h1 id="rfc.section.3.5.1">
+<a href="#rfc.section.3.5.1">3.5.1.</a> PSK Identity Requirements</h1>
+<p id="rfc.section.3.5.1.p.1">Because determining a correct PSK value on the server side is a computationally intensive operation requiring multiple round trips, a mechanism for hitless key change must be defined.  During TLS handshake, a client MUST use PSK identity as defined in RFC 4279 [RFC4279] to signal to the server which PSK value to use.  If server does not recognize PSK identity it MUST respond with decrypt_error alert and MUST NOT respond with unknown_psk_identity.  Process to change pre-shared keys on server and client is then: 1.  Add new key with new PSK identity on the server.  2.  Add new key with new PSK identity on the client.  3.  Remove old key with old PSK identity from the client.  4.  Remove old key with old PSK identity from the server.  Note: PSK identity is transmitted in clear text and must not contain information which could aid an attacker who can eavesdrop on the connection.  </p>
+<h1 id="rfc.section.3.5.2">
+<a href="#rfc.section.3.5.2">3.5.2.</a> TLS Certificate Identity Requirements</h1>
+<p id="rfc.section.3.5.2.p.1">XXX </p>
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> Deprecation of TACACS+ PSK and Encryption</h1>
 <p id="rfc.section.4.p.1">The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.  </p>
-<p id="rfc.section.4.p.2">Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.  A Peer that receives a Packet without the flag set, should immediately terminate the TCP connection.  </p>
+<p id="rfc.section.4.p.2">Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header, indicating that the data obfuscation is not used.  A Peer that receives a Packet without the flag set, should immediately terminate the TCP/IP connection.  </p>
+<p id="rfc.section.4.p.3">A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods with a Server that is also compliant.  A TACACS+ implementation MAY, and is encouraged to, offer a configuration mechanism to disable them.  </p>
+<p id="rfc.section.4.p.4">A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  </p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> Security Considerations</h1>
 <p id="rfc.section.5.p.1">This document improves the privacy, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.  This does not in itself protect the server nor clients; the operator and equipment vendors have a role.  That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.  </p>
+<p id="rfc.section.5.p.2">It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.  It would be highly desirable for the TLS working group to publish a document that evolves with TLS and its algorithms that RFCs could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.  As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported or deprecated, in the absence of updates to this RFC.  </p>
+<p id="rfc.section.5.p.3">TLS encryption SHOULD be used in deployments when both the clients and servers support it.  Servers that support TLS encryption MAY be configured to allow legacy encryption when TLS encryption is not supported by the client.  </p>
+<p id="rfc.section.5.p.4">It is NOT RECOMMENDED to deploy TACACS+ without transport or legacy encryption, except for test environments.  </p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> IANA Considerations</h1>
-<p id="rfc.section.6.p.1">The authors request that, at draft acceptance time, the OPSAWG Chairs submit a request to IANA for an early allocation, per <a href="#RFC4020" class="xref">[RFC4020]</a>, of a new well-known system TCP port number for "tacacss", described as "TACACS+ over TLS/SSL".  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.  </p>
-<p id="rfc.section.6.p.2">RFC EDITOR: this port number should be replace "[TBD]" within thisdocument.  </p>
+<p id="rfc.section.6.p.1">The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <a href="#RFC4020" class="xref">RFC402</a>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS/SSL".  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.  </p>
+<p id="rfc.section.6.p.2">RFC EDITOR: this port number should be replace "[TBD]" within this document.  </p>
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> Acknowledgments</h1>
 <p id="rfc.section.7.p.1">The author(s) would like to thank Steven M. Bellovin and Stephen Farrell for their support, insightful review, and/or comments.  </p>
 <h1 id="rfc.references">
-<a href="#rfc.references">8.</a> Normative References</h1>
+<a href="#rfc.references">8.</a> References</h1>
+<h1 id="rfc.references.1">
+<a href="#rfc.references.1">8.1.</a> Normative References</h1>
 <table><tbody>
 <tr>
 <td class="reference"><b id="I-D.ietf-opsawg-tacacs">[I-D.ietf-opsawg-tacacs]</b></td>
@@ -546,11 +590,6 @@
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
 <td class="top">
 <a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
-</tr>
-<tr>
-<td class="reference"><b id="RFC4020">[RFC4020]</b></td>
-<td class="top">
-<a>Kompella, K.</a> and <a>A. Zinin</a>, "<a href="https://tools.ietf.org/html/rfc4020">Early IANA Allocation of Standards Track Code Points</a>", RFC 4020, DOI 10.17487/RFC4020, February 2005.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC4279">[RFC4279]</b></td>
@@ -571,6 +610,30 @@
 <td class="reference"><b id="RFC8446">[RFC8446]</b></td>
 <td class="top">
 <a>Rescorla, E.</a>, "<a href="https://tools.ietf.org/html/rfc8446">The Transport Layer Security (TLS) Protocol Version 1.3</a>", RFC 8446, DOI 10.17487/RFC8446, August 2018.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.references.2">
+<a href="#rfc.references.2">8.2.</a> Informative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="RFC3365">[RFC3365]</b></td>
+<td class="top">
+<a>Schiller, J.</a>, "<a href="https://tools.ietf.org/html/rfc3365">Strong Security Requirements for Internet Engineering Task Force Standard Protocols</a>", BCP 61, RFC 3365, DOI 10.17487/RFC3365, August 2002.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4020">[RFC4020]</b></td>
+<td class="top">
+<a>Kompella, K.</a> and <a>A. Zinin</a>, "<a href="https://tools.ietf.org/html/rfc4020">Early IANA Allocation of Standards Track Code Points</a>", RFC 4020, DOI 10.17487/RFC4020, February 2005.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6335">[RFC6335]</b></td>
+<td class="top">
+<a>Cotton, M.</a>, <a>Eggert, L.</a>, <a>Touch, J.</a>, <a>Westerlund, M.</a> and <a>S. Cheshire</a>, "<a href="https://tools.ietf.org/html/rfc6335">Internet Assigned Numbers Authority (IANA) Procedures for the Management of the Service Name and Transport Protocol Port Number Registry</a>", BCP 165, RFC 6335, DOI 10.17487/RFC6335, August 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7605">[RFC7605]</b></td>
+<td class="top">
+<a>Touch, J.</a>, "<a href="https://tools.ietf.org/html/rfc7605">Recommendations on Using Assigned Transport Port Numbers</a>", BCP 165, RFC 7605, DOI 10.17487/RFC7605, August 2015.</td>
 </tr>
 </tbody></table>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>

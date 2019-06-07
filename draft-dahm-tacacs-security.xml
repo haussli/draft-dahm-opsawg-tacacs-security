@@ -104,7 +104,7 @@
 
         <section title="Technical Definitions">
             <t>
-		The Technical Definitions section of <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> is fully applicable here and will not be repeated.
+		The Technical Definitions section of <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> is fully applicable here and will not be repeated.  The following terms are also used in this document.
             </t>
             <t>
 		Peer
@@ -112,36 +112,111 @@
             <t>
 		This refers to a TACACS+ Server or Client.
             </t>
+            <t>
+		Session
+            </t>
+            <t>
+		Defined in <xref target="I-D.ietf-opsawg-tacacs">TACACS+</xref> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.
+            </t>
         </section>
 
-        <section title="TACACS+ Connections">
+        <section title="TLS for TACACS+">
             <t>
-		XXX
+		TACACS+ connections are over TCP/IP, initiated by the Client to the Server.
+		The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in <xref target="I-D.ietf-opsawg-tacacs">TACACS+</xref>.
+		A connection may be used for only a single Session or the multiplexing of multiple Sessions.
             </t>
-            <section title="Connection">
-                <t>
-		XXX
+            <t>
+		It is mandatory to maintain the privacy, integrity, and authentication of these connections, as <xref target="RFC3365">RFC3365</xref> dictates the need for end-to-end security.
+		The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
+            </t>
+            <section title="Well-Known TCP/IP Port">
+	    <t>
+		All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
+		Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
+		For this reason, it is desirable to not use a "STARTTLS" command process that is a feature of some protocols, that once existed without TLS, use to maintain backward compatibility.
+		Instead, a different well-known TCP/IP port is assigned, port [TBD].
+	    </t>
+	    <t>
+		A new port is considered appropriate and superior to "STARTTLS" because:
+		<list style="symbols">
+		<t>easily block the unencrypted/inferiorly encrypted version by the port number,</t>
+		<t>a passive Intrusion Detection System (IDS) can watch the unencrypted version,</t>
+		<t>STARTTLS can be vulnerable to Man in the Middle (MitM) attacks,</t>
+		<t>and can help prevent the accidental exposure of sensitive information due to misconfiguration.</t>
+		</list>
+	    </t>
+            </section>
+	    <section title="Cypher Requirements">
+            <t>
+TACACS+ Servers supporting Transport encryption MUST utilise the TLS
+   options described in the following sections.
+            </t>
+		<section title="Mandatory Cipher Suites">
+		<t>
+TLS 1.2 RFC 5246 [RFC5246] allows specifying application profiles
+   prescribing which cipher suites to implement for interoperability
+   purposes.  To maintain simplicity of current TACACS+ configuration
+   using pre-shared secrets, the server implementation MUST implement:
+
+      TLS_DHE_PSK_WITH_3DES_EDE_CBC_SHA
+
+      TLS_DHE_PSK_WITH_AES_128_CBC_SHA
+
+      TLS_DHE_PSK_WITH_AES_256_CBC_SHA
+
+   Client MUST implement at least one of cipher suites which are
+   implemented on the server, and it MAY implement all of them.
+
+   Both clients and servers MAY implement other cipher suites, but their
+   interoperability is not guaranteed and their implementation is
+   outside of scope of this document.
+
 		</t>
-	        <section title="Security Considerations">
-                    <t>
+		</section>
+            </section>
+	    <section title="TLS Protocol Version">
+            <t>
+TACACS+ Servers supporting TLS encryption MUST implement at least TLS version 1.2.  They MAY implement higher TLS versions.
+            </t>
+            </section>
+	    <section title="Deprecation of MD5 and unencrypted">
+            <t>
+            </t>
+            </section>
+	    <section title="Authentication">
+            <t>
 		    XXX
-                    </t>
-                </section>
-	        <section title="Authentication">
-                    <t>
-		    XXX
-                    </t>
-                </section>
-	        <section title="Cypher Requirements">
-                    <t>
-		    XXX
-                    </t>
-                </section>
-	        <section title="Deprecation of MD5 and unencrypted">
-                    <t>
-		    XXX
-                    </t>
-                </section>
+            </t>
+		<section title="PSK Identity Requirements">
+		<t>
+Because determining a correct PSK value on the server side is a
+   computationally intensive operation requiring multiple round trips, a
+   mechanism for hitless key change must be defined.  During TLS
+   handshake, a client MUST use PSK identity as defined in RFC 4279
+   [RFC4279] to signal to the server which PSK value to use.  If server
+   does not recognize PSK identity it MUST respond with decrypt_error
+   alert and MUST NOT respond with unknown_psk_identity.  Process to
+   change pre-shared keys on server and client is then:
+
+   1.  Add new key with new PSK identity on the server.
+
+   2.  Add new key with new PSK identity on the client.
+
+   3.  Remove old key with old PSK identity from the client.
+
+   4.  Remove old key with old PSK identity from the server.
+
+   Note: PSK identity is transmitted in clear text and must not contain
+   information which could aid an attacker who can eavesdrop on the
+   connection.
+		</t>
+		</section>
+		<section title="TLS Certificate Identity Requirements">
+		<t>
+XXX
+		</t>
+		</section>
             </section>
         </section>
 
@@ -152,8 +227,15 @@
 		Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
             </t>
             <t>
-		Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.
-		A Peer that receives a Packet without the flag set, should immediately terminate the TCP connection.
+		Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header, indicating that the data obfuscation is not used.
+		A Peer that receives a Packet without the flag set, should immediately terminate the TCP/IP connection.
+            </t>
+            <t>
+		A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods with a Server that is also compliant.
+		A TACACS+ implementation MAY, and is encouraged to, offer a configuration mechanism to disable them.
+            </t>
+            <t>
+		A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
             </t>
         </section>
 
@@ -163,15 +245,27 @@
 		This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
 		That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
             </t>
+	    <t>
+		It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
+		It would be highly desirable for the TLS working group to publish a document that evolves with TLS and its algorithms that RFCs could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
+		As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported or deprecated, in the absence of updates to this RFC.
+            </t>
+            <t>
+		TLS encryption SHOULD be used in deployments when both the clients and servers support it.
+		Servers that support TLS encryption MAY be configured to allow legacy encryption when TLS encryption is not supported by the client.
+	    </t>
+	    <t>
+		It is NOT RECOMMENDED to deploy TACACS+ without transport or legacy encryption, except for test environments.
+	    </t>
         </section>
 
         <section title="IANA Considerations">
             <t>
-		The authors request that, at draft acceptance time, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/>, of a new well-known system TCP port number for "tacacss", described as "TACACS+ over TLS/SSL".
+		The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020">RFC402</xref>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS/SSL".
 		The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
             </t>
             <t>
-		RFC EDITOR: this port number should be replace "[TBD]" within thisdocument.
+		RFC EDITOR: this port number should be replace "[TBD]" within this document.
             </t>
         </section>
 
@@ -188,11 +282,13 @@
             <?rfc include="reference.RFC.4279"?>
             <?rfc include="reference.RFC.2119"?>
             <?rfc include="reference.RFC.8174"?>
-            <?rfc include="reference.RFC.4020"?>
             <?rfc include="reference.I-D.ietf-opsawg-tacacs.xml"?>
         </references>
-<!--        <references title="Informative References">
-            <?rfc include="reference.RFC.XXXX"?>
-        </references> -->
+        <references title="Informative References">
+            <?rfc include="reference.RFC.3365"?>
+            <?rfc include="reference.RFC.4020"?>
+            <?rfc include="reference.RFC.6335"?>
+            <?rfc include="reference.RFC.7605"?>
+        </references>
     </back>
 </rfc>

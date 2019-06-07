@@ -5,10 +5,10 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 8, 2019                            Cisco Systems, Inc.
+Expires: December 9, 2019                            Cisco Systems, Inc.
                                                                   A. Ota
                                                              Google Inc.
-                                                            June 6, 2019
+                                                            June 7, 2019
 
 
                           TACACS+ TLS Support
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 8, 2019.
+   This Internet-Draft will expire on December 9, 2019.
 
 Copyright Notice
 
@@ -68,17 +68,22 @@ Table of Contents
 
    1.  Introduction
    2.  Technical Definitions
-   3.  TACACS+ Connections
-     3.1.  Connection
-       3.1.1.  Security Considerations
-       3.1.2.  Authentication
-       3.1.3.  Cypher Requirements
-       3.1.4.  Deprecation of MD5 and unencrypted
+   3.  TLS for TACACS+
+     3.1.  Well-Known TCP/IP Port
+     3.2.  Cypher Requirements
+       3.2.1.  Mandatory Cipher Suites
+     3.3.  TLS Protocol Version
+     3.4.  Deprecation of MD5 and unencrypted
+     3.5.  Authentication
+       3.5.1.  PSK Identity Requirements
+       3.5.2.  TLS Certificate Identity Requirements
    4.  Deprecation of TACACS+ PSK and Encryption
    5.  Security Considerations
    6.  IANA Considerations
    7.  Acknowledgments
-   8.  Normative References
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -105,33 +110,103 @@ Table of Contents
 
    The Technical Definitions section of TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] is fully applicable here and will not be
-   repeated.
+   repeated.  The following terms are also used in this document.
 
    Peer
 
    This refers to a TACACS+ Server or Client.
 
-3.  TACACS+ Connections
+   Session
+
+   Defined in TACACS+ [I-D.ietf-opsawg-tacacs] as a single
+   authentication sequence, a single authorization exchange, or a single
+   accounting exchange.
+
+3.  TLS for TACACS+
+
+   TACACS+ connections are over TCP/IP, initiated by the Client to the
+   Server.  The well-known TCP/IP port 49 on the Server is used for
+   unencrypted and encrypted connections as defined in TACACS+
+   [I-D.ietf-opsawg-tacacs].  A connection may be used for only a single
+   Session or the multiplexing of multiple Sessions.
+
+   It is mandatory to maintain the privacy, integrity, and
+   authentication of these connections, as RFC3365 [RFC3365] dictates
+   the need for end-to-end security.  The current IETF technology best
+   suited for TACACS+ is TLS, which can provide both authentication and
+   transport encryption.
+
+3.1.  Well-Known TCP/IP Port
+
+   All data exchanged by TACACS+ Peers MUST be encrypted, including the
+   authentication of the Peers.  Therefore, encryption MUST be initiated
+   immediately upon the establishment of the TCP/IP connection.  For
+   this reason, it is desirable to not use a "STARTTLS" command process
+   that is a feature of some protocols, that once existed without TLS,
+   use to maintain backward compatibility.  Instead, a different well-
+   known TCP/IP port is assigned, port [TBD].
+
+   A new port is considered appropriate and superior to "STARTTLS"
+   because:
+
+   o  easily block the unencrypted/inferiorly encrypted version by the
+      port number,
+
+   o  a passive Intrusion Detection System (IDS) can watch the
+      unencrypted version,
+
+   o  STARTTLS can be vulnerable to Man in the Middle (MitM) attacks,
+
+   o  and can help prevent the accidental exposure of sensitive
+      information due to misconfiguration.
+
+3.2.  Cypher Requirements
+
+   TACACS+ Servers supporting Transport encryption MUST utilise the TLS
+   options described in the following sections.
+
+3.2.1.  Mandatory Cipher Suites
+
+   TLS 1.2 RFC 5246 [RFC5246] allows specifying application profiles
+   prescribing which cipher suites to implement for interoperability
+   purposes.  To maintain simplicity of current TACACS+ configuration
+   using pre-shared secrets, the server implementation MUST implement:
+   TLS_DHE_PSK_WITH_3DES_EDE_CBC_SHA TLS_DHE_PSK_WITH_AES_128_CBC_SHA
+   TLS_DHE_PSK_WITH_AES_256_CBC_SHA Client MUST implement at least one
+   of cipher suites which are implemented on the server, and it MAY
+   implement all of them.  Both clients and servers MAY implement other
+   cipher suites, but their interoperability is not guaranteed and their
+   implementation is outside of scope of this document.
+
+3.3.  TLS Protocol Version
+
+   TACACS+ Servers supporting TLS encryption MUST implement at least TLS
+   version 1.2.  They MAY implement higher TLS versions.
+
+3.4.  Deprecation of MD5 and unencrypted
+
+3.5.  Authentication
 
    XXX
 
-3.1.  Connection
+3.5.1.  PSK Identity Requirements
 
-   XXX
+   Because determining a correct PSK value on the server side is a
+   computationally intensive operation requiring multiple round trips, a
+   mechanism for hitless key change must be defined.  During TLS
+   handshake, a client MUST use PSK identity as defined in RFC 4279
+   [RFC4279] to signal to the server which PSK value to use.  If server
+   does not recognize PSK identity it MUST respond with decrypt_error
+   alert and MUST NOT respond with unknown_psk_identity.  Process to
+   change pre-shared keys on server and client is then: 1.  Add new key
+   with new PSK identity on the server.  2.  Add new key with new PSK
+   identity on the client.  3.  Remove old key with old PSK identity
+   from the client.  4.  Remove old key with old PSK identity from the
+   server.  Note: PSK identity is transmitted in clear text and must not
+   contain information which could aid an attacker who can eavesdrop on
+   the connection.
 
-3.1.1.  Security Considerations
-
-   XXX
-
-3.1.2.  Authentication
-
-   XXX
-
-3.1.3.  Cypher Requirements
-
-   XXX
-
-3.1.4.  Deprecation of MD5 and unencrypted
+3.5.2.  TLS Certificate Identity Requirements
 
    XXX
 
@@ -148,9 +223,18 @@ Table of Contents
    field, is also deprecated.
 
    Peers compliant with this document and using TLS should set the
-   TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header.  A Peer that
-   receives a Packet without the flag set, should immediately terminate
-   the TCP connection.
+   TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header, indicating that
+   the data obfuscation is not used.  A Peer that receives a Packet
+   without the flag set, should immediately terminate the TCP/IP
+   connection.
+
+   A Client that is compliant with this document MUST NOT utilize these
+   deprecated authentication or encryption methods with a Server that is
+   also compliant.  A TACACS+ implementation MAY, and is encouraged to,
+   offer a configuration mechanism to disable them.
+
+   A future document SHOULD be written to deprecate the well-known TCP/
+   IP port 49, allocated by TACACS+ Protocol [I-D.ietf-opsawg-tacacs].
 
 5.  Security Considerations
 
@@ -162,24 +246,44 @@ Table of Contents
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
 
+   It is not and never will be reasonable to expect RFCs be updated in
+   perpetuity as each new TLS version and/or algorithm emerges nor at a
+   rate to keep pace.  It would be highly desirable for the TLS working
+   group to publish a document that evolves with TLS and its algorithms
+   that RFCs could reference without the need to update those RFCs, thus
+   allowing them to evolve by inheritance.  As no such document exists,
+   implementers and operators SHOULD make informed use of RFCs to
+   determine which TLS versions and algorithms should be supported or
+   deprecated, in the absence of updates to this RFC.
+
+   TLS encryption SHOULD be used in deployments when both the clients
+   and servers support it.  Servers that support TLS encryption MAY be
+   configured to allow legacy encryption when TLS encryption is not
+   supported by the client.
+
+   It is NOT RECOMMENDED to deploy TACACS+ without transport or legacy
+   encryption, except for test environments.
+
 6.  IANA Considerations
 
-   The authors request that, at draft acceptance time, the OPSAWG Chairs
-   submit a request to IANA for an early allocation, per [RFC4020], of a
-   new well-known system TCP port number for "tacacss", described as
-   "TACACS+ over TLS/SSL".  The name "tacacss" follows the common
-   practice of appending an "s" to the name given to the non-TLS well-
-   known port.
+   The authors request that, when this draft is accepted by the working
+   group, the OPSAWG Chairs submit a request to IANA for an early
+   allocation, per RFC402 [RFC4020], of a new well-known system TCP/IP
+   port number for "tacacss", described as "TACACS+ over TLS/SSL".  The
+   name "tacacss" follows the common practice of appending an "s" to the
+   name given to the non-TLS well-known port.
 
-   RFC EDITOR: this port number should be replace "[TBD]" within
-   thisdocument.
+   RFC EDITOR: this port number should be replace "[TBD]" within this
+   document.
 
 7.  Acknowledgments
 
    The author(s) would like to thank Steven M.  Bellovin and Stephen
    Farrell for their support, insightful review, and/or comments.
 
-8.  Normative References
+8.  References
+
+8.1.  Normative References
 
    [I-D.ietf-opsawg-tacacs]
               Dahm, T., Ota, A., dcmgash@cisco.com, d., Carrel, D., and
@@ -190,11 +294,6 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
-              Standards Track Code Points", RFC 4020,
-              DOI 10.17487/RFC4020, February 2005,
-              <https://www.rfc-editor.org/info/rfc4020>.
 
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",
@@ -213,6 +312,29 @@ Table of Contents
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
+
+8.2.  Informative References
+
+   [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
+              Engineering Task Force Standard Protocols", BCP 61,
+              RFC 3365, DOI 10.17487/RFC3365, August 2002,
+              <https://www.rfc-editor.org/info/rfc3365>.
+
+   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
+              Standards Track Code Points", RFC 4020,
+              DOI 10.17487/RFC4020, February 2005,
+              <https://www.rfc-editor.org/info/rfc4020>.
+
+   [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
+              Cheshire, "Internet Assigned Numbers Authority (IANA)
+              Procedures for the Management of the Service Name and
+              Transport Protocol Port Number Registry", BCP 165,
+              RFC 6335, DOI 10.17487/RFC6335, August 2011,
+              <https://www.rfc-editor.org/info/rfc6335>.
+
+   [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
+              Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
+              August 2015, <https://www.rfc-editor.org/info/rfc7605>.
 
 Authors' Addresses
 
