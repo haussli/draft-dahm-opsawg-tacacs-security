@@ -5,10 +5,10 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 9, 2019                            Cisco Systems, Inc.
+Expires: December 15, 2019                           Cisco Systems, Inc.
                                                                   A. Ota
                                                              Google Inc.
-                                                            June 7, 2019
+                                                           June 13, 2019
 
 
                           TACACS+ TLS Support
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 9, 2019.
+   This Internet-Draft will expire on December 15, 2019.
 
 
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 1]
+Dahm, et al.            Expires December 15, 2019               [Page 1]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -102,22 +102,22 @@ Table of Contents
    networked computing devices via one or more centralized servers.  The
    protocol carries authentication, authorization and accounting
    information for TACACS+ clients.  While this information is highly
-   sensitive, TACACS+ lacks modern and/or effective privacy, integrity,
-   and authentication of the connection and network traffic between the
-   server and client.
+   sensitive, TACACS+ lacks modern and/or effective confidentiality,
+   integrity, and authentication of the connection and network traffic
+   between the server and client.
 
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 2]
+Dahm, et al.            Expires December 15, 2019               [Page 2]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
 
-   The existing privacy, integrity, and authentication mechanisms of
-   TACACS+ are extremely weak.  The Security Considerations section of
-   TACACS+ Protocol [I-D.ietf-opsawg-tacacs] adequately describes this
-   and will not be repeated.
+   The existing confidentiality, integrity, and authentication
+   mechanisms of TACACS+ are extremely weak.  The Security
+   Considerations section of TACACS+ Protocol [I-D.ietf-opsawg-tacacs]
+   adequately describes this and will not be repeated.
 
    To address these flaws, this document updates the TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] to support TLS [RFC8446] authentication and
@@ -147,7 +147,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
    [I-D.ietf-opsawg-tacacs].  A connection may be used for only a single
    Session or the multiplexing of multiple Sessions.
 
-   It is mandatory to maintain the privacy, integrity, and
+   It is mandatory to maintain the confidentiality, integrity, and
    authentication of these connections, as RFC3365 [RFC3365] dictates
    the need for end-to-end security.  The current IETF technology best
    suited for TACACS+ is TLS, which can provide both authentication and
@@ -165,7 +165,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 3]
+Dahm, et al.            Expires December 15, 2019               [Page 3]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -221,7 +221,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 4]
+Dahm, et al.            Expires December 15, 2019               [Page 4]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -277,7 +277,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 5]
+Dahm, et al.            Expires December 15, 2019               [Page 5]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -296,13 +296,13 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 5.  Security Considerations
 
-   This document improves the privacy, integrity, and authentication of
-   the connection and network traffic between the TACACS+ servers and
-   clients by adding TLS support.  This does not in itself protect the
-   server nor clients; the operator and equipment vendors have a role.
-   That role is to diligently follow current best practices for
-   maintaining the integrity of network devices and selection of TLS key
-   and encryption algorithms.
+   This document improves the confidentiality, integrity, and
+   authentication of the connection and network traffic between the
+   TACACS+ servers and clients by adding TLS support.  This does not in
+   itself protect the server nor clients; the operator and equipment
+   vendors have a role.  That role is to diligently follow current best
+   practices for maintaining the integrity of network devices and
+   selection of TLS key and encryption algorithms.
 
    It is not and never will be reasonable to expect RFCs be updated in
    perpetuity as each new TLS version and/or algorithm emerges nor at a
@@ -333,7 +333,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 6]
+Dahm, et al.            Expires December 15, 2019               [Page 6]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -343,8 +343,9 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 7.  Acknowledgments
 
-   The author(s) would like to thank Steven M.  Bellovin and Stephen
-   Farrell for their support, insightful review, and/or comments.
+   The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
+   and Stephen Farrell for their support, insightful review, and/or
+   comments.
 
 8.  References
 
@@ -388,8 +389,7 @@ Internet-Draft                 TACACS+ TLS                     June 2019
 
 
 
-
-Dahm, et al.            Expires December 9, 2019                [Page 7]
+Dahm, et al.            Expires December 15, 2019               [Page 7]
 
 Internet-Draft                 TACACS+ TLS                     June 2019
 
@@ -445,4 +445,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires December 9, 2019                [Page 8]
+Dahm, et al.            Expires December 15, 2019               [Page 8]

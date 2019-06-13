@@ -91,10 +91,10 @@
             <t>
 		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
-		While this information is highly sensitive, TACACS+ lacks modern and/or effective privacy, integrity, and authentication of the connection and network traffic between the server and client.
+		While this information is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
             </t>
             <t>
-		The existing privacy, integrity, and authentication mechanisms of TACACS+ are extremely weak.
+		The existing confidentiality, integrity, and authentication mechanisms of TACACS+ are extremely weak.
 		The Security Considerations section of <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> adequately describes this and will not be repeated.
             </t>
             <t>
@@ -127,7 +127,7 @@
 		A connection may be used for only a single Session or the multiplexing of multiple Sessions.
             </t>
             <t>
-		It is mandatory to maintain the privacy, integrity, and authentication of these connections, as <xref target="RFC3365">RFC3365</xref> dictates the need for end-to-end security.
+		It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365">RFC3365</xref> dictates the need for end-to-end security.
 		The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
             </t>
             <section title="Well-Known TCP/IP Port">
@@ -234,7 +234,7 @@ XXX
 
        <section title="Security Considerations">
            <t>
-		This document improves the privacy, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.
+		This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ servers and clients by adding TLS support.
 		This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
 		That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
             </t>
@@ -264,7 +264,7 @@ XXX
 
         <section title="Acknowledgments">
             <t>
-                The author(s) would like to thank Steven M. Bellovin and Stephen Farrell for their support, insightful review, and/or comments.
+                The author(s) would like to thank Russ Housley, Steven M. Bellovin, and Stephen Farrell for their support, insightful review, and/or comments.
             </t>
         </section>
     </middle>
