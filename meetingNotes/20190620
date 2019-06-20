@@ -1,0 +1,35 @@
+- draft progress
+	We have an outline and there has been some useful private comment from
+	IETF security folks.  Heasley will summarize this for the group asap
+	and start to form the TLS specific portion of the draft.
+
+- progress on living document reference
+	Including Housley's comments about this, there was discussion about
+	living (evergreen) document reference for cipher suites.
+
+	Doug suggessts that we must be careful about the document taking
+	responsibility for security specifics, but that it assume some by
+	(or in) specifying recommended ciphersuites.
+
+	Thorsten agrees to take security/ciphersuits into our hands, but
+	could also reference other document's recommendation AND take
+	REQUIRED ciphersuites from those documents.
+
+	Doug clarifies that he is agrees, but wants to recognize that tacacs
+	rfc will then require updates in the future.  OK, but has impact.
+
+- email to OPSAWG about tacacs+ TLS
+	Doug and Thorsten agreed that the draft email was reasonable.
+
+	Andrej should tell us if he agrees.  Heasley will wait for Andrej
+	then send to the OPSAWG list.
+
+- what is the sate of the current draft.
+	doug has had no time due to travel.  he will try to find time this
+	weekend.  has made a list of comments from the emails.
+
+	Thorsten suggests splitting the emails among the group for parallel
+	progress drafting responses.
+
+The next call will be Tuseday 2nd of July at 10:00 PT, 18:00 Dublin time.
+WebEx invitation has been sent.
