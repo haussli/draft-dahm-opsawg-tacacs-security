@@ -11,12 +11,16 @@
 	responsibility for security specifics, but that it assume some by
 	(or in) specifying recommended ciphersuites.
 
-	Thorsten agrees to take security/ciphersuits into our hands, but
-	could also reference other document's recommendation AND take
-	REQUIRED ciphersuites from those documents.
+	Thorsten agrees fully.  Thinks that a reference like "MUST
+	always support the latest TLS version" without taking anything specific,
+	like ciphersuites, from that document itself. That would mean we do not
+	have to update the TACACS+ document when IETF jumps from TLS 1.3 to TLS
+	1.4 (or similar) but the protocol would be required to support the
+	latest security features.
 
-	Doug clarifies that he is agrees, but wants to recognize that tacacs
-	rfc will then require updates in the future.  OK, but has impact.
+	Doug clarifies that he agrees, but wants to recognize that if the
+	tacacs takes responsiblity for ciphersuites, the rfc will then require
+	updates in the future.  OK, but has impact.
 
 - email to OPSAWG about tacacs+ TLS
 	Doug and Thorsten agreed that the draft email was reasonable.
