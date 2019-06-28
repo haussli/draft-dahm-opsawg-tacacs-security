@@ -5,10 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 15, 2019                           Cisco Systems, Inc.
+Expires: December 30, 2019                           Cisco Systems, Inc.
                                                                   A. Ota
-                                                             Google Inc.
-                                                           June 13, 2019
+                                                           June 28, 2019
 
 
                           TACACS+ TLS Support
@@ -47,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 15, 2019.
+   This Internet-Draft will expire on December 30, 2019.
 
 Copyright Notice
 
@@ -368,7 +367,6 @@ Authors' Addresses
 
 
    Andrej Ota
-   Google Inc.
 
    Email: andrej@ota.si
 
