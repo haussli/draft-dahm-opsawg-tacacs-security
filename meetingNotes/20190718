@@ -1,0 +1,41 @@
+- cmorrow will attend IETF 105 plenary to learn about "Evolving Documents",
+  aka "Evergreen Documents".  Please let us know how this goes.
+
+- draft progress
+	Heasley will try to push an update today.
+
+- progress on living document reference
+        Some discussion about how to make the recommendations.  The recent
+	comment about BCP needs to be considered; it is not clear that BCP
+	numbers are static, and thus would not offer any relief.  It is
+	clear that none of us wish to periodically update the RFC as TLS
+	evolves.
+
+	we should research what the latest https has done.  Doug will try to
+	do this.
+
+	We will add what we think is best to the draft, then pose the question
+	to the WG for their preference.
+
+- what is the state of the current draft.
+	doug has reviewed comments & DISCUSS and emailed the WG.  he will try
+	to submit a new revision this week.  Much of the comment was about
+	character sets.  There may need to be some discussion about how to
+	address the comments, either with the group or WG.
+
+	Thorsten reviewed Doug's comments to the list, and except for the
+	comment from Andrej, it seemed appropriate.
+
+	Andrej's issue is regarding reference to a historical RFC (XXX
+	I may have misheard this).  Doug believes that he may have missed
+	Andrej's comment and will search for it.  I attempted to find Andrej's
+	comment in the OPSAWG mail archive, but the most recent mail from
+	Andrej is dated 19.22.4:
+	https://mailarchive.ietf.org/arch/msg/opsawg/lfkkc6ZCCNw8rDNQX-lO9nhW_kY
+
+- email to OPSAWG about tacacs+ TLS
+	No replies were received.
+
+
+The next call will be Thursday 15th of August at 10:00 PT, 18:00 Dublin time.
+WebEx invitation will be sent.
