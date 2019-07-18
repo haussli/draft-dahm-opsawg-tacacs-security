@@ -1,23 +1,39 @@
 BASENAME= draft-dahm-tacacs-security
-EXT=.xml
 VERSION=00
-SOURCENAME=${BASENAME}${EXT}
+
+EXT=.xml
+SOURCEIN=${BASENAME}.in
+XMLNAME=${BASENAME}${EXT}
 DRAFTNAME=${BASENAME}-${VERSION}
 
-all:
-	if [ ! -e ${DRAFTNAME} ] ; then					\
+HTML=${DRAFTNAME}/${BASENAME}.html
+RAW=${DRAFTNAME}/${BASENAME}.raw.txt
+TEXT=${DRAFTNAME}/${BASENAME}.txt
+
+all: ${DRAFTNAME} ${XMLNAME} ${HTML} ${RAW} ${TEXT}
+
+${DRAFTNAME}:
+	if test ! -e ${DRAFTNAME}; then					\
 		mkdir -p ${DRAFTNAME} || exit 1;			\
 	fi;								\
-	xml2rfc ${SOURCENAME} -b ${DRAFTNAME} --raw --text --html
 
-text:
-	xml2rfc ${SOURCENAME} -b ${DRAFTNAME} --raw
+${XMLNAME}: ${SOURCEIN} Makefile
+	rm -f $@;							\
+	sed								\
+		-e 's,@DRAFTNAME\@,$(DRAFTNAME),g'			\
+		${SOURCEIN} > $@
 
-paginated:
-	xml2rfc ${SOURCENAME} -b ${DRAFTNAME} --text
+${DRAFTNAME}/${BASENAME}.raw.txt: ${DRAFTNAME} ${XMLNAME} Makefile
+	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --raw
+text: ${DRAFTNAME}/${BASENAME}.raw.txt
 
-html:
-	xml2rfc ${SOURCENAME} -b ${DRAFTNAME} --html
+${DRAFTNAME}/${BASENAME}.txt: ${DRAFTNAME} ${XMLNAME} Makefile
+	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --text
+paginated: ${DRAFTNAME}/${BASENAME}.txt
+
+${DRAFTNAME}/${BASENAME}.html: ${DRAFTNAME} ${XMLNAME} Makefile
+	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --html
+html: ${DRAFTNAME}/${BASENAME}.html
 
 clean:
-	rm ${DRAFTNAME}.*
+	rm ${DRAFTNAME}/${BASENAME}.* ${XMLNAME}.bak

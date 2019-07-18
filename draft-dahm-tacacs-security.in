@@ -22,7 +22,7 @@
 
 <rfc category="std"
     ipr="trust200902"
-    docName="draft-dahm-tacacs-security-00"
+    docName="@DRAFTNAME@"
     submissionType="IETF">
 
     <front>
