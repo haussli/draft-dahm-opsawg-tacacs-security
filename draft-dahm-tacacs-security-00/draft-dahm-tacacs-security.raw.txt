@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: December 30, 2019                           Cisco Systems, Inc.
+Expires: January 19, 2020                            Cisco Systems, Inc.
                                                                   A. Ota
-                                                           June 28, 2019
+                                                           July 18, 2019
 
 
                           TACACS+ TLS Support
-                       draft-dahm-tacacs-security
+                     draft-dahm-tacacs-security-00
 
 Abstract
 
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 30, 2019.
+   This Internet-Draft will expire on January 19, 2020.
 
 Copyright Notice
 
