@@ -5,6 +5,9 @@ SOURCENAME=${BASENAME}${EXT}
 DRAFTNAME=${BASENAME}-${VERSION}
 
 all:
+	if [ ! -e ${DRAFTNAME} ] ; then					\
+		mkdir -p ${DRAFTNAME} || exit 1;			\
+	fi;								\
 	xml2rfc ${SOURCENAME} -b ${DRAFTNAME} --raw --text --html
 
 text:
