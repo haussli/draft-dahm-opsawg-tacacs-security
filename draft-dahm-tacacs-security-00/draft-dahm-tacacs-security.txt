@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: January 19, 2020                            Cisco Systems, Inc.
+Expires: February 28, 2020                           Cisco Systems, Inc.
                                                                   A. Ota
-                                                           July 18, 2019
+                                                         August 27, 2019
 
 
                           TACACS+ TLS Support
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 19, 2020.
+   This Internet-Draft will expire on February 28, 2020.
 
 
 
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 1]
+Dahm, et al.            Expires February 28, 2020               [Page 1]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 2]
+Dahm, et al.            Expires February 28, 2020               [Page 2]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
    The existing confidentiality, integrity, and authentication
@@ -165,9 +165,9 @@ Internet-Draft                 TACACS+ TLS                     July 2019
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 3]
+Dahm, et al.            Expires February 28, 2020               [Page 3]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
    A new port is considered appropriate and superior to "STARTTLS"
@@ -221,9 +221,9 @@ Internet-Draft                 TACACS+ TLS                     July 2019
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 4]
+Dahm, et al.            Expires February 28, 2020               [Page 4]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
 3.4.  Deprecation of MD5 and unencrypted
@@ -277,9 +277,9 @@ Internet-Draft                 TACACS+ TLS                     July 2019
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 5]
+Dahm, et al.            Expires February 28, 2020               [Page 5]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
    the data obfuscation is not used.  A Peer that receives a Packet
@@ -333,9 +333,9 @@ Internet-Draft                 TACACS+ TLS                     July 2019
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 6]
+Dahm, et al.            Expires February 28, 2020               [Page 6]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
    RFC EDITOR: this port number should be replace "[TBD]" within this
@@ -389,9 +389,9 @@ Internet-Draft                 TACACS+ TLS                     July 2019
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 7]
+Dahm, et al.            Expires February 28, 2020               [Page 7]
 
-Internet-Draft                 TACACS+ TLS                     July 2019
+Internet-Draft                 TACACS+ TLS                   August 2019
 
 
    [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
@@ -445,4 +445,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires January 19, 2020                [Page 8]
+Dahm, et al.            Expires February 28, 2020               [Page 8]
