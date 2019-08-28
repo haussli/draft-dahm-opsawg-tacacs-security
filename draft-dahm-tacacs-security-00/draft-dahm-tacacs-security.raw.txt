@@ -18,7 +18,7 @@ Abstract
    The TACACS+ Protocol [I-D.ietf-opsawg-tacacs] provides device
    administration for routers, network access servers and other
    networked computing devices via one or more centralized servers.
-   This document, a companion to TACACS+ protocol
+   This document, a companion to the TACACS+ protocol
    [I-D.ietf-opsawg-tacacs], adds Transport Layer Security (TLS
    [RFC8446]) support and deprecates former inferior security
    mechanisms.
@@ -72,10 +72,9 @@ Table of Contents
      3.2.  TLS Protocol Version
      3.3.  Cypher Requirements
        3.3.1.  Mandatory Cipher Suites
-     3.4.  Deprecation of MD5 and unencrypted
-     3.5.  Authentication
-       3.5.1.  PSK Identity Requirements
-       3.5.2.  TLS Certificate Identity Requirements
+     3.4.  Authentication
+       3.4.1.  PSK Identity Requirements
+       3.4.2.  TLS Certificate Identity Requirements
    4.  Deprecation of TACACS+ PSK and Encryption
    5.  Security Considerations
    6.  IANA Considerations
@@ -98,8 +97,8 @@ Table of Contents
 
    The existing confidentiality, integrity, and authentication
    mechanisms of TACACS+ are extremely weak.  The Security
-   Considerations section of TACACS+ Protocol [I-D.ietf-opsawg-tacacs]
-   adequately describes this and will not be repeated.
+   Considerations section of the TACACS+ Protocol
+   [I-D.ietf-opsawg-tacacs] adequately describes this.
 
    To address these flaws, this document updates the TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] to support TLS [RFC8446] authentication and
@@ -107,7 +106,7 @@ Table of Contents
 
 2.  Technical Definitions
 
-   The Technical Definitions section of TACACS+ Protocol
+   The Technical Definitions section of the TACACS+ Protocol
    [I-D.ietf-opsawg-tacacs] is fully applicable here and will not be
    repeated.  The following terms are also used in this document.
 
@@ -117,7 +116,7 @@ Table of Contents
 
    Session
 
-   Defined in TACACS+ [I-D.ietf-opsawg-tacacs] as a single
+   Defined in the TACACS+ Protocol [I-D.ietf-opsawg-tacacs] as a single
    authentication sequence, a single authorization exchange, or a single
    accounting exchange.
 
@@ -125,9 +124,9 @@ Table of Contents
 
    TACACS+ connections are over TCP/IP, initiated by the Client to the
    Server.  The well-known TCP/IP port 49 on the Server is used for
-   unencrypted and encrypted connections as defined in TACACS+
-   [I-D.ietf-opsawg-tacacs].  A connection may be used for only a single
-   Session or the multiplexing of multiple Sessions.
+   unencrypted and encrypted connections as defined in the TACACS+
+   Protocol [I-D.ietf-opsawg-tacacs].  A connection may be used for only
+   a single Session or the multiplexing of multiple Sessions.
 
    It is mandatory to maintain the confidentiality, integrity, and
    authentication of these connections, as RFC3365 [RFC3365] dictates
@@ -141,15 +140,15 @@ Table of Contents
    authentication of the Peers.  Therefore, encryption MUST be initiated
    immediately upon the establishment of the TCP/IP connection.  For
    this reason, it is desirable to not use a "STARTTLS" command process
-   that is a feature of some protocols, that once existed without TLS,
-   use to maintain backward compatibility.  Instead, a different well-
-   known TCP/IP port is assigned, port [TBD].
+   which is a feature some protocols, that once existed without TLS, use
+   to maintain backward compatibility.  Instead, a different well-known
+   TCP/IP port is assigned, port [TBD].
 
    A new port is considered appropriate and superior to "STARTTLS"
    because it allows for:
 
-   o  easily blocking the unencrypted or inferiorly encrypted version by
-      the port number,
+   o  easily blocking the unencrypted or inferiorly encrypted
+      connections by the port number,
 
    o  a passive Intrusion Detection System (IDS) can watch the
       unencrypted version,
@@ -160,25 +159,31 @@ Table of Contents
       information due to misconfiguration.
 
    However, co-existence of inferior authentication and encryption,
-   whether TACACS+ legacy or deprecated parts that compose TLS, presents
-   opportunity for down-grade attacks.  The simplest way to address the
-   exposure from TACACS+ legacy methods is to refuse legacy TACACS+
-   connections at the server entirely, perhaps using separate servers
-   for legay and TLS.  Another approach is to have configuration of
-   TACACS+ servers on clients require TLS and likewise server's
-   configuration of permitted clients.  Furthermore, Peers SHOULD be
-   configurable to limit offered or recognized TLS versions and
-   algorithms to those recommended.
+   whether TACACS+ legacy or deprecated parts that compose TLS, also
+   presents opportunity for down-grade attacks.  The simplest way to
+   address the exposure from TACACS+ legacy methods is to refuse legacy
+   TACACS+ connections at the server entirely, perhaps using separate
+   servers for legacy and TLS.  Another approach is to have
+   configuration of TACACS+ on clients require TLS, both globally and
+   per-server, and likewise the configuration on server of clients known
+   to be have TLS support.  Furthermore, Peers SHOULD be configurable to
+   limit offered or recognized TLS versions and algorithms to those
+   recommended.
 
-   XXX any other issues?
+   Servers and clients could also have a cache mechanism of clients and
+   servers respectively that have engaged in TACACS+ TLS connections and
+   demand TLS from that point forward.  However, this has potential to
+   be a Denial of Service (DoS) vector.
 
 3.2.  TLS Protocol Version
 
    TACACS+ implementations supporting TLS encryption MUST implement at
    least TLS version 1.2 [RFC5246].  However, they SHOULD also implement
    newer TLS versions as they emerge and MUST abandon TLS versions as
-   they are deprecated, including TLS 1.2.  XXX They SHOULD implement
-   TLS version 1.3 [RFC8446].
+   they are deprecated, including TLS 1.2 and prior versions.
+
+   Note that TLS version 1.3 [RFC8446] has arrived and SHOULD be
+   supported.
 
 3.3.  Cypher Requirements
 
@@ -207,13 +212,11 @@ Table of Contents
    outside of scope of this document.  XXX again; should allow a way to
    evolve.  how???
 
-3.4.  Deprecation of MD5 and unencrypted
-
-3.5.  Authentication
+3.4.  Authentication
 
    XXX
 
-3.5.1.  PSK Identity Requirements
+3.4.1.  PSK Identity Requirements
 
    Because determining a correct PSK value on the server side is a
    computationally intensive operation requiring multiple round trips, a
@@ -237,7 +240,7 @@ Table of Contents
    information which could aid an attacker who can eavesdrop on the
    connection.
 
-3.5.2.  TLS Certificate Identity Requirements
+3.4.2.  TLS Certificate Identity Requirements
 
    XXX
 
@@ -246,8 +249,8 @@ Table of Contents
    The original TACACS+ draft specified a form of encryption and Peer
    authentication using a pre-shared key that is wholly inadequate by
    modern standards and is diminutively referred to as data obfuscation
-   in TACACS+ Protocol [I-D.ietf-opsawg-tacacs].  The introduction of
-   TLS PSK and certificate Peer authentication and TLS encryption to
+   in the TACACS+ Protocol [I-D.ietf-opsawg-tacacs].  The introduction
+   of TLS PSK and certificate Peer authentication and TLS encryption to
    TACACS+ obsolesces these former mechanisms and so are hereby
    deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in
    the TACACS+ header, the least significant bit (LSB) of the flags
@@ -265,7 +268,8 @@ Table of Contents
    offer a configuration mechanism to disable them.
 
    A future document SHOULD be written to deprecate the well-known TCP/
-   IP port 49, allocated by TACACS+ Protocol [I-D.ietf-opsawg-tacacs].
+   IP port 49, allocated by the TACACS+ Protocol
+   [I-D.ietf-opsawg-tacacs].
 
 5.  Security Considerations
 
