@@ -1,0 +1,55 @@
+Two agenda items proposed:
+- Discuss progress on the TACACS+ Protocol draft, if any.  Or what help
+  is needed.
+
+Current status is unknown; Doug's presence is needed.
+
+- Open to any comments on the current text.
+
+  Attempting to address one of Russ Housley's comments; in Section 3.1
+  Well-Known TCP/IP Port, I tried to address the negative aspect(s) of a new
+  well-known port; primarily the down-grade attack.  I am not certain that I
+  captured this nor covered all of them; it likely needs more attention.
+
+  Andrej (or Thorsten) said that there were 2 major concerns with not using an
+  separate port:
+	- middleware boxes (MiTM)
+	- distinguishing between old and new protocols
+  Downgrade should not be a problem; it can be addressed by not supporting the
+  legacy TCP port or removal of that code entirely.  One can't attack code
+  that is not present.
+
+  If legacy support is not present, how is the transition performed?  It is
+  expected that separate servers would be used and that clients can be
+  configured specifically for TLS as a totally separate authen/author
+  mechanism (tacacsS server <address>).
+
+  Andrej suggest that there should be no attempt to address operational
+  procedures of transition from the legacy protocol unless OPSAWG demands it.
+  Otherwise only mention transition in the sense of what must be supported by
+  protocol or implementation to achieve it.
+
+  We should address why something is being deprecated and support the decision;
+  ie: MD5, etc.
+
+  We must also address failure procedures, such as network connection failure:
+	- client attempts connect, fails, should it move to next server?
+	- client connects, tls fails, should it move to next server?
+	- all tacacs servers fail, what then?
+		should say that any additional auth mechanisms should be chosen
+		by config and other mechanisms are not suggested/guided by the
+		document, but should not revert to insecure methods
+
+  I tried to re-word S3.2 TLS Protocol Version in a manner that prescribes
+  adoption of new TLS technologies and abandonment of old.  This still needs
+  a reference to the recommendations documentation that Russ suggested.
+
+  Andrej has concern about interoperability; some bare minimum must be
+  mandated to maintain interoperability.
+
+  How can implementers keep up to date with TLS versions/algs or even just
+  with what has been deprecated or emerged.  Following IETF status is not an
+  easy task.
+
+  Andrej thinks we should ask the OPSAWG; even before publishing an initial
+  draft for adoption.
