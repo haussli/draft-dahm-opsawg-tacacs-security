@@ -11,7 +11,7 @@ Current status is unknown; Doug's presence is needed.
   well-known port; primarily the down-grade attack.  I am not certain that I
   captured this nor covered all of them; it likely needs more attention.
 
-  Andrej (or Thorsten) said that there were 2 major concerns with not using an
+  Thorsten said that there were 2 major concerns with not using an
   separate port:
 	- middleware boxes (MiTM)
 	- distinguishing between old and new protocols
@@ -22,7 +22,7 @@ Current status is unknown; Doug's presence is needed.
   If legacy support is not present, how is the transition performed?  It is
   expected that separate servers would be used and that clients can be
   configured specifically for TLS as a totally separate authen/author
-  mechanism (tacacsS server <address>).
+  mechanism (tacacs server address [old_port||new_port]).
 
   Andrej suggest that there should be no attempt to address operational
   procedures of transition from the legacy protocol unless OPSAWG demands it.
