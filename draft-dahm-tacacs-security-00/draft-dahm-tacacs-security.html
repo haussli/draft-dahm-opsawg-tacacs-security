@@ -376,6 +376,10 @@
   <link href="#rfc.toc" rel="Contents">
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
 <link href="#rfc.section.2" rel="Chapter" title="2 Technical Definitions">
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Legacy Connection">
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Peer">
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Session">
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 TLS Connection">
 <link href="#rfc.section.3" rel="Chapter" title="3 TLS for TACACS+">
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Well-Known TCP/IP Port">
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 TLS Protocol Version">
@@ -394,12 +398,12 @@
 <link href="#rfc.authors" rel="Chapter">
 
 
-  <meta name="generator" content="xml2rfc version 2.23.0 - https://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.27.0 - https://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Dahm, T., Gash, D., and A. Ota" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-dahm-tacacs-security-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2019-28" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-12" />
   <meta name="dct.abstract" content="The TACACS+ Protocol provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.  This document, a companion to the TACACS+ protocol, adds Transport Layer Security (TLS) support and deprecates former inferior security mechanisms.  " />
   <meta name="description" content="The TACACS+ Protocol provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.  This document, a companion to the TACACS+ protocol, adds Transport Layer Security (TLS) support and deprecates former inferior security mechanisms.  " />
 
@@ -423,7 +427,7 @@
 <td class="right">D. Gash</td>
 </tr>
 <tr>
-<td class="left">Expires: February 29, 2020</td>
+<td class="left">Expires: May 15, 2020</td>
 <td class="right">Cisco Systems, Inc.</td>
 </tr>
 <tr>
@@ -432,7 +436,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">August 28, 2019</td>
+<td class="right">November 12, 2019</td>
 </tr>
 
     	
@@ -450,7 +454,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on February 29, 2020.</p>
+<p>This Internet-Draft will expire on May 15, 2020.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -464,7 +468,15 @@
 </li>
 <li>2.   <a href="#rfc.section.2">Technical Definitions</a>
 </li>
-<li>3.   <a href="#rfc.section.3">TLS for TACACS+</a>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Legacy Connection</a>
+</li>
+<li>2.2.   <a href="#rfc.section.2.2">Peer</a>
+</li>
+<li>2.3.   <a href="#rfc.section.2.3">Session</a>
+</li>
+<li>2.4.   <a href="#rfc.section.2.4">TLS Connection</a>
+</li>
+</ul><li>3.   <a href="#rfc.section.3">TLS for TACACS+</a>
 </li>
 <ul><li>3.1.   <a href="#rfc.section.3.1">Well-Known TCP/IP Port</a>
 </li>
@@ -507,11 +519,19 @@
 <p id="rfc.section.1.p.3">To address these flaws, this document updates the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> to support <a href="#RFC8446" class="xref">TLS</a> authentication and encryption, and deprecates the use of its former mechanisms.  </p>
 <h1 id="rfc.section.2">
 <a href="#rfc.section.2">2.</a> Technical Definitions</h1>
-<p id="rfc.section.2.p.1">The Technical Definitions section of the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> is fully applicable here and will not be repeated.  The following terms are also used in this document.  </p>
-<p id="rfc.section.2.p.2">Peer </p>
-<p id="rfc.section.2.p.3">This refers to a TACACS+ Server or Client.  </p>
-<p id="rfc.section.2.p.4">Session </p>
-<p id="rfc.section.2.p.5">Defined in the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.  </p>
+<p id="rfc.section.2.p.1">The Technical Definitions section of the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> is fully applicable here and will not be repeated, though may be augmented.  The following terms are also used in this document.  </p>
+<h1 id="rfc.section.2.1">
+<a href="#rfc.section.2.1">2.1.</a> Legacy Connection</h1>
+<p id="rfc.section.2.1.p.1">This is another term for a Connection as defined in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  It is a Connection without TLS and possibly using legacy TACACS+ authentication and obfuscation.  </p>
+<h1 id="rfc.section.2.2">
+<a href="#rfc.section.2.2">2.2.</a> Peer</h1>
+<p id="rfc.section.2.2.p.1">This refers to a TACACS+ Server or Client.  </p>
+<h1 id="rfc.section.2.3">
+<a href="#rfc.section.2.3">2.3.</a> Session</h1>
+<p id="rfc.section.2.3.p.1">Defined in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.  </p>
+<h1 id="rfc.section.2.4">
+<a href="#rfc.section.2.4">2.4.</a> TLS Connection</h1>
+<p id="rfc.section.2.4.p.1">A Connection is defined in <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  A TLS Connection is a TCP/IP connection with TLS used by TACACS+ for transport.  The TCP/IP port [TBD] is allocated by IANA.  </p>
 <h1 id="rfc.section.3">
 <a href="#rfc.section.3">3.</a> TLS for TACACS+</h1>
 <p id="rfc.section.3.p.1">TACACS+ connections are over TCP/IP, initiated by the Client to the Server.  The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  A connection may be used for only a single Session or the multiplexing of multiple Sessions.  </p>
@@ -519,19 +539,19 @@
 <h1 id="rfc.section.3.1">
 <a href="#rfc.section.3.1">3.1.</a> <a href="#wellknown" id="wellknown">Well-Known TCP/IP Port</a>
 </h1>
-<p id="rfc.section.3.1.p.1">All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.  Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.  For this reason, it is desirable to not use a "STARTTLS" command process which is a feature some protocols, that once existed without TLS, use to maintain backward compatibility.  Instead, a different well-known TCP/IP port is assigned, port [TBD].  </p>
-<p id="rfc.section.3.1.p.2">A new port is considered appropriate and superior to "STARTTLS" because it allows for: </p>
+<p id="rfc.section.3.1.p.1">All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.  Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.  For this reason, it is desirable to not use a "STARTTLS" command process which is a feature some protocols, that once existed without TLS, use to maintain backward compatibility.  Instead, following <a href="#RFC7605" class="xref">RFC7605</a>, a different well-known system TCP/IP port is assigned port [TBD].  </p>
+<p id="rfc.section.3.1.p.2">A new port is considered appropriate and superior to "STARTTLS" because it allows: </p>
 
 <ul>
-<li>easily blocking the unencrypted or inferiorly encrypted connections by the port number,</li>
-<li>a passive Intrusion Detection System (IDS) can watch the unencrypted version,</li>
-<li>STARTTLS can be vulnerable to Man in the Middle (MitM) attacks,</li>
-<li>and can help prevent the accidental exposure of sensitive information due to misconfiguration.</li>
+<li>easily blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</li>
+<li>passive Intrusion Detection Systems (IDS) watching the unencrypted version to be unaffected by the introduction of TLS,</li>
+<li>avoidance of Man in the Middle (MitM) attacks that can affectSTARTTLS,</li>
+<li>and helps prevention of the accidental exposure of sensitive information due to misconfiguration.</li>
 </ul>
 
 <p> </p>
-<p id="rfc.section.3.1.p.3">However, co-existence of inferior authentication and encryption, whether TACACS+ legacy or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.  The simplest way to address the exposure from TACACS+ legacy methods is to refuse legacy TACACS+ connections at the server entirely, perhaps using separate servers for legacy and TLS.  Another approach is to have configuration of TACACS+ on clients require TLS, both globally and per-server, and likewise the configuration on server of clients known to be have TLS support.  Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended.  </p>
-<p id="rfc.section.3.1.p.4">Servers and clients could also have a cache mechanism of clients and servers respectively that have engaged in TACACS+ TLS connections and demand TLS from that point forward.  However, this has potential to be a Denial of Service (DoS) vector.  </p>
+<p id="rfc.section.3.1.p.3">However, co-existence of inferior authentication and encryption, whether TACACS+ legacy or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.  The simplest way to address the exposure from TACACS+ legacy methods is to refuse legacy TACACS+ connections at the server entirely, perhaps using separate servers for legacy and TLS.  Another approach is configuration that requires TLS; clients SHOULD allow configuration of TACACS+ servers, both globally and per-server, to require TLS and likewise servers SHOULD allow configuration to require TLS of clients known to be have TLS support.  Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.  </p>
+<p id="rfc.section.3.1.p.4">Servers and clients could also have a cache mechanism of clients and servers, respectively, that have engaged in TACACS+ TLS connections and demand TLS from that point forward.  However, this has potential to be a Denial of Service (DoS) vector.  </p>
 <h1 id="rfc.section.3.2">
 <a href="#rfc.section.3.2">3.2.</a> TLS Protocol Version</h1>
 <p id="rfc.section.3.2.p.1">TACACS+ implementations supporting TLS encryption MUST implement at least <a href="#RFC5246" class="xref">TLS version 1.2</a>.  However, they SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.2 and prior versions.  </p>
@@ -571,7 +591,7 @@
 <dd>Remove old key with old PSK identity from the server.</dd>
 </dl>
 
-<p> </p>
+<p> XXX reference "key life" in rfc8645 ??? </p>
 <p id="rfc.section.3.4.1.p.3">Note: PSK identity is transmitted in clear text and must not contain information which could aid an attacker who can eavesdrop on the connection.  </p>
 <h1 id="rfc.section.3.4.2">
 <a href="#rfc.section.3.4.2">3.4.2.</a> TLS Certificate Identity Requirements</h1>
@@ -579,19 +599,20 @@
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> Deprecation of TACACS+ PSK and Encryption</h1>
 <p id="rfc.section.4.p.1">The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.  </p>
-<p id="rfc.section.4.p.2">Peers compliant with this document and using TLS should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header, indicating that the data obfuscation is not used.  A Peer that receives a Packet without the flag set, should immediately terminate the TCP/IP connection.  </p>
-<p id="rfc.section.4.p.3">A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods with a Server that is also compliant.  A TACACS+ implementation MAY, and is encouraged to, offer a configuration mechanism to disable them.  </p>
-<p id="rfc.section.4.p.4">A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  </p>
+<p id="rfc.section.4.p.2">Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header of Packets on TLS Connections, indicating that the data obfuscation is not used.  A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.  </p>
+<p id="rfc.section.4.p.3">A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections.  </p>
+<p id="rfc.section.4.p.4">A TACACS+ implementation SHOULD, and is encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.  </p>
+<p id="rfc.section.4.p.5">A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <a href="#I-D.ietf-opsawg-tacacs" class="xref">TACACS+ Protocol</a>.  </p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> Security Considerations</h1>
 <p id="rfc.section.5.p.1">This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.  This does not in itself protect the server nor clients; the operator and equipment vendors have a role.  That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.  </p>
-<p id="rfc.section.5.p.2">It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.  It would be highly desirable for the TLS working group to publish a document that evolves with TLS and its algorithms that RFCs such as this one could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.  As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.  </p>
-<p id="rfc.section.5.p.3">TLS encryption SHOULD be used in deployments when both the clients and servers support it.  Servers that support TLS encryption MAY be configured to allow legacy encryption when TLS encryption is not supported by the client.  However, operators must be cognizant of the threat of a downgrade attack, as described in <a href="#wellknown" class="xref">Section 3.1</a>.  </p>
-<p id="rfc.section.5.p.4">It is NOT RECOMMENDED to deploy TACACS+ without TLS transport or legacy encryption, except for test and debug environments.  </p>
+<p id="rfc.section.5.p.2">It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.  It would be highly desirable for the TLS working group to publish a single document that evolves with TLS and its algorithms that RFCs such as this one could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.  As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.  </p>
+<p id="rfc.section.5.p.3">TLS encryption SHOULD be used in deployments when both the clients and servers support it.  Servers that support TLS encryption MAY be configured to allow Legacy Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <a href="#wellknown" class="xref">Section 3.1</a>.  Legacy Connections would be better served by separate Servers from the TLS Servers.  </p>
+<p id="rfc.section.5.p.4">It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.  </p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> IANA Considerations</h1>
-<p id="rfc.section.6.p.1">The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <a href="#RFC4020" class="xref">RFC402</a>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS/SSL".  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.  </p>
-<p id="rfc.section.6.p.2">RFC EDITOR: this port number should be replace "[TBD]" within this document.  </p>
+<p id="rfc.section.6.p.1">The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <a href="#RFC4020" class="xref">RFC4020</a> and <a href="#RFC6335" class="xref">RFC6335</a>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.  This allocation is justified in <a href="#wellknown" class="xref">Section 3.1</a>.  </p>
+<p id="rfc.section.6.p.2">RFC EDITOR: this port number should replace "[TBD]" within this document.  </p>
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> Acknowledgments</h1>
 <p id="rfc.section.7.p.1">The author(s) would like to thank Russ Housley, Steven M. Bellovin, and Stephen Farrell for their support, insightful review, and/or comments.  </p>
@@ -603,7 +624,7 @@
 <tr>
 <td class="reference"><b id="I-D.ietf-opsawg-tacacs">[I-D.ietf-opsawg-tacacs]</b></td>
 <td class="top">
-<a>Dahm, T.</a>, <a>Ota, A.</a>, <a>dcmgash@cisco.com, d.</a>, <a>Carrel, D.</a> and <a>L. Grant</a>, "<a href="https://tools.ietf.org/html/draft-ietf-opsawg-tacacs-13">The TACACS+ Protocol</a>", Internet-Draft draft-ietf-opsawg-tacacs-13, March 2019.</td>
+<a>Dahm, T.</a>, <a>Ota, A.</a>, <a>dcmgash@cisco.com, d.</a>, <a>Carrel, D.</a> and <a>L. Grant</a>, "<a href="https://tools.ietf.org/html/draft-ietf-opsawg-tacacs-15">The TACACS+ Protocol</a>", Internet-Draft draft-ietf-opsawg-tacacs-15, September 2019.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
