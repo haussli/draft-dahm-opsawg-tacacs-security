@@ -74,7 +74,7 @@ Table of Contents
    3.  TLS for TACACS+
      3.1.  Well-Known TCP/IP Port
      3.2.  TLS Protocol Version
-     3.3.  Cypher Requirements
+     3.3.  Cipher Requirements
        3.3.1.  Mandatory Cipher Suites
      3.4.  Authentication
        3.4.1.  PSK Identity Requirements
@@ -197,15 +197,29 @@ Table of Contents
 
 3.2.  TLS Protocol Version
 
-   TACACS+ implementations supporting TLS encryption MUST implement at
-   least TLS version 1.2 [RFC5246].  However, they SHOULD also implement
-   newer TLS versions as they emerge and MUST abandon TLS versions as
-   they are deprecated, including TLS 1.2 and prior versions.
+   TACACS+ implementations supporting TLS MUST implement at least TLS
+   version 1.3 [RFC8446] until it is deprecated.  However,
+   implementations SHOULD also implement newer TLS versions as they
+   emerge and MUST abandon TLS versions as they are deprecated,
+   including TLS 1.3 and prior versions.
 
-   Note that TLS version 1.3 [RFC8446] has arrived and SHOULD be
-   supported.
+   Clearly deprecation is more difficult for Servers, because support
+   for and deployment of new TLS versions to Clients will occur with
+   great randomness or perhaps not at all due to End of Support (EoS).
+   Therefore, it is of great value to, and implementations MAY, support
+   deprecated versions to allow for gradual adoption and software at its
+   End of Life (EoL).  A Server that supports deprecated versions SHOULD
+   NOT enable this support except by operator configuration.
 
-3.3.  Cypher Requirements
+3.3.  Cipher Requirements
+
+   As with TLS Protocol Versions (Section 3.2), TACACS+ implementations
+   MUST adopt and deprecate new cipher suites as they emerge or fade and
+   MAY support deprecated cipher suites.  However, cipher suites is a
+   far more complex subject because those chosen directly affect the
+   effectiveness of the confidentiality, integrity, and authentication
+   of TLS, the processing required, and the types of authentication
+   available.
 
    TACACS+ Servers supporting TLS MUST utilise the TLS encryption
    options described in the following sections.  XXX but should be

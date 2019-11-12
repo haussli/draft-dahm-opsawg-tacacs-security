@@ -168,16 +168,22 @@
 		However, this has potential to be a Denial of Service (DoS) vector.
 	    </t>
             </section>
-	    <section title="TLS Protocol Version">
+	    <section title="TLS Protocol Version" anchor="TLSProtoVers">
             <t>
-		TACACS+ implementations supporting TLS encryption MUST implement at least <xref target="RFC5246">TLS version 1.2</xref>.
-		However, they SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.2 and prior versions.
+		TACACS+ implementations supporting TLS MUST implement at least <xref target="RFC8446">TLS version 1.3</xref> until it is deprecated.
+		However, implementations SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.3 and prior versions.
             </t>
             <t>
-		Note that <xref target="RFC8446">TLS version 1.3</xref> has arrived and SHOULD be supported.
+		Clearly deprecation is more difficult for Servers, because support for and deployment of new TLS versions to Clients will occur with great randomness or perhaps not at all due to End of Support (EoS).
+		Therefore, it is of great value to, and implementations MAY, support deprecated versions to allow for gradual adoption and software at its End of Life (EoL).
+		A Server that supports deprecated versions SHOULD NOT enable this support except by operator configuration.
             </t>
             </section>
-	    <section title="Cypher Requirements">
+	    <section title="Cipher Requirements">
+            <t>
+		As with <xref target="TLSProtoVers">TLS Protocol Versions</xref>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.
+		However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.
+            </t>
             <t>
 		TACACS+ Servers supporting TLS MUST utilise the TLS encryption options described in the following sections.
 XXX but should be allowed to evolve as TLS does.

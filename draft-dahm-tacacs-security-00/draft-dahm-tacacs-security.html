@@ -383,7 +383,7 @@
 <link href="#rfc.section.3" rel="Chapter" title="3 TLS for TACACS+">
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Well-Known TCP/IP Port">
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 TLS Protocol Version">
-<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Cypher Requirements">
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Cipher Requirements">
 <link href="#rfc.section.3.3.1" rel="Chapter" title="3.3.1 Mandatory Cipher Suites">
 <link href="#rfc.section.3.4" rel="Chapter" title="3.4 Authentication">
 <link href="#rfc.section.3.4.1" rel="Chapter" title="3.4.1 PSK Identity Requirements">
@@ -482,7 +482,7 @@
 </li>
 <li>3.2.   <a href="#rfc.section.3.2">TLS Protocol Version</a>
 </li>
-<li>3.3.   <a href="#rfc.section.3.3">Cypher Requirements</a>
+<li>3.3.   <a href="#rfc.section.3.3">Cipher Requirements</a>
 </li>
 <ul><li>3.3.1.   <a href="#rfc.section.3.3.1">Mandatory Cipher Suites</a>
 </li>
@@ -553,12 +553,14 @@
 <p id="rfc.section.3.1.p.3">However, co-existence of inferior authentication and encryption, whether TACACS+ legacy or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.  The simplest way to address the exposure from TACACS+ legacy methods is to refuse legacy TACACS+ connections at the server entirely, perhaps using separate servers for legacy and TLS.  Another approach is configuration that requires TLS; clients SHOULD allow configuration of TACACS+ servers, both globally and per-server, to require TLS and likewise servers SHOULD allow configuration to require TLS of clients known to be have TLS support.  Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.  </p>
 <p id="rfc.section.3.1.p.4">Servers and clients could also have a cache mechanism of clients and servers, respectively, that have engaged in TACACS+ TLS connections and demand TLS from that point forward.  However, this has potential to be a Denial of Service (DoS) vector.  </p>
 <h1 id="rfc.section.3.2">
-<a href="#rfc.section.3.2">3.2.</a> TLS Protocol Version</h1>
-<p id="rfc.section.3.2.p.1">TACACS+ implementations supporting TLS encryption MUST implement at least <a href="#RFC5246" class="xref">TLS version 1.2</a>.  However, they SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.2 and prior versions.  </p>
-<p id="rfc.section.3.2.p.2">Note that <a href="#RFC8446" class="xref">TLS version 1.3</a> has arrived and SHOULD be supported.  </p>
+<a href="#rfc.section.3.2">3.2.</a> <a href="#TLSProtoVers" id="TLSProtoVers">TLS Protocol Version</a>
+</h1>
+<p id="rfc.section.3.2.p.1">TACACS+ implementations supporting TLS MUST implement at least <a href="#RFC8446" class="xref">TLS version 1.3</a> until it is deprecated.  However, implementations SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.3 and prior versions.  </p>
+<p id="rfc.section.3.2.p.2">Clearly deprecation is more difficult for Servers, because support for and deployment of new TLS versions to Clients will occur with great randomness or perhaps not at all due to End of Support (EoS).  Therefore, it is of great value to, and implementations MAY, support deprecated versions to allow for gradual adoption and software at its End of Life (EoL).  A Server that supports deprecated versions SHOULD NOT enable this support except by operator configuration.  </p>
 <h1 id="rfc.section.3.3">
-<a href="#rfc.section.3.3">3.3.</a> Cypher Requirements</h1>
-<p id="rfc.section.3.3.p.1">TACACS+ Servers supporting TLS MUST utilise the TLS encryption options described in the following sections.  XXX but should be allowed to evolve as TLS does.  </p>
+<a href="#rfc.section.3.3">3.3.</a> Cipher Requirements</h1>
+<p id="rfc.section.3.3.p.1">As with <a href="#TLSProtoVers" class="xref">TLS Protocol Versions</a>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.  However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.  </p>
+<p id="rfc.section.3.3.p.2">TACACS+ Servers supporting TLS MUST utilise the TLS encryption options described in the following sections.  XXX but should be allowed to evolve as TLS does.  </p>
 <h1 id="rfc.section.3.3.1">
 <a href="#rfc.section.3.3.1">3.3.1.</a> Mandatory Cipher Suites</h1>
 <p><a href="#RFC5246" class="xref">TLS 1.2</a> allows specifying application profiles prescribing which cipher suites to implement for interoperability purposes.  To maintain simplicity of current TACACS+ configuration using pre-shared secrets, the server implementation MUST implement: </p>
