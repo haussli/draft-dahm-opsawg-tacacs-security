@@ -1,0 +1,40 @@
+1) Thinking about the proxy case, we want to formalize a way that a device
+   could set a flag/field to keep the original requester address in the packet.
+
+   DeKok said that RADIUS (can?) embed the NAS info in a request
+
+   Maybe use the remote address field?  There was also a method mentioned in a
+   previos meeting; which was XXX
+
+   Also see 20190509 notes.
+
+2) We may want to interconnect the 3 A's, so authorization knows that
+   authentication has happened, and a device can retrieve information from a
+   server.  It can then put into an authorization request as an optional
+   attribute.
+
+   Perhaps use an Auth Token, possibly o-auth or o-auth-like?  However,
+	- then all tacacs servers must share these tokens, or
+	- a Token could retain information about the server that created it and
+	  that server would become preferred for the given login/ppp/etc
+	  session, but a method of re-authentication to another server would
+	  still be needed and anycast tacacs servers might complicate this, or
+	- the authentication may need to be performed multiple times.
+
+3) We do need separate (well-known) TCP port number
+
+4) We want to use PSK and Certs but need to find more information again on
+   what were the arguments pro and con for the two options
+
+   Someone warned against using Certs due to complexity.  Who was that and
+   what exactly were the reasons?
+
+5) Plan to create one document with all updates.
+
+6) Action Item for everyone: pick what you want to deprecate from the
+   current document, put it into Github
+
+   - should the current tacacs "encryption" mechanism be deprecated?
+	- This would break tacacs for many old devices that are still servicable
+   - should MD4 support used primarily by Microsoft be deprecated?
+   - method for ssh pubkey support.  See 20190402 notes.
