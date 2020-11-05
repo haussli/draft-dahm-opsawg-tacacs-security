@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: May 15, 2020                                Cisco Systems, Inc.
+Expires: May 9, 2021                                 Cisco Systems, Inc.
                                                                   A. Ota
-                                                       November 12, 2019
+                                                        November 5, 2020
 
 
                           TACACS+ TLS Support
@@ -46,11 +46,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 15, 2020.
+   This Internet-Draft will expire on May 9, 2021.
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -221,7 +221,7 @@ Table of Contents
    of TLS, the processing required, and the types of authentication
    available.
 
-   TACACS+ Servers supporting TLS MUST utilise the TLS encryption
+   TACACS+ Servers supporting TLS MUST utilize the TLS encryption
    options described in the following sections.  XXX but should be
    allowed to evolve as TLS does.
 
@@ -248,17 +248,22 @@ Table of Contents
 
 3.4.  Authentication
 
-   XXX
+   XXX TLS authentication can occur via asymmetric cryptographic or
+   Edwards-Curve Digital Signature Algorithm, or various forms of
+   symmetric pre-shared-key (PSK).  we only consider out of band PSK.
+   KDF hash alg needs to be specified?  PSK can only be assoc with one
+   HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
 
 3.4.1.  PSK Identity Requirements
 
-   Because determining a correct PSK value on the server side is a
-   computationally intensive operation requiring multiple round trips, a
-   mechanism for hitless key change must be defined.  During TLS
-   handshake, a client MUST use PSK identity as defined in [RFC4279] to
-   signal to the server which PSK value to use.  If server does not
-   recognize PSK identity it MUST respond with decrypt_error alert and
-   MUST NOT respond with unknown_psk_identity.
+   See rfc 8446 s2.2 regarding PSK secret choice Because determining a
+   correct PSK value on the server side is a computationally intensive
+   operation requiring multiple round trips, a mechanism for hitless key
+   change must be defined.  During TLS handshake, a client MUST use PSK
+   identity as defined in [RFC4279] to signal to the server which PSK
+   value to use.  If server does not recognize PSK identity it MUST
+   respond with decrypt_error alert and MUST NOT respond with
+   unknown_psk_identity.
 
    Process to change pre-shared keys on server and client is then:
 
@@ -366,7 +371,7 @@ Table of Contents
    [I-D.ietf-opsawg-tacacs]
               Dahm, T., Ota, A., dcmgash@cisco.com, d., Carrel, D., and
               L. Grant, "The TACACS+ Protocol", draft-ietf-opsawg-
-              tacacs-15 (work in progress), September 2019.
+              tacacs-18 (work in progress), March 2020.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
