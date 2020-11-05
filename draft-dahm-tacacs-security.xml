@@ -185,8 +185,10 @@
 		However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.
             </t>
             <t>
-		TACACS+ Servers supporting TLS MUST utilise the TLS encryption options described in the following sections.
+		TACACS+ Servers supporting TLS MUST utilize the TLS encryption options described in the following sections.
+
 XXX but should be allowed to evolve as TLS does.
+
             </t>
 		<section title="Mandatory Cipher Suites">
 		<t>
@@ -207,12 +209,22 @@ XXX but should be allowed to evolve as TLS does.
 		</t>
 		</section>
             </section>
+
 	    <section title="Authentication">
             <t>
 XXX
+TLS authentication can occur via asymmetric cryptographic or
+ Edwards-Curve Digital Signature Algorithm,
+or various forms of symmetric pre-shared-key (PSK).
+we only consider out of band PSK.  KDF hash alg needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
+RPKs - https://tools.ietf.org/html/rfc7250
+
             </t>
 		<section title="PSK Identity Requirements">
 		<t>
+
+See rfc 8446 s2.2 regarding PSK  secret choice
+
 Because determining a correct PSK value on the server side is a computationally intensive operation requiring multiple round trips, a mechanism for hitless key change must be defined.
 During TLS handshake, a client MUST use PSK identity as defined in <xref target="RFC4279"/> to signal to the server which PSK value to use.
 If server does not recognize PSK identity it MUST respond with decrypt_error alert and MUST NOT respond with unknown_psk_identity.
