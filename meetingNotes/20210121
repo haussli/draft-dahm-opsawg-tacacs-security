@@ -1,0 +1,32 @@
+- discussion about Douglas' email from Nov 26 about adding the NAS address
+  to authentication requests.
+
+  Concluded that we should persue option 2 from that email; add a new version
+  with new packet types for authen, author, accounting, improving consistency
+  and extensibility.  And,
+        - extend argument lengths to 4 bytes (from 1)
+        - also extend arg count fields to 4 bytes (from 1)
+ 
+  Douglas will draft proposed packet formats.
+ 
+- discussion about how to incorporate ssh pubkey authen into tacacs.  Heasley 
+  asked about how the server could offer the keys to the client (so that the
+  server does not need to handle signature comparison and/or handle the crypto
+  algorithms) and how should the client indicate to the server success/failure
+  of the pubkey auth.
+ 
+  A typical authen is something like: 
+        Server                  Client
+                        <<<<    authen start (may include username)
+        get username    >>>>
+                        <<<<    username
+        get password    >>>>
+                        <<<<    password
+        pass/fail       >>>>
+                        EOF
+ 
+  Could the server send pubkeys as <data> in the authen_reply packet (S5.2)
+  as status GETDATA or GETPASS or a new status?  This flow seems very odd.
+  And, the result still needs to be communicated to the server.
+ 
+  Further discussion is moved to the maillist.
