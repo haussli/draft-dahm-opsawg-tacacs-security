@@ -1,0 +1,74 @@
+- ssh pubkey discussion re-visited the motivation for it, which is pubkey
+  auth on devices that have no way of configuring keys locally and the
+  central provisioning (Doug's term) of keys.
+
+  junos eg (truncated for brevity):
+        user heas {
+            authentication {
+                ssh-rsa "2048 37 15075956......31 heas@guelah";
+            }
+        }
+
+  ios xr (too much aggrevation):
+	https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k-r6-4/system-security/configuration/guide/b-system-security-cg-asr9000-64x/b-system-security-cg-asr9000-64x_chapter_01010.html
+
+	"The public key must be in base64 encoded (binary) format for it to be imported correctly into the box. You can use third party tools available on the Internet to convert the key to the binary format."
+
+
+  ios xe (truncated for brevity):
+
+	ip ssh pubkey-chain
+	  username heas
+	   key-hash ssh-rsa 42CBF6........67 heas@ni
+
+  ios classic: not supported
+
+  sros: appears to support local keys, but docs are terrible and ...
+
+  The discussion has lately been around whether to A) send keys to the device
+  where the device itself makes the signature/key comparison or B) the device
+  sends the signature to the tacacs server for the comparison.
+
+  A) Doug noted that the original ms-chap support used sendpass, which sends
+     the password to the device for comparison.  That was deprecated because
+     it is inherrently insecure, particularly with the lack of TLS.  Sending
+     pubkeys does not seem to share this insecurity, and confidentiality
+     would be secured with TLS.  This should be explained in the security
+     section of the draft.
+
+     This leaves key comparison, and therefore ciphers to and on the client.
+     It also means that the client can extract information from the keys as
+     it sees fit for local policy, etc.  It can also send extracted data to
+     the server for logging, etc.
+
+     It could be a requirement that the server be given that data and/or a
+     last opportunity to deny/fail the login.
+
+     A user may have keys for each ssh client and multiple key types based on
+     what the ssh server supports.  This could be result in a large tacacs
+     packet compared to what tacacs sends today.
+
+  B) This is a more natural flow; the challenge is sent to the server for
+     comparison.  However, then the server must handle the various key
+     types/ciphers; perhaps it must either in method A too, if it must read
+     a file of keys (TBD).
+
+     There seems to be support in libgssapi for handling keys.  This must
+     be verified.  Part of openssh: https://www.openssh.com/portable.html
+
+  I believe that the pubkey authentication process is discussed here:
+  RFC4462 SSH GSS-API Methods.  We need to understand this to best judge
+  which direction to take.
+
+
+- discussed Doug's AVP-only approach to packet data fields (following the
+  header).  We agreed to explore this further, where Doug will propose 1
+  packet format for all of the packet types (authen, author, accounting).
+  
+  A client will choose the format by leading the communication with one of
+  the old types or the new.
+
+- we have not discussed Andrej's authentication token (oauth-like) idea yet.
+
+- Discovered that TLS 1.3 PSK became an experimental RFC in May 2020.  RFC8773.
+  Adoption seems limited; eg: grpc does not support it.
