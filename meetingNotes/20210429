@@ -1,0 +1,60 @@
+- Douglas asks if 1.3 PSK requires certs; Heasley believes it does, at least for
+  the sever side, because PSK in 1.3 is really session resumption that is only
+  possible after a full exchange has occured.  We agreed to research this
+  further.
+
+  We *think* that PSKs are desired for ease of use & ease of deployment and
+  possibly for operation in isolation.  We think that certificates might be
+  a barrier to use, because certificates is complex and not universally
+  understood.  However, to argue for certificates in isolation, it is possible
+  load the CA's public key onto and cache it on devices to allow for the full
+  cert check - even if it is a self-signed (by T+ servers) cert.  The
+  complicated part is the loading itself AND maintaining all of these artifacts.
+
+  Douglas suggested that it would be useful to look into how radius did DTLS/TLS
+  in rfc6614.
+
+  Doug offered these research resources:
+
+  TLS 1.3
+  https://tools.ietf.org/html/rfc8446
+
+  Deprecating TLS 1.0, 1.1
+  https://tools.ietf.org/html/rfc8996
+
+  RADIUS Radsec
+  https://tools.ietf.org/html/rfc6614
+
+  PSK examples:
+  https://security.stackexchange.com/questions/187335/minimal-tls1-3-client-hello
+
+  TLS Refresh:
+  https://www.cs.bham.ac.uk/~bas/papers/Smyth19-TLS.jan.pdf
+
+
+- ssh
+  netconf notifications rfc5277 show how notifications work.  the NMS connects
+  to the device and subscribes to notifications.  netconf transport 
+  https://tools.ietf.org/html/rfc4741#section-2.2 states required transports
+  (ssh and tls).
+
+  rfc6470 is the base notification spec for notifs.
+
+  rfc6241 is netconf 1.1 (i think)
+
+  But this is what I was thinking of:
+  rfc8071 is netconf call-home, where the device connects to the NMS; wherein
+  the designation of which is the server and which the client does not change,
+  nor does behavior of noftifications - meaning that the client (NMS) must
+  initiate the notification subscription.
+
+  At Thorsten's suggestion (i think), we concluded that we might explore this,
+  but will not suggest it to the WG unless a PSK model is demanded and PSK in
+  TLS 1.3 is considered too difficult.
+
+- Doug will review/coalesce the protocol changes from the emails (subject
+  "New Packets" and "T+ Proxy") for inclusion in the draft.
+
+- we would like to have a first draft in ~4 weeks, which may not be complete.
+  It should have a security section, even if it is basic.  Doug prefers to
+  omit the xml tagging until we are nearly ready to submit.
