@@ -24,7 +24,7 @@ ${XMLNAME}: ${SOURCEIN} Makefile
 		${SOURCEIN} > $@
 
 ${DRAFTNAME}/${BASENAME}.raw.txt: ${DRAFTNAME} ${XMLNAME} Makefile
-	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --raw
+	xml2rfc --v2 ${XMLNAME} -b ${DRAFTNAME} --raw
 text: ${DRAFTNAME}/${BASENAME}.raw.txt
 
 ${DRAFTNAME}/${BASENAME}.txt: ${DRAFTNAME} ${XMLNAME} Makefile
