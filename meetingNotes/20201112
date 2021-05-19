@@ -1,10 +1,10 @@
 Brief meeting + comments from previous week of email:
 
 - TLS 1.3 0-RTT
-  Thorsten & heasley think that the value is very limited by comparison to
-  HTTP or QUIC-HTTP and by nature of the current tacacs+ protocol that valuable
-  information could be held in anything that might be in that first packet
-  anyway.
+  Thorsten, Douglas, & heasley think that the value is very limited by
+  comparison to HTTP or QUIC-HTTP and by nature of the current tacacs+ protocol
+  that valuable information could be held in anything that might be in that
+  first packet anyway.
 
   TLS would also need to provide a way to return to a full handshake if the
   client connects to a different server that does not have the token, which it
