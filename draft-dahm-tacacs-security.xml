@@ -75,8 +75,8 @@
 
         <abstract>
             <t>
-		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-                This document, a companion to the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ protocol</xref>, adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) support and deprecates former inferior security mechanisms.
+		The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+                This document, a companion to the <xref target="RFC8907">TACACS+ protocol</xref>, adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) support and deprecates former inferior security mechanisms.
             </t>
         </abstract>
         <note title="Requirements Language">
@@ -88,27 +88,27 @@
     <middle>
         <section title="Introduction">
             <t>
-		The <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
+		The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
 		While this information is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
             </t>
             <t>
 		The existing confidentiality, integrity, and authentication mechanisms of TACACS+ are extremely weak.
-		The Security Considerations section of the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> adequately describes this.
+		The Security Considerations section of the <xref target="RFC8907">TACACS+ Protocol</xref> adequately describes this.
             </t>
             <t>
-		To address these flaws, this document updates the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
+		To address these flaws, this document updates the <xref target="RFC8907">TACACS+ Protocol</xref> to support <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
             </t>
         </section>
 
         <section title="Technical Definitions">
             <t>
-		The Technical Definitions section of the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
+		The Technical Definitions section of the <xref target="RFC8907">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
 	 	The following terms are also used in this document.
             </t>
             <section title="Legacy Connection">
             <t>
-		This is another term for a Connection as defined in <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		This is another term for a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
 		It is a Connection without TLS and possibly using legacy TACACS+ authentication and obfuscation.
             </t>
             </section>
@@ -119,12 +119,12 @@
             </section>
             <section title="Session">
             <t>
-		Defined in <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.
+		Defined in <xref target="RFC8907">TACACS+ Protocol</xref> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.
             </t>
             </section>
             <section title="TLS Connection">
             <t>
-		A Connection is defined in <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		A Connection is defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
 		A TLS Connection is a TCP/IP connection with TLS used by TACACS+ for transport.
 		The TCP/IP port [TBD] is allocated by IANA.
             </t>
@@ -134,7 +134,7 @@
         <section title="TLS for TACACS+">
             <t>
 		TACACS+ connections are over TCP/IP, initiated by the Client to the Server.
-		The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
 		A connection may be used for only a single Session or the multiplexing of multiple Sessions.
             </t>
             <t>
@@ -253,7 +253,7 @@ XXX
 
         <section title="Deprecation of TACACS+ PSK and Encryption">
             <t>
-		The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		The original TACACS+ draft specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in the <xref target="RFC8907">TACACS+ Protocol</xref>.
 		The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
 		Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
             </t>
@@ -268,7 +268,7 @@ XXX
 		A TACACS+ implementation SHOULD, and is encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
             </t>
             <t>
-		A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="I-D.ietf-opsawg-tacacs">TACACS+ Protocol</xref>.
+		A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
             </t>
         </section>
 
@@ -317,7 +317,7 @@ XXX
             <?rfc include="reference.RFC.4279"?>
             <?rfc include="reference.RFC.2119"?>
             <?rfc include="reference.RFC.8174"?>
-            <?rfc include="reference.I-D.ietf-opsawg-tacacs.xml"?>
+            <?rfc include="reference.RFC.8907"?>
         </references>
         <references title="Informative References">
             <?rfc include="reference.RFC.3365"?>
