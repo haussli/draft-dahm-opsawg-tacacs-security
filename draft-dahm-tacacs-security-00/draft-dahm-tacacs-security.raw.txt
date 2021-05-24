@@ -5,23 +5,23 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: May 9, 2021                                 Cisco Systems, Inc.
+Expires: November 25, 2021                           Cisco Systems, Inc.
                                                                   A. Ota
-                                                        November 5, 2020
+                                                            May 24, 2021
 
 
-                          TACACS+ TLS Support
+               TACACS+ Security, TLS, and SSH Public Keys
                      draft-dahm-tacacs-security-00
 
 Abstract
 
-   The TACACS+ Protocol [I-D.ietf-opsawg-tacacs] provides device
-   administration for routers, network access servers and other
-   networked computing devices via one or more centralized servers.
-   This document, a companion to the TACACS+ protocol
-   [I-D.ietf-opsawg-tacacs], adds Transport Layer Security (TLS
-   [RFC8446]) support and deprecates former inferior security
-   mechanisms.
+   The TACACS+ Protocol [RFC8907] provides device administration for
+   routers, network access servers and other networked computing devices
+   via one or more centralized servers.  This document, a companion to
+   the TACACS+ protocol [RFC8907], adds new packet formats to improve
+   security and function, adds Transport Layer Security (TLS [RFC8446])
+   support, adds support to carry SSH [RFC4716] public keys, and
+   deprecates former inferior security mechanisms.
 
 Requirements Language
 
@@ -46,11 +46,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 9, 2021.
+   This Internet-Draft will expire on November 25, 2021.
 
 Copyright Notice
 
-   Copyright (c) 2020 IETF Trust and the persons identified as the
+   Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -80,46 +80,55 @@ Table of Contents
        3.4.1.  PSK Identity Requirements
        3.4.2.  TLS Certificate Identity Requirements
    4.  Deprecation of TACACS+ PSK and Encryption
-   5.  Security Considerations
-   6.  IANA Considerations
-   7.  Acknowledgments
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   5.  TACACS+ Extended Packet Type
+   6.  Security Considerations
+   7.  IANA Considerations
+   8.  Acknowledgments
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
 
-   The TACACS+ Protocol [I-D.ietf-opsawg-tacacs] provides device
-   administration for routers, network access servers and other
-   networked computing devices via one or more centralized servers.  The
-   protocol carries authentication, authorization and accounting
-   information for TACACS+ clients.  While this information is highly
-   sensitive, TACACS+ lacks modern and/or effective confidentiality,
-   integrity, and authentication of the connection and network traffic
-   between the server and client.
+   The TACACS+ Protocol [RFC8907] provides device administration for
+   routers, network access servers and other networked computing devices
+   via one or more centralized servers.  The protocol carries
+   authentication, authorization and accounting information for TACACS+
+   clients.  While this information is highly sensitive, TACACS+ lacks
+   modern and/or effective confidentiality, integrity, and
+   authentication of the connection and network traffic between the
+   server and client.
 
    The existing confidentiality, integrity, and authentication
    mechanisms of TACACS+ are extremely weak.  The Security
-   Considerations section of the TACACS+ Protocol
-   [I-D.ietf-opsawg-tacacs] adequately describes this.
+   Considerations section of the TACACS+ Protocol [RFC8907] adequately
+   describes this.
 
    To address these flaws, this document updates the TACACS+ Protocol
-   [I-D.ietf-opsawg-tacacs] to support TLS [RFC8446] authentication and
-   encryption, and deprecates the use of its former mechanisms.
+   [RFC8907] to use TLS [RFC8446] authentication and encryption, and
+   deprecates the use of its former mechanisms.
+
+   To support SSH authentication using public keys, highly desired by
+   the operator community, this document introduces a method to support
+   sending public keys to a TACACS+ client, allowing centralized
+   management.
+
+   To accomplish these goals and improve security and functionality when
+   a network proxy is involved in a TACACS+ connection, new and uniform
+   packet formats are introduced.
 
 2.  Technical Definitions
 
-   The Technical Definitions section of the TACACS+ Protocol
-   [I-D.ietf-opsawg-tacacs] is fully applicable here and will not be
-   repeated, though may be augmented.  The following terms are also used
-   in this document.
+   The Technical Definitions section of the TACACS+ Protocol [RFC8907]
+   is fully applicable here and will not be repeated, though may be
+   augmented.  The following terms are also used in this document.
 
 2.1.  Legacy Connection
 
    This is another term for a Connection as defined in TACACS+ Protocol
-   [I-D.ietf-opsawg-tacacs].  It is a Connection without TLS and
-   possibly using legacy TACACS+ authentication and obfuscation.
+   [RFC8907].  It is a Connection without TLS and possibly using legacy
+   TACACS+ authentication and obfuscation.
 
 2.2.  Peer
 
@@ -127,23 +136,24 @@ Table of Contents
 
 2.3.  Session
 
-   Defined in TACACS+ Protocol [I-D.ietf-opsawg-tacacs] as a single
-   authentication sequence, a single authorization exchange, or a single
-   accounting exchange.
+   Defined in TACACS+ Protocol [RFC8907] as a single authentication
+   sequence, a single authorization exchange, or a single accounting
+   exchange.
 
 2.4.  TLS Connection
 
-   A Connection is defined in TACACS+ Protocol [I-D.ietf-opsawg-tacacs].
-   A TLS Connection is a TCP/IP connection with TLS used by TACACS+ for
-   transport.  The TCP/IP port [TBD] is allocated by IANA.
+   A TLS Connection is a TCP/IP connection with TLS authentication and
+   encruption used by TACACS+ for transport, similar to a Connection as
+   defined in TACACS+ Protocol [RFC8907].  The TCP/IP port [TBD] is
+   allocated by IANA for this TLS connection.
 
 3.  TLS for TACACS+
 
    TACACS+ connections are over TCP/IP, initiated by the Client to the
    Server.  The well-known TCP/IP port 49 on the Server is used for
    unencrypted and encrypted connections as defined in the TACACS+
-   Protocol [I-D.ietf-opsawg-tacacs].  A connection may be used for only
-   a single Session or the multiplexing of multiple Sessions.
+   Protocol [RFC8907].  A connection may be used for only a single
+   Session or the multiplexing of multiple Sessions.
 
    It is mandatory to maintain the confidentiality, integrity, and
    authentication of these connections, as RFC3365 [RFC3365] dictates
@@ -188,7 +198,9 @@ Table of Contents
    SHOULD allow configuration to require TLS of clients known to be have
    TLS support.  Furthermore, Peers SHOULD be configurable to limit
    offered or recognized TLS versions and algorithms to those
-   recommended by standards bodies and implementers.
+   recommended by standards bodies and implementers.  XXX another form
+   of downgrade attack is to filter/block the TLS port.  make sure this
+   is covered in the text.
 
    Servers and clients could also have a cache mechanism of clients and
    servers, respectively, that have engaged in TACACS+ TLS connections
@@ -197,6 +209,7 @@ Table of Contents
 
 3.2.  TLS Protocol Version
 
+   XXX rfc8773 is required to have server/client certificates with PSK
    TACACS+ implementations supporting TLS MUST implement at least TLS
    version 1.3 [RFC8446] until it is deprecated.  However,
    implementations SHOULD also implement newer TLS versions as they
@@ -213,10 +226,12 @@ Table of Contents
 
 3.3.  Cipher Requirements
 
-   As with TLS Protocol Versions (Section 3.2), TACACS+ implementations
-   MUST adopt and deprecate new cipher suites as they emerge or fade and
-   MAY support deprecated cipher suites.  However, cipher suites is a
-   far more complex subject because those chosen directly affect the
+   XXX The IANA registry now has "Recommended" algorithms.  reference
+   this for ciphers that should be supported.  As with TLS Protocol
+   Versions (Section 3.2), TACACS+ implementations MUST adopt and
+   deprecate new cipher suites as they emerge or fade and MAY support
+   deprecated cipher suites.  However, cipher suites is a far more
+   complex subject because those chosen directly affect the
    effectiveness of the confidentiality, integrity, and authentication
    of TLS, the processing required, and the types of authentication
    available.
@@ -244,7 +259,13 @@ Table of Contents
    Both Clients and Servers MAY implement other cipher suites, but their
    interoperability is not guaranteed and their implementation is
    outside of scope of this document.  XXX again; should allow a way to
-   evolve.  how???
+   evolve.  how??? XXX russ housley says: Section 3.3.1: Do you want to
+   provide any guidance for TLS 1.3?  I would say something like: if TLS
+   1.2 is used, then one of the following ciphersuites MUST be used ...
+   if TLS 1.3 is used, then one of the following ciphersuites MUST be
+   used ...  This is not ideal for the evolution part, but you might
+   say: if a version beyond TLS 1.3 is used, then one of the
+   ciphersuites that i s marked as "Recommended" MUST be used ...  XXX
 
 3.4.  Authentication
 
@@ -290,12 +311,12 @@ Table of Contents
    The original TACACS+ draft specified a form of encryption and Peer
    authentication using a pre-shared key that is wholly inadequate by
    modern standards and is diminutively referred to as data obfuscation
-   in the TACACS+ Protocol [I-D.ietf-opsawg-tacacs].  The introduction
-   of TLS PSK and certificate Peer authentication and TLS encryption to
-   TACACS+ obsolesces these former mechanisms and so are hereby
-   deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in
-   the TACACS+ header, the least significant bit (LSB) of the flags
-   field, is also deprecated.
+   in the TACACS+ Protocol [RFC8907].  The introduction of TLS PSK and
+   certificate Peer authentication and TLS encryption to TACACS+
+   obsolesces these former mechanisms and so are hereby deprecated.
+   Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
+   header, the least significant bit (LSB) of the flags field, is also
+   deprecated.
 
    Peers compliant with this document should set the
    TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header of Packets on TLS
@@ -310,10 +331,75 @@ Table of Contents
    configuration mechanism to disable non-TLS connections entirely.
 
    A future document SHOULD be written to deprecate the well-known TCP/
-   IP port 49, allocated by the TACACS+ Protocol
-   [I-D.ietf-opsawg-tacacs].
+   IP port 49, allocated by the TACACS+ Protocol [RFC8907].
 
-5.  Security Considerations
+5.  TACACS+ Extended Packet Type
+
+   XXX 1 TACACS+ Header Type minor_version This is the minor TACACS+
+   version number.  TAC_PLUS_MINOR_VER_TWO := 0x2 type This is the
+   packet type.  Legal values are: TAC_PLUS_AUTHEN := 0x01
+   (Authentication) TAC_PLUS_AUTHOR := 0x02 (Authorization)
+   TAC_PLUS_ACCT := 0x03 (Accounting) TAC_PLUS_EXT := 0x04 (Extended) 2
+   TACACS+ Extended Packet Type The purpose of this new packet type is
+   to allow: 1) Larger Data Values 2) Authentication Packets to include
+   arbitrary arguments It is possible to encode the previous 3 packet
+   types using the Pre Defined Ar gument names.  The pattern is intended
+   to follow the style of the original TACACS+ packets, however there
+   are a few minor differences from the legacy arguments: 1) The
+   argument value size specified by 32 bit 2) The name and value are no
+   longer in the same field with the separator.  Ins tead both the name
+   and the argument have lengths in bytes, and the argument type is
+   indicated by the last char in the name.  +----------------+----------
+   ------+----------------+----------------+ | arg_count ...  +---------
+   -------+----------------+----------------+----------------+ |
+   arg_1_name_len | +----------------+ | arg_1_value_len ...  +---------
+   -------+----------------+----------------+----------------+ |
+   arg_2_name_len | +----------------+ | arg_2_value_len ...  | +-------
+   ---------+----------------+----------------+----------------+ | ...
+    | +----------------+----------------+----------------+--------------
+   --+ | arg_N_name_len | +----------------+ | arg_N_value_len | +------
+   ----------+----------------+----------------+----------------+ |
+   arg_1_name ...  +----------------+----------------+----------------+-
+   ---------------+ | arg_1_value ...  +----------------+---------------
+   -+----------------+----------------+ | arg_2_name ...  +-------------
+   ---+----------------+----------------+----------------+ | arg_2_value
+   ...  +----------------+----------------+----------------+------------
+   ----+ | ...  +----------------+----------------+----------------+----
+   ------------+ | arg_N_name ...  +----------------+----------------+--
+   --------------+----------------+ | arg_N_value ...
+   +----------------+----------------+----------------+----------------+
+   arg_count The number of arguments in the packet arg_1_name_len ...
+   arg_N_name_len The size of the Name part of each argument, including
+   the final Mandatory/Opt ioanl Char.  The maximum size is 2^8 -1
+   bytes.  arg_1_value_len ... arg_N_value_len The size of the Value
+   part of each argument, including the final Mandatory/Op tioanl Char.
+   The maximum size is 2^32 -1 bytes.  arg_1_name ... arg_N_name The
+   name part of each argument, MUST include the final Mandatory/Optional
+   Cha r (* or =) at the end.  The name is encoded using same
+   specifications as the argument names in previous TACACS+
+   authorization and accou nting packets, arg_1_name ... arg_N_name The
+   value part of each argument, including the final Mandatory/Optional
+   Char.  Pre Defined Argument Names The predefined names are intended
+   to cover the full set of hardwired fields i n the regular packet
+   types 1-3.  The purpose of reflecting them here is to ensure that the
+   older packet types can be transported using the ne w packet type with
+   no ambiguity to the naming (because these fields were previously
+   fixed, they did not require names).  The convention follows th e
+   pattern for cisco AV-PAIRS in RADIUS: all lower case with dash as
+   whitespace, with t Note that one new item is added: origin-client.
+   This is added to allow the se rver to identify the first NAS that was
+   hit to properly support the proxy case.  type= authentication-action=
+   authentication-type= authentication-service= authentication-method*
+   privilege-level* user= port* remote-address* origin-client* data=
+   server-message* user-message* status= flags+ Extension Arguments
+   (Group 1: Legacy) Previously in Authorization and Accounting packets
+   there were a set of define d arguments.  These will also be encoded,
+   where needed, as arguments here.  Extension Arguments (Group 2: New)
+   In addition to the Predefined arguments and the Legacy arguments, all
+   the New arguments for novel use cases will be encoded as arguments
+   here.
+
+6.  Security Considerations
 
    This document improves the confidentiality, integrity, and
    authentication of the connection and network traffic between the
@@ -345,7 +431,7 @@ Table of Contents
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
    and encryption, except for test and debug environments.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    The authors request that, when this draft is accepted by the working
    group, the OPSAWG Chairs submit a request to IANA for an early
@@ -358,20 +444,15 @@ Table of Contents
    RFC EDITOR: this port number should replace "[TBD]" within this
    document.
 
-7.  Acknowledgments
+8.  Acknowledgments
 
    The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
    and Stephen Farrell for their support, insightful review, and/or
    comments.
 
-8.  References
+9.  References
 
-8.1.  Normative References
-
-   [I-D.ietf-opsawg-tacacs]
-              Dahm, T., Ota, A., dcmgash@cisco.com, d., Carrel, D., and
-              L. Grant, "The TACACS+ Protocol", draft-ietf-opsawg-
-              tacacs-18 (work in progress), March 2020.
+9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -382,6 +463,10 @@ Table of Contents
               Ciphersuites for Transport Layer Security (TLS)",
               RFC 4279, DOI 10.17487/RFC4279, December 2005,
               <https://www.rfc-editor.org/info/rfc4279>.
+
+   [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
+              Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
+              November 2006, <https://www.rfc-editor.org/info/rfc4716>.
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
@@ -396,7 +481,13 @@ Table of Contents
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
-8.2.  Informative References
+   [RFC8907]  Dahm, T., Ota, A., Medway Gash, D., Carrel, D., and L.
+              Grant, "The Terminal Access Controller Access-Control
+              System Plus (TACACS+) Protocol", RFC 8907,
+              DOI 10.17487/RFC8907, September 2020,
+              <https://www.rfc-editor.org/info/rfc8907>.
+
+9.2.  Informative References
 
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
