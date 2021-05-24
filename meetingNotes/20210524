@@ -1,0 +1,7 @@
+- Doug continues to adjust the text of the extended packet text and formats;
+  working to add examples.
+
+- more research is needed to understand how PSKs (or ePSKs) work in TLS 1.3.
+  in particular, look at the openssl example code.
+
+- we need to provide a draft outline or first cut soon.
