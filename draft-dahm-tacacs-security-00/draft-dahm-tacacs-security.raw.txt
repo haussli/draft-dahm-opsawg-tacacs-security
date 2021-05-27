@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: November 25, 2021                           Cisco Systems, Inc.
+Expires: November 28, 2021                           Cisco Systems, Inc.
                                                                   A. Ota
-                                                            May 24, 2021
+                                                            May 27, 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 25, 2021.
+   This Internet-Draft will expire on November 28, 2021.
 
 Copyright Notice
 
@@ -308,15 +308,15 @@ Table of Contents
 
 4.  Deprecation of TACACS+ PSK and Encryption
 
-   The original TACACS+ draft specified a form of encryption and Peer
-   authentication using a pre-shared key that is wholly inadequate by
-   modern standards and is diminutively referred to as data obfuscation
-   in the TACACS+ Protocol [RFC8907].  The introduction of TLS PSK and
-   certificate Peer authentication and TLS encryption to TACACS+
-   obsolesces these former mechanisms and so are hereby deprecated.
-   Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
-   header, the least significant bit (LSB) of the flags field, is also
-   deprecated.
+   The TACACS+ Protocol [RFC8907] specified a form of encryption and
+   Peer authentication using a pre-shared key that is wholly inadequate
+   by modern standards and is diminutively referred to as data
+   obfuscation in the TACACS+ Protocol [RFC8907].  The introduction of
+   TLS PSK and certificate Peer authentication and TLS encryption to
+   TACACS+ obsolesces these former mechanisms and so are hereby
+   deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in
+   the TACACS+ header, the least significant bit (LSB) of the flags
+   field, is also deprecated.
 
    Peers compliant with this document should set the
    TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header of Packets on TLS
@@ -386,9 +386,9 @@ Table of Contents
    no ambiguity to the naming (because these fields were previously
    fixed, they did not require names).  The convention follows th e
    pattern for cisco AV-PAIRS in RADIUS: all lower case with dash as
-   whitespace, with t Note that one new item is added: origin-client.
-   This is added to allow the se rver to identify the first NAS that was
-   hit to properly support the proxy case.  type= authentication-action=
+   whitespace.  Note that one new item is added: origin-client.  This is
+   added to allow the se rver to identify the first NAS that was hit to
+   properly support the proxy case.  type= authentication-action=
    authentication-type= authentication-service= authentication-method*
    privilege-level* user= port* remote-address* origin-client* data=
    server-message* user-message* status= flags+ Extension Arguments
