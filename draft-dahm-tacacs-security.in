@@ -89,8 +89,8 @@
         <section title="Introduction">
             <t>
 		The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-		The protocol carries authentication, authorization and accounting information for TACACS+ clients.
-		While this information is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
+		The protocol provides authentication, authorization and accounting services for TACACS+ clients.
+		While the content of the protocol is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
             </t>
             <t>
 		The existing confidentiality, integrity, and authentication mechanisms of TACACS+ are extremely weak.
@@ -112,10 +112,10 @@
 		The Technical Definitions section of the <xref target="RFC8907">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
 	 	The following terms are also used in this document.
             </t>
-            <section title="Legacy Connection">
+            <section title="Unsecure Connection">
             <t>
 		This is another term for a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
-		It is a Connection without TLS and possibly using legacy TACACS+ authentication and obfuscation.
+		It is a Connection without TLS and therefore being plaintext or possibly using unsecure TACACS+ authentication and obfuscation.
             </t>
             </section>
             <section title="Peer">
@@ -163,8 +163,8 @@
 		</list>
 	    </t>
 	    <t>
-		However, co-existence of inferior authentication and encryption, whether TACACS+ legacy or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
-		The simplest way to address the exposure from TACACS+ legacy methods is to refuse legacy TACACS+ connections at the server entirely, perhaps using separate servers for legacy and TLS.
+		However, co-existence of inferior authentication and encryption, whether TACACS+ Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
+		The simplest way to address the exposure from TACACS+ Unsecure Connection methods is to refuse TACACS+ Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
 		Another approach is configuration that requires TLS; clients SHOULD allow configuration of TACACS+ servers, both globally and per-server, to require TLS and likewise servers SHOULD allow configuration to require TLS of clients known to be have TLS support.
 		Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
 XXX another form of downgrade attack is to filter/block the TLS port.  make sure this is covered in the text.
@@ -448,8 +448,8 @@ Extension Arguments (Group 2: New)
             </t>
             <t>
 		TLS encryption SHOULD be used in deployments when both the clients and servers support it.
-		Servers that support TLS encryption MAY be configured to allow Legacy Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
-		Legacy Connections would be better served by separate Servers from the TLS Servers.
+		Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
+		Unsecure Connections would be better served by separate Servers from the TLS Servers.
 	    </t>
 	    <t>
 		It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.

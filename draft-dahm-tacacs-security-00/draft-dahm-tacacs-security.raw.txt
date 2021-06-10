@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: November 28, 2021                           Cisco Systems, Inc.
+Expires: December 12, 2021                           Cisco Systems, Inc.
                                                                   A. Ota
-                                                            May 27, 2021
+                                                           June 10, 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 28, 2021.
+   This Internet-Draft will expire on December 12, 2021.
 
 Copyright Notice
 
@@ -67,7 +67,7 @@ Table of Contents
 
    1.  Introduction
    2.  Technical Definitions
-     2.1.  Legacy Connection
+     2.1.  Unsecure Connection
      2.2.  Peer
      2.3.  Session
      2.4.  TLS Connection
@@ -93,10 +93,10 @@ Table of Contents
 
    The TACACS+ Protocol [RFC8907] provides device administration for
    routers, network access servers and other networked computing devices
-   via one or more centralized servers.  The protocol carries
-   authentication, authorization and accounting information for TACACS+
-   clients.  While this information is highly sensitive, TACACS+ lacks
-   modern and/or effective confidentiality, integrity, and
+   via one or more centralized servers.  The protocol provides
+   authentication, authorization and accounting services for TACACS+
+   clients.  While the content of the protocol is highly sensitive,
+   TACACS+ lacks modern and/or effective confidentiality, integrity, and
    authentication of the connection and network traffic between the
    server and client.
 
@@ -124,11 +124,12 @@ Table of Contents
    is fully applicable here and will not be repeated, though may be
    augmented.  The following terms are also used in this document.
 
-2.1.  Legacy Connection
+2.1.  Unsecure Connection
 
    This is another term for a Connection as defined in TACACS+ Protocol
-   [RFC8907].  It is a Connection without TLS and possibly using legacy
-   TACACS+ authentication and obfuscation.
+   [RFC8907].  It is a Connection without TLS and therefore being
+   plaintext or possibly using unsecure TACACS+ authentication and
+   obfuscation.
 
 2.2.  Peer
 
@@ -188,19 +189,19 @@ Table of Contents
       information due to misconfiguration.
 
    However, co-existence of inferior authentication and encryption,
-   whether TACACS+ legacy or deprecated parts that compose TLS, also
-   presents opportunity for down-grade attacks.  The simplest way to
-   address the exposure from TACACS+ legacy methods is to refuse legacy
-   TACACS+ connections at the server entirely, perhaps using separate
-   servers for legacy and TLS.  Another approach is configuration that
-   requires TLS; clients SHOULD allow configuration of TACACS+ servers,
-   both globally and per-server, to require TLS and likewise servers
-   SHOULD allow configuration to require TLS of clients known to be have
-   TLS support.  Furthermore, Peers SHOULD be configurable to limit
-   offered or recognized TLS versions and algorithms to those
-   recommended by standards bodies and implementers.  XXX another form
-   of downgrade attack is to filter/block the TLS port.  make sure this
-   is covered in the text.
+   whether TACACS+ Unsecure Connection or deprecated parts that compose
+   TLS, also presents opportunity for down-grade attacks.  The simplest
+   way to address the exposure from TACACS+ Unsecure Connection methods
+   is to refuse TACACS+ Unsecure Connections at the server entirely,
+   perhaps using separate servers for Unsecure Connections and TLS.
+   Another approach is configuration that requires TLS; clients SHOULD
+   allow configuration of TACACS+ servers, both globally and per-server,
+   to require TLS and likewise servers SHOULD allow configuration to
+   require TLS of clients known to be have TLS support.  Furthermore,
+   Peers SHOULD be configurable to limit offered or recognized TLS
+   versions and algorithms to those recommended by standards bodies and
+   implementers.  XXX another form of downgrade attack is to filter/
+   block the TLS port.  make sure this is covered in the text.
 
    Servers and clients could also have a cache mechanism of clients and
    servers, respectively, that have engaged in TACACS+ TLS connections
@@ -422,9 +423,9 @@ Table of Contents
 
    TLS encryption SHOULD be used in deployments when both the clients
    and servers support it.  Servers that support TLS encryption MAY be
-   configured to allow Legacy Connections when TLS encryption is not
+   configured to allow Unsecure Connections when TLS encryption is not
    supported by the client, but this is NOT RECOMMENDED because of the
-   threat of downgrade attacks, as described in Section 3.1.  Legacy
+   threat of downgrade attacks, as described in Section 3.1.  Unsecure
    Connections would be better served by separate Servers from the TLS
    Servers.
 
