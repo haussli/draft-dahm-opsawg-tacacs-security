@@ -1,0 +1,58 @@
+- Douglas asks whether steps 7 & 8 of the proposed pubkey auth process
+  are necessary.  Can this be achieved in accounting?
+
+  Do all implementations support author or accounting?
+
+  Is pass/fail logged into accounting anyway?  Thorsten & Douglas expect it is
+  or should be.  Do implementations log auth errors (not failures) in
+  accounting?  IOS-XE does not seem to account authentication failures or
+  errors.
+
+  I thought that junos did not support author or accounting, but it seems
+  to support both now.  It appears that authorization might not be done
+  the same as on other vendors; for one thing, it caches the response.
+
+  https://www.juniper.net/documentation/us/en/software/junos/user-access/topics/topic-map/user-access-tacacs-authentication.html
+
+  if configured for login events, junos does not log accounting for failed
+  logins.
+
+- Douglas also asks if the entire key sharing process should be moved to
+  authorization?  In the end, felt he had talked himself out of it, unless his
+  original extended authentication packet format change proposal is
+  incorporated?
+
+  Would this create confusion from the name (authorization vs authentication)?
+  Is that a concern?
+
+  What about other authentication actions, such as account expiration, ToD
+  allowance, NAS allowance, etc?  I admit that "allowance" should be
+  authorization, but all those things are normally done in authentication on
+  the server.
+
+- Douglas suggests not using null termination for end of strings marker in
+  the pubkey process (or tacacs in general).
+
+  Maybe use ',' or ';'.  make sure the separator can not be used in the rfc
+  4716 ascii format.
+
+- Douglas asks if we need to adjust the pubkey format from rfc4716 to not be
+  return terminated?
+
+- With 1 octet arg_len fields, what is the longest possible key from rfc4716
+  format?  How many keys should we expect?  Should we attempt to limit
+  it?  2 (hosts) * 3 (key types) per user might be a reasonable expectation?
+
+  I do not think we should limit the number of keys.  The server does not need
+  to return all key types if the client requests a particular key type;
+  ssh_pubkey_type AVP in the proposal.
+
+- Douglas asks if we should require the username in the START packet, rather
+  than accomodating it missing.  Says that the allowance in the existing
+  process were from evolution of the protocol; so just dictate what must be
+  present.
+
+- Douglas asks if we should reintroduce larger attributes.  Douglas will
+  re-examine that and either incorporate into the document/git or post in email.
+
+  The ssh pubkey process should be re-examined with the extended formats.
