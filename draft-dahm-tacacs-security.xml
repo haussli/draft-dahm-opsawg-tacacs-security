@@ -293,147 +293,188 @@ XXX
 		A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
             </t>
         </section>
+        <section title="TACACS+ Extended Authentication Packet Types">
+            <t>Versions 1 and 2 of the T+ Protocol, as defined in [RFC 8907], specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support
+                the credential validation use case but does not accommodate any further arguments
+                which may be used to give context to the request.</t>
 
-       <section title="TACACS+ Extended Packet Type">
-           <t>
-XXX
-1 TACACS+ Header Type
+        <t>One use-case where this shortcoming inhibits correct operation is for the TACACS+
+            proxy. Because the originating client is not encoded in the regular Authentication
+            START Packet, TACACS+ Servers generally attempt to determine the client from the TCP
+            connection. This is effective only for the first step: proxied TACACS+ servers can
+            no longer securely enforce policy based upon the end client IP-Address.</t>
 
-minor_version
+        <t>Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol</t>
 
-This is the minor TACACS+ version number.
-   TAC_PLUS_MINOR_VER_TWO := 0x2
+        <t>To support these use cases, and allow clients to add environment information
+            to the request, the Extended Authentication Packets brings the Authentication 
+            phase of the protocol inline with the Authorization and Accounting Phase by incorporating
+            extensible arguments</t>
 
-
-type
-   This is the packet type. Legal values are:
-
-   TAC_PLUS_AUTHEN := 0x01 (Authentication)
-
-   TAC_PLUS_AUTHOR := 0x02 (Authorization)
-
-   TAC_PLUS_ACCT   := 0x03 (Accounting)
-
-   TAC_PLUS_EXT    := 0x04 (Extended)
-
-2 TACACS+ Extended Packet Type
-
-   The purpose of this new packet type is to allow:
-
-   1) Larger Data Values
-   2) Authentication Packets to include arbitrary arguments
-
-   It is possible to encode the previous 3 packet types using the Pre Defined Ar
-gument names.
-
-   The pattern is intended to follow the style of the original TACACS+ packets,
-however there are a few minor differences from the legacy arguments:
-
-   1) The argument value size specified by 32 bit
-   2) The name and value are no longer in the same field with the separator. Ins
-tead both the name and the argument have lengths in bytes,
-   and the argument type is indicated by the last char in the name.
-
-
-   +----------------+----------------+----------------+----------------+
-   | arg_count ...
-   +----------------+----------------+----------------+----------------+
-   | arg_1_name_len |
-   +----------------+
-   | arg_1_value_len ...
-   +----------------+----------------+----------------+----------------+
-   | arg_2_name_len |
-   +----------------+
-   | arg_2_value_len ...                                               |
-   +----------------+----------------+----------------+----------------+
-   | ...                                                               |
-   +----------------+----------------+----------------+----------------+
-   | arg_N_name_len |
-   +----------------+
-   | arg_N_value_len                                                   |
-   +----------------+----------------+----------------+----------------+
-   | arg_1_name ...
-   +----------------+----------------+----------------+----------------+
-   | arg_1_value ...
-   +----------------+----------------+----------------+----------------+
-   | arg_2_name ...
-   +----------------+----------------+----------------+----------------+
-   | arg_2_value ...
-   +----------------+----------------+----------------+----------------+
-   | ...
-   +----------------+----------------+----------------+----------------+
-   | arg_N_name ...
-   +----------------+----------------+----------------+----------------+
-   | arg_N_value ...
-   +----------------+----------------+----------------+----------------+
-
-arg_count
-
-   The number of arguments in the packet
-
-arg_1_name_len ... arg_N_name_len
-
-   The size of the Name part of each argument, including the final Mandatory/Opt
-ioanl Char. The maximum size is 2^8 -1 bytes.
-
-arg_1_value_len ... arg_N_value_len
-
-   The size of the Value part of each argument, including the final Mandatory/Op
-tioanl Char. The maximum size is 2^32 -1 bytes.
-
-arg_1_name ... arg_N_name
-
-   The name part of each argument, MUST include the final Mandatory/Optional Cha
-r (* or =) at the end. The name is encoded using same
-specifications as the argument names in previous TACACS+ authorization and accou
-nting packets,
-
-arg_1_name ... arg_N_name
-
-   The value part of each argument, including the final Mandatory/Optional Char.
+        <t>The server should expect Extended Authentication Packet bodies if the minor version in the header is: 0x2</t>
 
 
 
-Pre Defined Argument Names
+            <section anchor="ExtendedAuthenticationSTARTPacketBody" title="The Extended Authentication START Packet Body">
+                <figure>
+                    <artwork><![CDATA[
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |    action      |    priv_lvl    |  authen_type   | authen_service |
+                        +----------------+----------------+----------------+----------------+
+                        |    user_len    |    port_len    |  rem_addr_len  |    data_len    |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |     
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+     
+                        |    arg_N_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |    user ...
+                        +----------------+----------------+----------------+----------------+
+                        |    port ...
+                        +----------------+----------------+----------------+----------------+
+                        |    rem_addr ...
+                        +----------------+----------------+----------------+----------------+
+                        |    data...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+                                                            ]]>                    </artwork>
+                </figure>
 
-   The predefined names are intended to cover the full set of hardwired fields i
-n the regular packet types 1-3. The purpose of reflecting them
-   here is to ensure that the older packet types can be transported using the ne
-w packet type with no ambiguity to the naming (because these fields
-   were previously fixed, they did not require names). The convention follows th
-e pattern for cisco AV-PAIRS in RADIUS: all lower case with dash as
-   whitespace.
+                <t>The action, priv_level, authen_type, authen_service, user_len port_len rem_addr_len
+data_len, user, port, rem_addr and data fields are used exactly as defined in the 
+Authentication START Packet Body in [RFC 8907].</t>
 
-   Note that one new item is added: origin-client. This is added to allow the se
-rver to identify the first NAS that was hit to properly support the proxy case.
+                <t>arg_cnt</t>
 
-   type=
-   authentication-action=
-   authentication-type=
-   authentication-service=
-   authentication-method*
-   privilege-level*
-   user=
-   port*
-   remote-address*
-   origin-client*
-   data=
-   server-message*
-   user-message*
-   status=
-   flags+
-   
-Extension Arguments (Group 1: Legacy)
-   
-   Previously in Authorization and Accounting packets there were a set of define
-d arguments. These will also be encoded, where needed, as arguments here.
+                <t>This represents the number of arguments in the packet.</t>
 
-Extension Arguments (Group 2: New)
+                <t>arg_1 ... arg_N, arg_1_len .... arg_N_len</t>
 
-   In addition to the Predefined arguments and the Legacy arguments, all the New
- arguments for novel use cases will be encoded as arguments here.
-           </t>
-       </section>
+                <t>Each argument is encoded in the packet as a single arg field (arg_1...  arg_N) with
+   a corresponding length field (which indicates the length of each argument in bytes).</t>
+
+                <t>The arguments are argument-value pairs. The argument and the value are in a single
+   string and are separated by either a "=" (0X3D) or a "*" (0X2A). The equals sign 
+   indicates a mandatory argument. The asterisk indicates an optional one. An argument
+   name MUST NOT contain either of the separators.  An argument value MAY contain the
+   separators. The value part of an argument-value pair may be empty, that is, the length
+   of the value may be zero.</t>
+
+                <t>Optional arguments are ones that may be disregarded by the server. Mandatory arguments
+   require that the server implementation and configuration includes the details of how
+   to act on it.</t>
+
+                <t>Though the arguments allow extensibility through the rule above, the argument to encode
+   the originating client will be defined here:</t>
+
+                <t>origin_client</t>
+
+                <t>The IP-Address of the originating TACACS+ client. This is text encoded in
+   line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6. IPv4 addresses are
+   specified as octet numeric values separated by dots ('.'). IPv6 address text representation 
+   is defined in [RFC5952].</t>
+
+
+            </section>
+            <section anchor="ExtensionAuthenticationREPLYPacketBody" title="The Extension Authentication REPLY Packet Body">
+                <t>
+					The TACACS+ server sends only one type of extended
+					authentication packet to the client.
+                </t>
+
+                <figure>
+                    <artwork><![CDATA[
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |     status     |      flags     |        server_msg_len           |
+                        +----------------+----------------+----------------+----------------+
+                        |           data_len              |        server_msg ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |     
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+     
+                        |    arg_N_len                                                       |
+                        +----------------+----------------+----------------+----------------+
+                        |    data ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+                    ]]>                    </artwork>
+                </figure>
+
+
+                <t>The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the 
+Authentication REPLY Packet Body in [RFC 8907].</t>
+
+                <t>The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+                </t>
+            </section>
+
+            <section anchor="ExtendedAuthenticationCONTINUEPacketBody" title="The Extended Authentication CONTINUE Packet Body">
+                <t>
+					This packet is sent from the client to the server
+					following the
+					receipt
+					of an Extended REPLY packet.
+                </t>
+                <figure>
+                    <artwork><![CDATA[
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |          user_msg len           |            data_len             |
+                        +----------------+----------------+----------------+----------------+
+                        |     flags      
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |     
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+     
+                        |    arg_N_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |  user_msg ...
+                        +----------------+----------------+----------------+----------------+
+                        |    data ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+                    ]]>                    </artwork>
+                </figure>
+
+                <t>The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the 
+Authentication REPLY Packet Body in [RFC 8907].</t>
+
+                <t>The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+                </t>
+            </section>
+        </section>
 
        <section title="Security Considerations">
            <t>

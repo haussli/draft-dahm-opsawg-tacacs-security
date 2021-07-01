@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Intended status: Standards Track                                 D. Gash
-Expires: 12 December 2021                            Cisco Systems, Inc.
+Expires: 2 January 2022                              Cisco Systems, Inc.
                                                                   A. Ota
-                                                            10 June 2021
+                                                             1 July 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 December 2021.
+   This Internet-Draft will expire on 2 January 2022.
 
 
 
 
 
 
-Dahm, et al.            Expires 12 December 2021                [Page 1]
+Dahm, et al.             Expires 2 January 2022                 [Page 1]
 
-Internet-Draft                 TACACS+ TLS                     June 2021
+Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 Copyright Notice
@@ -74,29 +74,45 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Technical Definitions . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Unsecure Connection . . . . . . . . . . . . . . . . . . .   3
      2.2.  Peer  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     2.3.  Session . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.3.  Session . . . . . . . . . . . . . . . . . . . . . . . . .   4
      2.4.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   4
    3.  TLS for TACACS+ . . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   4
      3.2.  TLS Protocol Version  . . . . . . . . . . . . . . . . . .   5
-     3.3.  Cipher Requirements . . . . . . . . . . . . . . . . . . .   5
+     3.3.  Cipher Requirements . . . . . . . . . . . . . . . . . . .   6
        3.3.1.  Mandatory Cipher Suites . . . . . . . . . . . . . . .   6
-     3.4.  Authentication  . . . . . . . . . . . . . . . . . . . . .   6
+     3.4.  Authentication  . . . . . . . . . . . . . . . . . . . . .   7
        3.4.1.  PSK Identity Requirements . . . . . . . . . . . . . .   7
        3.4.2.  TLS Certificate Identity Requirements . . . . . . . .   7
    4.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .   7
-   5.  TACACS+ Extended Packet Type  . . . . . . . . . . . . . . . .   8
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
-   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  10
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   5.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   8
+     5.1.  The Extended Authentication START Packet Body . . . . . .   8
+     5.2.  The Extension Authentication REPLY Packet Body  . . . . .  10
+     5.3.  The Extended Authentication CONTINUE Packet Body  . . . .  11
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  13
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  14
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
+
+
+
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 2]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
 
 1.  Introduction
 
@@ -106,14 +122,6 @@ Table of Contents
    authentication, authorization and accounting services for TACACS+
    clients.  While the content of the protocol is highly sensitive,
    TACACS+ lacks modern and/or effective confidentiality, integrity, and
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 2]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
-
    authentication of the connection and network traffic between the
    server and client.
 
@@ -152,23 +160,21 @@ Internet-Draft                 TACACS+ TLS                     June 2021
 
    This refers to a TACACS+ Server or Client.
 
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 3]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
 2.3.  Session
 
    Defined in TACACS+ Protocol [RFC8907] as a single authentication
    sequence, a single authorization exchange, or a single accounting
    exchange.
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 3]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
 2.4.  TLS Connection
 
@@ -211,20 +217,20 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    *  passive Intrusion Detection Systems (IDS) watching the unencrypted
       version to be unaffected by the introduction of TLS,
 
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 4]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
    *  avoidance of Man in the Middle (MitM) attacks that can
       affectSTARTTLS,
 
    *  and helps prevention of the accidental exposure of sensitive
       information due to misconfiguration.
-
-
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 4]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
    However, co-existence of inferior authentication and encryption,
    whether TACACS+ Unsecure Connection or deprecated parts that compose
@@ -263,6 +269,19 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    End of Life (EoL).  A Server that supports deprecated versions SHOULD
    NOT enable this support except by operator configuration.
 
+
+
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 5]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
 3.3.  Cipher Requirements
 
    XXX The IANA registry now has "Recommended" algorithms.  reference
@@ -274,13 +293,6 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    effectiveness of the confidentiality, integrity, and authentication
    of TLS, the processing required, and the types of authentication
    available.
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 5]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
    TACACS+ Servers supporting TLS MUST utilize the TLS encryption
    options described in the following sections.  XXX but should be
@@ -313,6 +325,19 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    say: if a version beyond TLS 1.3 is used, then one of the
    ciphersuites that i s marked as "Recommended" MUST be used ... XXX
 
+
+
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 6]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
 3.4.  Authentication
 
    XXX TLS authentication can occur via asymmetric cryptographic or
@@ -320,23 +345,6 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    symmetric pre-shared-key (PSK). we only consider out of band PSK.
    KDF hash alg needs to be specified?  PSK can only be assoc with one
    HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 6]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
 3.4.1.  PSK Identity Requirements
 
@@ -378,6 +386,14 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    TLS PSK and certificate Peer authentication and TLS encryption to
    TACACS+ obsolesces these former mechanisms and so are hereby
    deprecated.  Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 7]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
    the TACACS+ header, the least significant bit (LSB) of the flags
    field, is also deprecated.
 
@@ -386,13 +402,6 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    Connections, indicating that the data obfuscation is not used.  A
    Peer that receives a Packet without the flag set on a TLS Connection,
    should immediately log the error and terminate the TCP/IP connection.
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 7]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
    A Client that is compliant with this document MUST NOT utilize these
    deprecated authentication or encryption methods on TLS Connections.
@@ -403,79 +412,245 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    A future document SHOULD be written to deprecate the well-known TCP/
    IP port 49, allocated by the TACACS+ Protocol [RFC8907].
 
-5.  TACACS+ Extended Packet Type
+5.  TACACS+ Extended Authentication Packet Types
 
-   XXX 1 TACACS+ Header Type minor_version This is the minor TACACS+
-   version number.  TAC_PLUS_MINOR_VER_TWO := 0x2 type This is the
-   packet type.  Legal values are: TAC_PLUS_AUTHEN := 0x01
-   (Authentication) TAC_PLUS_AUTHOR := 0x02 (Authorization)
-   TAC_PLUS_ACCT := 0x03 (Accounting) TAC_PLUS_EXT := 0x04 (Extended) 2
-   TACACS+ Extended Packet Type The purpose of this new packet type is
-   to allow: 1) Larger Data Values 2) Authentication Packets to include
-   arbitrary arguments It is possible to encode the previous 3 packet
-   types using the Pre Defined Ar gument names.  The pattern is intended
-   to follow the style of the original TACACS+ packets, however there
-   are a few minor differences from the legacy arguments: 1) The
-   argument value size specified by 32 bit 2) The name and value are no
-   longer in the same field with the separator.  Ins tead both the name
-   and the argument have lengths in bytes, and the argument type is
-   indicated by the last char in the name.  +----------------+----------
-   ------+----------------+----------------+ | arg_count ...  +---------
-   -------+----------------+----------------+----------------+ |
-   arg_1_name_len | +----------------+ | arg_1_value_len ...  +---------
-   -------+----------------+----------------+----------------+ |
-   arg_2_name_len | +----------------+ | arg_2_value_len ...  | +-------
-   ---------+----------------+----------------+----------------+ | ...
-    | +----------------+----------------+----------------+--------------
-   --+ | arg_N_name_len | +----------------+ | arg_N_value_len | +------
-   ----------+----------------+----------------+----------------+ |
-   arg_1_name ...  +----------------+----------------+----------------+-
-   ---------------+ | arg_1_value ...  +----------------+---------------
-   -+----------------+----------------+ | arg_2_name ...  +-------------
-   ---+----------------+----------------+----------------+ | arg_2_value
-   ...  +----------------+----------------+----------------+------------
-   ----+ | ...  +----------------+----------------+----------------+----
-   ------------+ | arg_N_name ...  +----------------+----------------+--
-   --------------+----------------+ | arg_N_value ...
-   +----------------+----------------+----------------+----------------+
-   arg_count The number of arguments in the packet arg_1_name_len ...
-   arg_N_name_len The size of the Name part of each argument, including
-   the final Mandatory/Opt ioanl Char.  The maximum size is 2^8 -1
-   bytes.  arg_1_value_len ... arg_N_value_len The size of the Value
+   Versions 1 and 2 of the T+ Protocol, as defined in [RFC 8907],
+   specify the TACACS+ Authentication Packets for START, REPLY and
+   CONTINUE which support the credential validation use case but does
+   not accommodate any further arguments which may be used to give
+   context to the request.
+
+   One use-case where this shortcoming inhibits correct operation is for
+   the TACACS+ proxy.  Because the originating client is not encoded in
+   the regular Authentication START Packet, TACACS+ Servers generally
+   attempt to determine the client from the TCP connection.  This is
+   effective only for the first step: proxied TACACS+ servers can no
+   longer securely enforce policy based upon the end client IP-Address.
+
+   Further, advanced use cases (such as SSH key distribution) would
+   otherwise rely on embedding structured information into the single
+   data fields, obfuscating the content of the protocol
+
+   To support these use cases, and allow clients to add environment
+   information to the request, the Extended Authentication Packets
+   brings the Authentication phase of the protocol inline with the
+   Authorization and Accounting Phase by incorporating extensible
+   arguments
+
+   The server should expect Extended Authentication Packet bodies if the
+   minor version in the header is: 0x2
+
+5.1.  The Extended Authentication START Packet Body
 
 
 
-Dahm, et al.            Expires 12 December 2021                [Page 8]
+
+Dahm, et al.             Expires 2 January 2022                 [Page 8]
 
-Internet-Draft                 TACACS+ TLS                     June 2021
+Internet-Draft                 TACACS+ TLS                     July 2021
 
 
-   part of each argument, including the final Mandatory/Op tioanl Char.
-   The maximum size is 2^32 -1 bytes.  arg_1_name ... arg_N_name The
-   name part of each argument, MUST include the final Mandatory/Optional
-   Cha r (* or =) at the end.  The name is encoded using same
-   specifications as the argument names in previous TACACS+
-   authorization and accou nting packets, arg_1_name ... arg_N_name The
-   value part of each argument, including the final Mandatory/Optional
-   Char.  Pre Defined Argument Names The predefined names are intended
-   to cover the full set of hardwired fields i n the regular packet
-   types 1-3.  The purpose of reflecting them here is to ensure that the
-   older packet types can be transported using the ne w packet type with
-   no ambiguity to the naming (because these fields were previously
-   fixed, they did not require names).  The convention follows th e
-   pattern for cisco AV-PAIRS in RADIUS: all lower case with dash as
-   whitespace.  Note that one new item is added: origin-client.  This is
-   added to allow the se rver to identify the first NAS that was hit to
-   properly support the proxy case.  type= authentication-action=
-   authentication-type= authentication-service= authentication-method*
-   privilege-level* user= port* remote-address* origin-client* data=
-   server-message* user-message* status= flags+ Extension Arguments
-   (Group 1: Legacy) Previously in Authorization and Accounting packets
-   there were a set of define d arguments.  These will also be encoded,
-   where needed, as arguments here.  Extension Arguments (Group 2: New)
-   In addition to the Predefined arguments and the Legacy arguments, all
-   the New arguments for novel use cases will be encoded as arguments
-   here.
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |    action      |    priv_lvl    |  authen_type   | authen_service |
+                        +----------------+----------------+----------------+----------------+
+                        |    user_len    |    port_len    |  rem_addr_len  |    data_len    |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |    user ...
+                        +----------------+----------------+----------------+----------------+
+                        |    port ...
+                        +----------------+----------------+----------------+----------------+
+                        |    rem_addr ...
+                        +----------------+----------------+----------------+----------------+
+                        |    data...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+
+   The action, priv_level, authen_type, authen_service, user_len
+   port_len rem_addr_len data_len, user, port, rem_addr and data fields
+   are used exactly as defined in the Authentication START Packet Body
+   in [RFC 8907].
+
+   arg_cnt
+
+   This represents the number of arguments in the packet.
+
+   arg_1 ... arg_N, arg_1_len .... arg_N_len
+
+   Each argument is encoded in the packet as a single arg field
+   (arg_1...  arg_N) with a corresponding length field (which indicates
+   the length of each argument in bytes).
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                 [Page 9]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
+   The arguments are argument-value pairs.  The argument and the value
+   are in a single string and are separated by either a "=" (0X3D) or a
+   "*" (0X2A).  The equals sign indicates a mandatory argument.  The
+   asterisk indicates an optional one.  An argument name MUST NOT
+   contain either of the separators.  An argument value MAY contain the
+   separators.  The value part of an argument-value pair may be empty,
+   that is, the length of the value may be zero.
+
+   Optional arguments are ones that may be disregarded by the server.
+   Mandatory arguments require that the server implementation and
+   configuration includes the details of how to act on it.
+
+   Though the arguments allow extensibility through the rule above, the
+   argument to encode the originating client will be defined here:
+
+   origin_client
+
+   The IP-Address of the originating TACACS+ client.  This is text
+   encoded in line with the rest of the TACACS+ protocol, and may be
+   IPv4 or IPv6.  IPv4 addresses are specified as octet numeric values
+   separated by dots ('.').  IPv6 address text representation is defined
+   in [RFC5952].
+
+5.2.  The Extension Authentication REPLY Packet Body
+
+   The TACACS+ server sends only one type of extended authentication
+   packet to the client.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                [Page 10]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |     status     |      flags     |        server_msg_len           |
+                        +----------------+----------------+----------------+----------------+
+                        |           data_len              |        server_msg ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N_len                                                       |
+                        +----------------+----------------+----------------+----------------+
+                        |    data ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+
+   The status, flags, server_msg_len, data_len, server_msg, and data
+   fields are used exactly as defined in the Authentication REPLY Packet
+   Body in [RFC 8907].
+
+   The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are
+   used as defined in Common Authentication flows (Section 5.1).
+
+5.3.  The Extended Authentication CONTINUE Packet Body
+
+   This packet is sent from the client to the server following the
+   receipt of an Extended REPLY packet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                [Page 11]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
+                        1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+                        +----------------+----------------+----------------+----------------+
+                        |          user_msg len           |            data_len             |
+                        +----------------+----------------+----------------+----------------+
+                        |     flags
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_cnt                                                        |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |      ...                                                          |
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N_len                                                      |
+                        +----------------+----------------+----------------+----------------+
+                        |  user_msg ...
+                        +----------------+----------------+----------------+----------------+
+                        |    data ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_1 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_2 ...
+                        +----------------+----------------+----------------+----------------+
+                        |    ...
+                        +----------------+----------------+----------------+----------------+
+                        |    arg_N ...
+                        +----------------+----------------+----------------+----------------+
+
+   The user_msg len, data_len, flags, user_msg, and data fields are used
+   exactly as defined in the Authentication REPLY Packet Body in [RFC
+   8907].
+
+   The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are
+   used as defined in Common Authentication flows (Section 5.1).
 
 6.  Security Considerations
 
@@ -491,20 +666,20 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    perpetuity as each new TLS version and/or algorithm emerges nor at a
    rate to keep pace.  It would be highly desirable for the TLS working
    group to publish a single document that evolves with TLS and its
+
+
+
+Dahm, et al.             Expires 2 January 2022                [Page 12]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
    algorithms that RFCs such as this one could reference without the
    need to update those RFCs, thus allowing them to evolve by
    inheritance.  As no such document exists, implementers and operators
    SHOULD make informed use of RFCs to determine which TLS versions and
    algorithms should be supported, deprecated, or abandoned, in the
    absence of updates to this RFC.
-
-
-
-
-Dahm, et al.            Expires 12 December 2021                [Page 9]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
    TLS encryption SHOULD be used in deployments when both the clients
    and servers support it.  Servers that support TLS encryption MAY be
@@ -545,6 +720,16 @@ Internet-Draft                 TACACS+ TLS                     June 2021
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                [Page 13]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",
               RFC 4279, DOI 10.17487/RFC4279, December 2005,
@@ -553,14 +738,6 @@ Internet-Draft                 TACACS+ TLS                     June 2021
    [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
               Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
               November 2006, <https://www.rfc-editor.org/info/rfc4716>.
-
-
-
-
-Dahm, et al.            Expires 12 December 2021               [Page 10]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
-
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
@@ -600,6 +777,15 @@ Internet-Draft                 TACACS+ TLS                     June 2021
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
 
+
+
+
+
+Dahm, et al.             Expires 2 January 2022                [Page 14]
+
+Internet-Draft                 TACACS+ TLS                     July 2021
+
+
    [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
               Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
               August 2015, <https://www.rfc-editor.org/info/rfc7605>.
@@ -609,13 +795,6 @@ Authors' Addresses
    Thorsten Dahm
 
    Email: thorsten.dahm@gmail.com
-
-
-
-
-Dahm, et al.            Expires 12 December 2021               [Page 11]
-
-Internet-Draft                 TACACS+ TLS                     June 2021
 
 
    Douglas Gash
@@ -658,15 +837,4 @@ Internet-Draft                 TACACS+ TLS                     June 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 12 December 2021               [Page 12]
+Dahm, et al.             Expires 2 January 2022                [Page 15]
