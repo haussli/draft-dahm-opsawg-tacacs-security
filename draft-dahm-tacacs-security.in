@@ -512,7 +512,7 @@ Authentication REPLY Packet Body in [RFC 8907].</t>
 
         <section title="Acknowledgments">
             <t>
-                The author(s) would like to thank Russ Housley, Steven M. Bellovin, and Stephen Farrell for their support, insightful review, and/or comments.
+                The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, and Tom Petch for their support, insightful review, and/or comments.
             </t>
         </section>
     </middle>

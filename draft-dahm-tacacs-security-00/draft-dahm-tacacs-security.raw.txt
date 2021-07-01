@@ -560,8 +560,8 @@ Table of Contents
 8.  Acknowledgments
 
    The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
-   and Stephen Farrell for their support, insightful review, and/or
-   comments.
+   Stephen Farrell, Alan DeKok, and Tom Petch for their support,
+   insightful review, and/or comments.
 
 9.  References
 
