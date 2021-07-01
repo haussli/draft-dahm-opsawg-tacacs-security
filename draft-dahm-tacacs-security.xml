@@ -130,8 +130,9 @@
             </section>
             <section title="TLS Connection">
             <t>
-		A TLS Connection is a TCP/IP connection with TLS authentication and encruption used by TACACS+ for transport, similar to a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
+		A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
 		The TCP/IP port [TBD] is allocated by IANA for this TLS connection.
+XXX Should "TLS" point to TLS 1.2 or 1.3 RFCs?  Both?
             </t>
             </section>
         </section>
@@ -150,22 +151,23 @@
 	    <t>
 		All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
 		Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
-		For this reason, it is desirable to not use a "STARTTLS" command process which is a feature some protocols, that once existed without TLS, use to maintain backward compatibility.
-		Instead, following <xref target="RFC7605">RFC7605</xref>, a different well-known system TCP/IP port is assigned port [TBD].
+		For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
+		Instead, following <xref target="RFC7605">RFC7605</xref>, a different well-known system TCP/IP port is assigned, port [TBD].
 	    </t>
 	    <t>
 		A new port is considered appropriate and superior to "STARTTLS" because it allows:
 		<list style="symbols">
 		<t>easily blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</t>
 		<t>passive Intrusion Detection Systems (IDS) watching the unencrypted version to be unaffected by the introduction of TLS,</t>
-		<t>avoidance of Man in the Middle (MitM) attacks that can affectSTARTTLS,</t>
-		<t>and helps prevention of the accidental exposure of sensitive information due to misconfiguration.</t>
+		<t>avoidance of Man in the Middle (MitM) attacks that can affect STARTTLS,</t>
+		<t>and helps prevent the accidental exposure of sensitive information due to misconfiguration.</t>
 		</list>
 	    </t>
 	    <t>
-		However, co-existence of inferior authentication and encryption, whether TACACS+ Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
-		The simplest way to address the exposure from TACACS+ Unsecure Connection methods is to refuse TACACS+ Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
-		Another approach is configuration that requires TLS; clients SHOULD allow configuration of TACACS+ servers, both globally and per-server, to require TLS and likewise servers SHOULD allow configuration to require TLS of clients known to be have TLS support.
+		However, co-existence of inferior authentication and encryption, whether a TACACS+ Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
+		The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
+		Another approach is configuration that requires TLS.
+		Clients and servers SHOULD allow configuration that requires TACACS+ Peers, globally and individually, use TLS.
 		Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
 XXX another form of downgrade attack is to filter/block the TLS port.  make sure this is covered in the text.
 	    </t>

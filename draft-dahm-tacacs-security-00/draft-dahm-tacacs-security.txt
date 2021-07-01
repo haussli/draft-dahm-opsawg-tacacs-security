@@ -179,9 +179,10 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 2.4.  TLS Connection
 
    A TLS Connection is a TCP/IP connection with TLS authentication and
-   encruption used by TACACS+ for transport, similar to a Connection as
+   encryption used by TACACS+ for transport, similar to a Connection as
    defined in TACACS+ Protocol [RFC8907].  The TCP/IP port [TBD] is
-   allocated by IANA for this TLS connection.
+   allocated by IANA for this TLS connection.  XXX Should "TLS" point to
+   TLS 1.2 or 1.3 RFCs?  Both?
 
 3.  TLS for TACACS+
 
@@ -202,11 +203,11 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    All data exchanged by TACACS+ Peers MUST be encrypted, including the
    authentication of the Peers.  Therefore, encryption MUST be initiated
    immediately upon the establishment of the TCP/IP connection.  For
-   this reason, it is desirable to not use a "STARTTLS" command process
-   which is a feature some protocols, that once existed without TLS, use
-   to maintain backward compatibility.  Instead, following RFC7605
-   [RFC7605], a different well-known system TCP/IP port is assigned port
-   [TBD].
+   this reason, it is desirable not to use a "STARTTLS" command process,
+   a feature that some protocols, which once existed without TLS, use to
+   maintain backward compatibility.  Instead, following RFC7605
+   [RFC7605], a different well-known system TCP/IP port is assigned,
+   port [TBD].
 
    A new port is considered appropriate and superior to "STARTTLS"
    because it allows:
@@ -220,32 +221,30 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-
 Dahm, et al.             Expires 2 January 2022                 [Page 4]
 
 Internet-Draft                 TACACS+ TLS                     July 2021
 
 
-   *  avoidance of Man in the Middle (MitM) attacks that can
-      affectSTARTTLS,
+   *  avoidance of Man in the Middle (MitM) attacks that can affect
+      STARTTLS,
 
-   *  and helps prevention of the accidental exposure of sensitive
-      information due to misconfiguration.
+   *  and helps prevent the accidental exposure of sensitive information
+      due to misconfiguration.
 
    However, co-existence of inferior authentication and encryption,
-   whether TACACS+ Unsecure Connection or deprecated parts that compose
-   TLS, also presents opportunity for down-grade attacks.  The simplest
-   way to address the exposure from TACACS+ Unsecure Connection methods
-   is to refuse TACACS+ Unsecure Connections at the server entirely,
-   perhaps using separate servers for Unsecure Connections and TLS.
-   Another approach is configuration that requires TLS; clients SHOULD
-   allow configuration of TACACS+ servers, both globally and per-server,
-   to require TLS and likewise servers SHOULD allow configuration to
-   require TLS of clients known to be have TLS support.  Furthermore,
-   Peers SHOULD be configurable to limit offered or recognized TLS
-   versions and algorithms to those recommended by standards bodies and
-   implementers.  XXX another form of downgrade attack is to filter/
-   block the TLS port.  make sure this is covered in the text.
+   whether a TACACS+ Unsecure Connection or deprecated parts that
+   compose TLS, also presents opportunity for down-grade attacks.  The
+   simplest way to address the exposure from Unsecure Connection methods
+   is to refuse Unsecure Connections at the server entirely, perhaps
+   using separate servers for Unsecure Connections and TLS.  Another
+   approach is configuration that requires TLS.  Clients and servers
+   SHOULD allow configuration that requires TACACS+ Peers, globally and
+   individually, use TLS.  Furthermore, Peers SHOULD be configurable to
+   limit offered or recognized TLS versions and algorithms to those
+   recommended by standards bodies and implementers.  XXX another form
+   of downgrade attack is to filter/block the TLS port.  make sure this
+   is covered in the text.
 
    Servers and clients could also have a cache mechanism of clients and
    servers, respectively, that have engaged in TACACS+ TLS connections
@@ -268,6 +267,7 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    deprecated versions to allow for gradual adoption and software at its
    End of Life (EoL).  A Server that supports deprecated versions SHOULD
    NOT enable this support except by operator configuration.
+
 
 
 
