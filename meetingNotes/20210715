@@ -1,0 +1,19 @@
+- Douglas asks why rfcs 6614 & 5425 make no mention of certificate revocation?
+  we wonder if this is simply a feature of TLS and does not require mention?
+  ISTR that RBush or RHousley suggested revocation is needed, possibly in
+  particular for resumption tickets?
+
+- should we limit ourselves to PSK and therefore tls1.2?  will the WG require
+  certificates?
+
+- should we mention 1.3 and PSK?  definitely 1.2 + PSK, but maybe say that
+  1.3 + PSK can be used when it is stable.
+
+  Thorsten suggests [implementations] SHOULD support PSK (1.2 or 1.3) and
+  MUST support Certs.  To which there is agreement.
+
+  We will try to avoid specifying a TLS version.
+
+- Douglas suggests splitting the TLS section to CERT-related text and other
+  TLS text.  Heasley will make an attempt that the full document and pass the
+  pen to Douglas/Thorsten.
