@@ -5,9 +5,9 @@
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft
 Intended status: Standards Track                                 D. Gash
-Expires: January 2, 2022                             Cisco Systems, Inc.
+Expires: January 17, 2022                            Cisco Systems, Inc.
                                                                   A. Ota
-                                                            July 1, 2021
+                                                           July 16, 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2022.
+   This Internet-Draft will expire on January 17, 2022.
 
 Copyright Notice
 
@@ -398,10 +398,10 @@ Table of Contents
    |    arg_N ...
    +----------------+----------------+----------------+----------------+
 
-   The action, priv_level, authen_type, authen_service, user_len
-   port_len rem_addr_len data_len, user, port, rem_addr and data fields
-   are used exactly as defined in the Authentication START Packet Body
-   in [RFC 8907].
+   The action, priv_level, authen_type, authen_service, user_len,
+   port_len, rem_addr_len, data_len, user, port, rem_addr and data
+   fields are used exactly as defined in the Authentication START Packet
+   Body in [RFC 8907].
 
    arg_cnt
 
@@ -441,30 +441,30 @@ Table of Contents
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
 
-   1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
-  +----------------+----------------+----------------+----------------+
-  |     status     |      flags     |        server_msg_len           |
-  +----------------+----------------+----------------+----------------+
-  |           data_len              |        server_msg ...
-  +----------------+----------------+----------------+----------------+
-  |    arg_cnt                                                        |
-  +----------------+----------------+----------------+----------------+
-  |    arg_1_len                                                      |
-  +----------------+----------------+----------------+----------------+
-  |      ...                                                          |
-  +----------------+----------------+----------------+----------------+
-  |    arg_N_len                                                       |
-  +----------------+----------------+----------------+----------------+
-  |    data ...
-  +----------------+----------------+----------------+----------------+
-  |    arg_1 ...
-  +----------------+----------------+----------------+----------------+
-  |    arg_2 ...
-  +----------------+----------------+----------------+----------------+
-  |    ...
-  +----------------+----------------+----------------+----------------+
-  |    arg_N ...
-  +----------------+----------------+----------------+----------------+
+    1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
+   +----------------+----------------+----------------+----------------+
+   |     status     |      flags     |        server_msg_len           |
+   +----------------+----------------+----------------+----------------+
+   |           data_len              |        server_msg ...
+   +----------------+----------------+----------------+----------------+
+   |    arg_cnt                                                        |
+   +----------------+----------------+----------------+----------------+
+   |    arg_1_len                                                      |
+   +----------------+----------------+----------------+----------------+
+   |      ...                                                          |
+   +----------------+----------------+----------------+----------------+
+   |    arg_N_len                                                      |
+   +----------------+----------------+----------------+----------------+
+   |    data ...
+   +----------------+----------------+----------------+----------------+
+   |    arg_1 ...
+   +----------------+----------------+----------------+----------------+
+   |    arg_2 ...
+   +----------------+----------------+----------------+----------------+
+   |    ...
+   +----------------+----------------+----------------+----------------+
+   |    arg_N ...
+   +----------------+----------------+----------------+----------------+
 
    The status, flags, server_msg_len, data_len, server_msg, and data
    fields are used exactly as defined in the Authentication REPLY Packet
