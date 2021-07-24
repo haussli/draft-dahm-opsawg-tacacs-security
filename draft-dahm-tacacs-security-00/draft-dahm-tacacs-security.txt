@@ -693,11 +693,11 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
    The authors request that, when this draft is accepted by the working
    group, the OPSAWG Chairs submit a request to IANA for an early
-   allocation, per [RFC4020] and RFC6335 [RFC6335], of a new well-known
-   system TCP/IP port number for "tacacss", described as "TACACS+ over
-   TLS".  The name "tacacss" follows the common practice of appending an
-   "s" to the name given to the non-TLS well-known port.  This
-   allocation is justified in Section 6.2.
+   allocation, per [RFC4020] and [RFC6335], of a new well-known system
+   TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
+   The name "tacacss" follows the common practice of appending an "s" to
+   the name given to the non-TLS well-known port.  This allocation is
+   justified in Section 6.2.
 
    RFC EDITOR: this port number should replace "[TBD]" within this
    document.

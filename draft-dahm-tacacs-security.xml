@@ -432,7 +432,6 @@ XXX
                 <t>
                     The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"></xref>.
                 </t>
-
                 <t>
                     The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
                 </t>
@@ -491,7 +490,7 @@ XXX
 
         <section title="IANA Considerations">
             <t>
-		The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"></xref> and <xref target="RFC6335">RFC6335</xref>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
+		The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"></xref> and <xref target="RFC6335"></xref>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
 		The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
 		This allocation is justified in <xref target="wellknown"/>.
             </t>
