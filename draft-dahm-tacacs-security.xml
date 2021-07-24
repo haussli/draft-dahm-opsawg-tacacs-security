@@ -76,7 +76,7 @@
         <abstract>
             <t>
 		The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-                This document, a companion to the <xref target="RFC8907">TACACS+ protocol</xref>, adds new packet formats to improve security and function, adds Transport Layer Security (<xref target="RFC8446">TLS</xref>) support, adds support to carry <xref target="RFC4716">SSH</xref> public keys, and deprecates former inferior security mechanisms.
+                This document, a companion to the <xref target="RFC8907">TACACS+ protocol</xref>, adds new packet formats to improve security and function, Transport Layer Security (currently defined by <xref target="RFC5246">TLS 1.2</xref> and <xref target="RFC8446">TLS 1.3</xref>) support, and support for <xref target="RFC4716">SSH</xref> public keys and deprecates former inferior security mechanisms.
             </t>
         </abstract>
         <note title="Requirements Language">
@@ -90,14 +90,13 @@
             <t>
 		The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
 		The protocol provides authentication, authorization and accounting services for TACACS+ clients.
+            </t>
+            <t>
 		While the content of the protocol is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
+		The existing mechanisms of TACACS+ are extremely weak and the Security Considerations section of the <xref target="RFC8907">TACACS+ Protocol</xref> adequately describes this.
             </t>
             <t>
-		The existing confidentiality, integrity, and authentication mechanisms of TACACS+ are extremely weak.
-		The Security Considerations section of the <xref target="RFC8907">TACACS+ Protocol</xref> adequately describes this.
-            </t>
-            <t>
-		To address these flaws, this document updates the <xref target="RFC8907">TACACS+ Protocol</xref> to use <xref target="RFC8446">TLS</xref> authentication and encryption, and deprecates the use of its former mechanisms.
+		To address these deficiencies, this document updates the <xref target="RFC8907">TACACS+ Protocol</xref> to use <xref target="RFC5246">TLS 1.2</xref> and <xref target="RFC8446">TLS 1.3</xref> authentication and encryption, and deprecates the use of its former mechanisms.
             </t>
             <t>
 		To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
@@ -123,57 +122,29 @@
 		This refers to a TACACS+ Server or Client.
             </t>
             </section>
-            <section title="Session">
-            <t>
-		Defined in <xref target="RFC8907">TACACS+ Protocol</xref> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.
-            </t>
-            </section>
             <section title="TLS Connection">
             <t>
 		A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
-		The TCP/IP port [TBD] is allocated by IANA for this TLS connection.
-XXX Should "TLS" point to TLS 1.2 or 1.3 RFCs?  Both?
             </t>
             </section>
         </section>
 
         <section title="TLS for TACACS+">
             <t>
-		TACACS+ connections are over TCP/IP, initiated by the Client to the Server.
+		TACACS+ connections are TCP/IP connections initiated by the Client to the Server.
 		The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
 		A connection may be used for only a single Session or the multiplexing of multiple Sessions.
             </t>
             <t>
-		It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365">RFC3365</xref> dictates the need for end-to-end security.
+		It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"></xref> dictates the need for end-to-end security.
 		The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
             </t>
-            <section title="Well-Known TCP/IP Port" anchor="wellknown">
+            <section title="Well-Known TCP/IP Port">
 	    <t>
 		All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
 		Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
 		For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
-		Instead, following <xref target="RFC7605">RFC7605</xref>, a different well-known system TCP/IP port is assigned, port [TBD].
-	    </t>
-	    <t>
-		A new port is considered appropriate and superior to "STARTTLS" because it allows:
-		<list style="symbols">
-		<t>easily blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</t>
-		<t>passive Intrusion Detection Systems (IDS) watching the unencrypted version to be unaffected by the introduction of TLS,</t>
-		<t>avoidance of Man in the Middle (MitM) attacks that can affect STARTTLS,</t>
-		<t>and helps prevent the accidental exposure of sensitive information due to misconfiguration.</t>
-		</list>
-	    </t>
-	    <t>
-		However, co-existence of inferior authentication and encryption, whether a TACACS+ Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
-		The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
-		Another approach is configuration that requires TLS.
-		Clients and servers SHOULD allow configuration that requires TACACS+ Peers, globally and individually, use TLS.
-		Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
-XXX another form of downgrade attack is to filter/block the TLS port.  make sure this is covered in the text.
-	    </t>
-	    <t>
-		Servers and clients could also have a cache mechanism of clients and servers, respectively, that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
-		However, this has potential to be a Denial of Service (DoS) vector.
+		Instead, following <xref target="RFC7605"></xref>, a different well-known system TCP/IP port is assigned by IANA, port [TBD], for the TLS connection.
 	    </t>
             </section>
 	    <section title="TLS Protocol Version" anchor="TLSProtoVers">
@@ -237,10 +208,10 @@ XXX
 	    <section title="Authentication">
             <t>
 XXX
-TLS authentication can occur via asymmetric cryptographic or
+TLS authentication can occur via asymmetric cryptography or
  Edwards-Curve Digital Signature Algorithm,
 or various forms of symmetric pre-shared-key (PSK).
-we only consider out of band PSK.  KDF hash alg needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
+we only consider out of band PSK.  KDF hash algorithm needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
 RPKs - https://tools.ietf.org/html/rfc7250
 
             </t>
@@ -277,46 +248,42 @@ XXX
 
         <section title="Deprecation of TACACS+ PSK and Encryption">
             <t>
-		The <xref target="RFC8907">TACACS+ Protocol</xref> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in the <xref target="RFC8907">TACACS+ Protocol</xref>.
+		The <xref target="RFC8907">TACACS+ Protocol</xref> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
 		The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
-		Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
             </t>
             <t>
-		Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header of Packets on TLS Connections, indicating that the data obfuscation is not used.
+		Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
+		Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
 		A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.
             </t>
             <t>
-		A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections.
+		A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/
             </t>
             <t>
-		A TACACS+ implementation SHOULD, and is encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
+		A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
             </t>
             <t>
 		A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
             </t>
         </section>
         <section title="TACACS+ Extended Authentication Packet Types">
-            <t>Versions 1 and 2 of the T+ Protocol, as defined in [RFC 8907], specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support
-                the credential validation use case but does not accommodate any further arguments
-                which may be used to give context to the request.</t>
-
-        <t>One use-case where this shortcoming inhibits correct operation is for the TACACS+
-            proxy. Because the originating client is not encoded in the regular Authentication
-            START Packet, TACACS+ Servers generally attempt to determine the client from the TCP
-            connection. This is effective only for the first step: proxied TACACS+ servers can
-            no longer securely enforce policy based upon the end client IP-Address.</t>
-
-        <t>Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol</t>
-
-        <t>To support these use cases, and allow clients to add environment information
-            to the request, the Extended Authentication Packets brings the Authentication 
-            phase of the protocol inline with the Authorization and Accounting Phase by incorporating
-            extensible arguments</t>
-
-        <t>The server should expect Extended Authentication Packet bodies if the minor version in the header is: 0x2</t>
-
-
-
+            <t>
+                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"></xref>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments which may be used to give context to the request.
+            </t>
+            <t>
+                One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
+                Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.
+                This is effective only for the first step: proxied TACACS+ servers can no longer securely enforce policy based upon the end client IP-Address.
+            </t>
+            <t>
+                Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol.
+            </t>
+            <t>
+                To support these use cases, and allow clients to add environment information to the request, the Extended Authentication Packets brings the Authentication phase of the protocol inline with the Authorization and Accounting Phase by incorporating extensible arguments.
+            </t>
+            <t>
+                The server should expect Extended Authentication Packet Bodies if the minor version in the Packet Header is: 0x2
+            </t>
             <section anchor="ExtendedAuthenticationSTARTPacketBody" title="The Extended Authentication START Packet Body">
                 <figure>
                     <artwork><![CDATA[
@@ -352,47 +319,47 @@ XXX
 +----------------+----------------+----------------+----------------+
 ]]></artwork>
                 </figure>
-
-                <t>The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in [RFC 8907].</t>
-
+                <t>
+                    The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"></xref>.
+                </t>
+                <t>The new fields are as follows:</t>
                 <t>arg_cnt</t>
-
                 <t>This represents the number of arguments in the packet.</t>
 
-                <t>arg_1 ... arg_N, arg_1_len .... arg_N_len</t>
+                <t>arg_1_len ... arg_N_len, arg_1 ... arg_N</t>
 
-                <t>Each argument is encoded in the packet as a single arg field (arg_1...  arg_N) with
-   a corresponding length field (which indicates the length of each argument in bytes).</t>
-
-                <t>The arguments are argument-value pairs. The argument and the value are in a single
-   string and are separated by either a "=" (0X3D) or a "*" (0X2A). The equals sign 
-   indicates a mandatory argument. The asterisk indicates an optional one. An argument
-   name MUST NOT contain either of the separators.  An argument value MAY contain the
-   separators. The value part of an argument-value pair may be empty, that is, the length
-   of the value may be zero.</t>
-
-                <t>Optional arguments are ones that may be disregarded by the server. Mandatory arguments
-   require that the server implementation and configuration includes the details of how
-   to act on it.</t>
-
-                <t>Though the arguments allow extensibility through the rule above, the argument to encode
-   the originating client will be defined here:</t>
-
-                <t>origin_client</t>
-
-                <t>The IP-Address of the originating TACACS+ client. This is text encoded in
-   line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6. IPv4 addresses are
-   specified as octet numeric values separated by dots ('.'). IPv6 address text representation 
-   is defined in [RFC5952].</t>
-
-
-            </section>
-            <section anchor="ExtensionAuthenticationREPLYPacketBody" title="The Extension Authentication REPLY Packet Body">
                 <t>
-					The TACACS+ server sends only one type of extended
-					authentication packet to the client.
+                    Each argument is encoded in the packet as a single arg field (arg_1 ... arg_N) with a corresponding length field that indicates the length of each argument in bytes.
+                </t>
+                <t>
+                    The arguments are argument-value pairs.
+                    The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
+                    The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
+                    An argument name MUST NOT contain either of the separators.
+                    An argument value MAY contain the separators.
+                    The value part of an argument-value pair may be empty, that is, the length of the value may be zero.
+                </t>
+                <t>
+                    Optional arguments are ones that may be disregarded by the server.
+                    Mandatory arguments require that the server implementation and configuration includes the details of how to act on it.
+                </t>
+                <t>
+                    Though the arguments allow extensibility through the rule above, the argument to encode the originating client will be defined here:
                 </t>
 
+                <t>origin_client</t>
+                <t>
+                    The IP-Address of the originating TACACS+ client.
+                    This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
+                    IPv4 addresses are specified as octet numeric values separated by dots ('.').
+                    IPv6 address text representation is defined in [RFC5952].
+                </t>
+            </section>
+
+            <section anchor="ExtensionAuthenticationREPLYPacketBody" title="The Extension Authentication REPLY Packet Body">
+                <t>
+                    The TACACS+ server sends only one type of extended authentication packet to the client.
+                </t>
                 <figure>
                     <artwork><![CDATA[
  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -421,21 +388,16 @@ XXX
 +----------------+----------------+----------------+----------------+
 ]]></artwork>
                 </figure>
-
-
-                <t>The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the 
-Authentication REPLY Packet Body in [RFC 8907].</t>
-
-                <t>The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+                <t>
+                    The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"></xref>].
+                </t>
+                <t>The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
                 </t>
             </section>
 
             <section anchor="ExtendedAuthenticationCONTINUEPacketBody" title="The Extended Authentication CONTINUE Packet Body">
                 <t>
-					This packet is sent from the client to the server
-					following the
-					receipt
-					of an Extended REPLY packet.
+                    This packet is sent from the client to the server following the receipt of an Extended REPLY packet.
                 </t>
                 <figure>
                     <artwork><![CDATA[
@@ -443,7 +405,7 @@ Authentication REPLY Packet Body in [RFC 8907].</t>
 +----------------+----------------+----------------+----------------+
 |          user_msg len           |            data_len             |
 +----------------+----------------+----------------+----------------+
-|     flags
+|     flags                                                         |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -467,39 +429,69 @@ Authentication REPLY Packet Body in [RFC 8907].</t>
 +----------------+----------------+----------------+----------------+
 ]]></artwork>
                 </figure>
+                <t>
+                    The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"></xref>.
+                </t>
 
-                <t>The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the 
-Authentication REPLY Packet Body in [RFC 8907].</t>
-
-                <t>The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+                <t>
+                    The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
                 </t>
             </section>
         </section>
 
-       <section title="Security Considerations">
-           <t>
-		This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.
-		This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
-		That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
-            </t>
-	    <t>
-		It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
-		It would be highly desirable for the TLS working group to publish a single document that evolves with TLS and its algorithms that RFCs such as this one could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
-		As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.
-            </t>
-            <t>
-		TLS encryption SHOULD be used in deployments when both the clients and servers support it.
-		Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
-		Unsecure Connections would be better served by separate Servers from the TLS Servers.
-	    </t>
-	    <t>
-		It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.
-	    </t>
+        <section title="Security Considerations">
+            <section title="TLS">
+                <t>
+		    This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.
+		    This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
+		    That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
+                </t>
+                <section title="TLS Options">
+	        <t>
+		    It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
+		    It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which RFCs using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
+		    As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.
+                </t>
+                </section>
+                <section title="TLS Use">
+                <t>
+		    TLS encryption SHOULD be used in deployments when both the clients and servers support it.
+		    Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
+		    Unsecure Connections would be better served by separate Servers from the TLS Servers.
+	        </t>
+	        <t>
+		    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.
+	        </t>
+                </section>
+            </section>
+            <section title="Well-Known TCP/IP Port" anchor="wellknown">
+	        <t>
+		    A new port is considered appropriate and superior to a "STARTTLS" command because it allows:
+		    <list style="symbols">
+		    <t>ease of blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</t>
+		    <t>passive Intrusion Detection Systems (IDSs) monitoring the unencrypted version to be unaffected by the introduction of TLS,</t>
+		    <t>avoidance of Man in the Middle (MitM) attacks that can interfere with STARTTLS,</t>
+		    <t>and helps prevent the accidental exposure of sensitive information due to misconfiguration.</t>
+		    </list>
+	        </t>
+	        <t>
+		    However, co-existence of inferior authentication and encryption, whether an Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
+		    Causing failure of connections to the TLS-enabled service or the negotiation of shared algorithm support are two such down-grade attacks.
+		    The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
+		    Another approach is mutual configuration that requires TLS.
+		    Clients and servers SHOULD support configuration that requires Peers, globally and individually, use TLS.
+		    Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
+	        </t>
+	        <t>
+		    Servers and clients could also maintain a cache of Peers that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
+		    However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a sever to believe that a client that does not support TLS has successfully connected with TLS.
+	        </t>
+            </section>
         </section>
 
         <section title="IANA Considerations">
             <t>
-		The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020">RFC4020</xref> and <xref target="RFC6335">RFC6335</xref>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
+		The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"></xref> and <xref target="RFC6335">RFC6335</xref>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
 		The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
 		This allocation is justified in <xref target="wellknown"/>.
             </t>

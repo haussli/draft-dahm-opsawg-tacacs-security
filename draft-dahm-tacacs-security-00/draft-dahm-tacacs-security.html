@@ -11,29 +11,29 @@
 <meta content="
        
  The  TACACS+ Protocol  provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-                This document, a companion to the  TACACS+ protocol , adds new packet formats to improve security and function, adds Transport Layer Security ( TLS ) support, adds support to carry  SSH  public keys, and deprecates former inferior security mechanisms.
+                This document, a companion to the  TACACS+ protocol , adds new packet formats to improve security and function, Transport Layer Security (currently defined by  TLS 1.2  and  TLS 1.3 ) support, and support for  SSH  public keys and deprecates former inferior security mechanisms.
        
     " name="description">
-<meta content="xml2rfc 3.7.0" name="generator">
+<meta content="xml2rfc 3.9.1" name="generator">
 <meta content="TACACS+" name="keyword">
 <meta content="draft-dahm-tacacs-security-00" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.7.0
-    Python 3.7.10
+  xml2rfc 3.9.1
+    Python 3.6.13
     appdirs 1.4.4
-    ConfigArgParse 1.4.1
-    google-i18n-address 2.5.0
+    ConfigArgParse 1.5.1
+    google-i18n-address 2.3.5
     html5lib 1.0.1
     intervaltree 3.0.2
     Jinja2 2.11.3
     kitchen 1.2.6
     lxml 4.6.3
     pycountry 18.5.26
-    pyflakes 2.3.0
+    pyflakes 2.2.0
     PyYAML 5.4.1
-    requests 2.26.0
+    requests 2.24.0
     setuptools 57.0.0
-    six 1.15.0
+    six 1.12.0
 -->
 <link href="draft-dahm-tacacs-security.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -202,6 +202,9 @@ ul.empty, .ulEmpty {
 }
 ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
+}
+ul.ulBare, li.ulBare {
+  margin-left: 0em !important;
 }
 ul.compact, .ulCompact,
 ol.compact, .olCompact {
@@ -1185,7 +1188,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dahm, et al.</td>
-<td class="center">Expires 17 January 2022</td>
+<td class="center">Expires 25 January 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1198,12 +1201,12 @@ li > p:last-of-type {
 <dd class="internet-draft">draft-dahm-tacacs-security-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-07-16" class="published">16 July 2021</time>
+<time datetime="2021-07-24" class="published">24 July 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-01-17">17 January 2022</time></dd>
+<dd class="expires"><time datetime="2022-01-25">25 January 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1224,7 +1227,7 @@ li > p:last-of-type {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">
  The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-                This document, a companion to the <span><a href="#RFC8907" class="xref">TACACS+ protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>, adds new packet formats to improve security and function, adds Transport Layer Security (<span><a href="#RFC8446" class="xref">TLS</a> [<a href="#RFC8446" class="xref">RFC8446</a>]</span>) support, adds support to carry <span><a href="#RFC4716" class="xref">SSH</a> [<a href="#RFC4716" class="xref">RFC4716</a>]</span> public keys, and deprecates former inferior security mechanisms.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+                This document, a companion to the <span><a href="#RFC8907" class="xref">TACACS+ protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>, adds new packet formats to improve security and function, Transport Layer Security (currently defined by <span><a href="#RFC5246" class="xref">TLS 1.2</a> [<a href="#RFC5246" class="xref">RFC5246</a>]</span> and <span><a href="#RFC8446" class="xref">TLS 1.3</a> [<a href="#RFC8446" class="xref">RFC8446</a>]</span>) support, and support for <span><a href="#RFC4716" class="xref">SSH</a> [<a href="#RFC4716" class="xref">RFC4716</a>]</span> public keys and deprecates former inferior security mechanisms.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note" id="section-note.1">
       <h2 id="name-requirements-language">
@@ -1252,7 +1255,7 @@ li > p:last-of-type {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 January 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 January 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1280,96 +1283,109 @@ li > p:last-of-type {
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.1">
+<nav class="toc"><ul class="ulBare compact ulEmpty toc">
+<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.2">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-technical-definitions" class="xref">Technical Definitions</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.2.2.1">
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
                 <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-unsecure-connection" class="xref">Unsecure Connection</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.2.2.2">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
                 <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-peer" class="xref">Peer</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-session" class="xref">Session</a></p>
-</li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-tls-connection" class="xref">TLS Connection</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-tls-connection" class="xref">TLS Connection</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.3">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-tls-for-tacacs" class="xref">TLS for TACACS+</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.3.2.1">
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-well-known-tcp-ip-port" class="xref">Well-Known TCP/IP Port</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.3.2.2">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-tls-protocol-version" class="xref">TLS Protocol Version</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.3.2.3">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-cipher-requirements" class="xref">Cipher Requirements</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+<ul class="ulBare toc compact ulEmpty">
+<li class="ulBare toc compact ulEmpty" id="section-toc.1-1.3.2.3.2.1">
                     <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="xref">3.3.1</a>.  <a href="#name-mandatory-cipher-suites" class="xref">Mandatory Cipher Suites</a></p>
 </li>
                 </ul>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.3.2.4">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-authentication" class="xref">Authentication</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.3.2.4.2.1">
+<ul class="ulBare toc compact ulEmpty">
+<li class="ulBare toc compact ulEmpty" id="section-toc.1-1.3.2.4.2.1">
                     <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="xref">3.4.1</a>.  <a href="#name-psk-identity-requirements" class="xref">PSK Identity Requirements</a></p>
 </li>
-                  <li class="toc compact ulEmpty" id="section-toc.1-1.3.2.4.2.2">
+                  <li class="ulBare toc compact ulEmpty" id="section-toc.1-1.3.2.4.2.2">
                     <p id="section-toc.1-1.3.2.4.2.2.1"><a href="#section-3.4.2" class="xref">3.4.2</a>.  <a href="#name-tls-certificate-identity-re" class="xref">TLS Certificate Identity Requirements</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.4">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-deprecation-of-tacacs-psk-a" class="xref">Deprecation of TACACS+ PSK and Encryption</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.5">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-tacacs-extended-authenticat" class="xref">TACACS+ Extended Authentication Packet Types</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.5.2.1">
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-the-extended-authentication" class="xref">The Extended Authentication START Packet Body</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.5.2.2">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
                 <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-the-extension-authenticatio" class="xref">The Extension Authentication REPLY Packet Body</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.5.2.3">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
                 <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-the-extended-authentication-" class="xref">The Extended Authentication CONTINUE Packet Body</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.6">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-tls" class="xref">TLS</a></p>
+<ul class="ulBare toc compact ulEmpty">
+<li class="ulBare toc compact ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="xref">6.1.1</a>.  <a href="#name-tls-options" class="xref">TLS Options</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.7">
+                  <li class="ulBare toc compact ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="xref">6.1.2</a>.  <a href="#name-tls-use" class="xref">TLS Use</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-well-known-tcp-ip-port-2" class="xref">Well-Known TCP/IP Port</a></p>
+</li>
+            </ul>
+</li>
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.8">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.9">
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a></p>
-<ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.9.2.1">
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
                 <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
 </li>
-              <li class="toc compact ulEmpty" id="section-toc.1-1.9.2.2">
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
                 <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
+          <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1381,13 +1397,12 @@ li > p:last-of-type {
       </h2>
 <p id="section-1-1">
  The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
- The protocol provides authentication, authorization and accounting services for TACACS+ clients.
- While the content of the protocol is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.<a href="#section-1-1" class="pilcrow">¶</a></p>
+ The protocol provides authentication, authorization and accounting services for TACACS+ clients.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">
- The existing confidentiality, integrity, and authentication mechanisms of TACACS+ are extremely weak.
- The Security Considerations section of the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> adequately describes this.<a href="#section-1-2" class="pilcrow">¶</a></p>
+ While the content of the protocol is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
+ The existing mechanisms of TACACS+ are extremely weak and the Security Considerations section of the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> adequately describes this.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">
- To address these flaws, this document updates the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> to use <span><a href="#RFC8446" class="xref">TLS</a> [<a href="#RFC8446" class="xref">RFC8446</a>]</span> authentication and encryption, and deprecates the use of its former mechanisms.<a href="#section-1-3" class="pilcrow">¶</a></p>
+ To address these deficiencies, this document updates the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> to use <span><a href="#RFC5246" class="xref">TLS 1.2</a> [<a href="#RFC5246" class="xref">RFC5246</a>]</span> and <span><a href="#RFC8446" class="xref">TLS 1.3</a> [<a href="#RFC8446" class="xref">RFC8446</a>]</span> authentication and encryption, and deprecates the use of its former mechanisms.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">
  To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">
@@ -1416,20 +1431,11 @@ li > p:last-of-type {
  This refers to a TACACS+ Server or Client.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.3">
-        <h3 id="name-session">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-session" class="section-name selfRef">Session</a>
+        <h3 id="name-tls-connection">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-tls-connection" class="section-name selfRef">TLS Connection</a>
         </h3>
 <p id="section-2.3-1">
- Defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> as a single authentication sequence, a single authorization exchange, or a single accounting exchange.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-</section>
-<section id="section-2.4">
-        <h3 id="name-tls-connection">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-tls-connection" class="section-name selfRef">TLS Connection</a>
-        </h3>
-<p id="section-2.4-1">
- A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.
- The TCP/IP port [TBD] is allocated by IANA for this TLS connection.
-XXX Should "TLS" point to TLS 1.2 or 1.3 RFCs?  Both?<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+ A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <section id="section-3">
@@ -1437,13 +1443,12 @@ XXX Should "TLS" point to TLS 1.2 or 1.3 RFCs?  Both?<a href="#section-2.4-1" cl
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-tls-for-tacacs" class="section-name selfRef">TLS for TACACS+</a>
       </h2>
 <p id="section-3-1">
- TACACS+ connections are over TCP/IP, initiated by the Client to the Server.
+ TACACS+ connections are TCP/IP connections initiated by the Client to the Server.
  The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.
  A connection may be used for only a single Session or the multiplexing of multiple Sessions.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">
- It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <span><a href="#RFC3365" class="xref">RFC3365</a> [<a href="#RFC3365" class="xref">RFC3365</a>]</span> dictates the need for end-to-end security.
+ It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <span>[<a href="#RFC3365" class="xref">RFC3365</a>]</span> dictates the need for end-to-end security.
  The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<div id="wellknown">
 <section id="section-3.1">
         <h3 id="name-well-known-tcp-ip-port">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-well-known-tcp-ip-port" class="section-name selfRef">Well-Known TCP/IP Port</a>
@@ -1452,31 +1457,8 @@ XXX Should "TLS" point to TLS 1.2 or 1.3 RFCs?  Both?<a href="#section-2.4-1" cl
  All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
  Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
  For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
- Instead, following <span><a href="#RFC7605" class="xref">RFC7605</a> [<a href="#RFC7605" class="xref">RFC7605</a>]</span>, a different well-known system TCP/IP port is assigned, port [TBD].<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">
- A new port is considered appropriate and superior to "STARTTLS" because it allows:<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1-3.1">easily blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,<a href="#section-3.1-3.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-3.2">passive Intrusion Detection Systems (IDS) watching the unencrypted version to be unaffected by the introduction of TLS,<a href="#section-3.1-3.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-3.3">avoidance of Man in the Middle (MitM) attacks that can affect STARTTLS,<a href="#section-3.1-3.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.1-3.4">and helps prevent the accidental exposure of sensitive information due to misconfiguration.<a href="#section-3.1-3.4" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-3.1-4">
- However, co-existence of inferior authentication and encryption, whether a TACACS+ Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
- The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
- Another approach is configuration that requires TLS.
- Clients and servers SHOULD allow configuration that requires TACACS+ Peers, globally and individually, use TLS.
- Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
-XXX another form of downgrade attack is to filter/block the TLS port.  make sure this is covered in the text.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">
- Servers and clients could also have a cache mechanism of clients and servers, respectively, that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
- However, this has potential to be a Denial of Service (DoS) vector.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+ Instead, following <span>[<a href="#RFC7605" class="xref">RFC7605</a>]</span>, a different well-known system TCP/IP port is assigned by IANA, port [TBD], for the TLS connection.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
-</div>
 <div id="TLSProtoVers">
 <section id="section-3.2">
         <h3 id="name-tls-protocol-version">
@@ -1546,10 +1528,10 @@ XXX<a href="#section-3.3.1-4" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-3.4-1">
 XXX
-TLS authentication can occur via asymmetric cryptographic or
+TLS authentication can occur via asymmetric cryptography or
  Edwards-Curve Digital Signature Algorithm,
 or various forms of symmetric pre-shared-key (PSK).
-we only consider out of band PSK.  KDF hash alg needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
+we only consider out of band PSK.  KDF hash algorithm needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
 RPKs - https://tools.ietf.org/html/rfc7250<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <section id="section-3.4.1">
           <h4 id="name-psk-identity-requirements">
@@ -1601,16 +1583,16 @@ XXX<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-deprecation-of-tacacs-psk-a" class="section-name selfRef">Deprecation of TACACS+ PSK and Encryption</a>
       </h2>
 <p id="section-4-1">
- The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation in the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.
- The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
- Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.<a href="#section-4-1" class="pilcrow">¶</a></p>
+ The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
+ The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">
- Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet header of Packets on TLS Connections, indicating that the data obfuscation is not used.
+ Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
+ Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
  A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <p id="section-4-3">
- A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections.<a href="#section-4-3" class="pilcrow">¶</a></p>
+ A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/<a href="#section-4-3" class="pilcrow">¶</a></p>
 <p id="section-4-4">
- A TACACS+ implementation SHOULD, and is encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.<a href="#section-4-4" class="pilcrow">¶</a></p>
+ A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <p id="section-4-5">
  A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-4-5" class="pilcrow">¶</a></p>
 </section>
@@ -1618,20 +1600,18 @@ XXX<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
       <h2 id="name-tacacs-extended-authenticat">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-tacacs-extended-authenticat" class="section-name selfRef">TACACS+ Extended Authentication Packet Types</a>
       </h2>
-<p id="section-5-1">Versions 1 and 2 of the T+ Protocol, as defined in [RFC 8907], specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support
-                the credential validation use case but does not accommodate any further arguments
-                which may be used to give context to the request.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">One use-case where this shortcoming inhibits correct operation is for the TACACS+
-            proxy. Because the originating client is not encoded in the regular Authentication
-            START Packet, TACACS+ Servers generally attempt to determine the client from the TCP
-            connection. This is effective only for the first step: proxied TACACS+ servers can
-            no longer securely enforce policy based upon the end client IP-Address.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">To support these use cases, and allow clients to add environment information
-            to the request, the Extended Authentication Packets brings the Authentication 
-            phase of the protocol inline with the Authorization and Accounting Phase by incorporating
-            extensible arguments<a href="#section-5-4" class="pilcrow">¶</a></p>
-<p id="section-5-5">The server should expect Extended Authentication Packet bodies if the minor version in the header is: 0x2<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-1">
+                Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments which may be used to give context to the request.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">
+                One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
+                Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.
+                This is effective only for the first step: proxied TACACS+ servers can no longer securely enforce policy based upon the end client IP-Address.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">
+                Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">
+                To support these use cases, and allow clients to add environment information to the request, the Extended Authentication Packets brings the Authentication phase of the protocol inline with the Authorization and Accounting Phase by incorporating extensible arguments.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">
+                The server should expect Extended Authentication Packet Bodies if the minor version in the Packet Header is: 0x2<a href="#section-5-5" class="pilcrow">¶</a></p>
 <div id="ExtendedAuthenticationSTARTPacketBody">
 <section id="section-5.1">
         <h3 id="name-the-extended-authentication">
@@ -1671,28 +1651,32 @@ XXX<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
 +----------------+----------------+----------------+----------------+
 </pre><a href="#section-5.1-1" class="pilcrow">¶</a>
 </div>
-<p id="section-5.1-2">The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in [RFC 8907].<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3">arg_cnt<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">This represents the number of arguments in the packet.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.1-5">arg_1 ... arg_N, arg_1_len .... arg_N_len<a href="#section-5.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.1-6">Each argument is encoded in the packet as a single arg field (arg_1...  arg_N) with
-   a corresponding length field (which indicates the length of each argument in bytes).<a href="#section-5.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.1-7">The arguments are argument-value pairs. The argument and the value are in a single
-   string and are separated by either a "=" (0X3D) or a "*" (0X2A). The equals sign 
-   indicates a mandatory argument. The asterisk indicates an optional one. An argument
-   name MUST NOT contain either of the separators.  An argument value MAY contain the
-   separators. The value part of an argument-value pair may be empty, that is, the length
-   of the value may be zero.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
-<p id="section-5.1-8">Optional arguments are ones that may be disregarded by the server. Mandatory arguments
-   require that the server implementation and configuration includes the details of how
-   to act on it.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
-<p id="section-5.1-9">Though the arguments allow extensibility through the rule above, the argument to encode
-   the originating client will be defined here:<a href="#section-5.1-9" class="pilcrow">¶</a></p>
-<p id="section-5.1-10">origin_client<a href="#section-5.1-10" class="pilcrow">¶</a></p>
-<p id="section-5.1-11">The IP-Address of the originating TACACS+ client. This is text encoded in
-   line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6. IPv4 addresses are
-   specified as octet numeric values separated by dots ('.'). IPv6 address text representation 
-   is defined in [RFC5952].<a href="#section-5.1-11" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">
+                    The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">The new fields are as follows:<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.1-4">arg_cnt<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1-5">This represents the number of arguments in the packet.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.1-6">arg_1_len ... arg_N_len, arg_1 ... arg_N<a href="#section-5.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.1-7">
+                    Each argument is encoded in the packet as a single arg field (arg_1 ... arg_N) with a corresponding length field that indicates the length of each argument in bytes.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.1-8">
+                    The arguments are argument-value pairs.
+                    The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
+                    The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
+                    An argument name MUST NOT contain either of the separators.
+                    An argument value MAY contain the separators.
+                    The value part of an argument-value pair may be empty, that is, the length of the value may be zero.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.1-9">
+                    Optional arguments are ones that may be disregarded by the server.
+                    Mandatory arguments require that the server implementation and configuration includes the details of how to act on it.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
+<p id="section-5.1-10">
+                    Though the arguments allow extensibility through the rule above, the argument to encode the originating client will be defined here:<a href="#section-5.1-10" class="pilcrow">¶</a></p>
+<p id="section-5.1-11">origin_client<a href="#section-5.1-11" class="pilcrow">¶</a></p>
+<p id="section-5.1-12">
+                    The IP-Address of the originating TACACS+ client.
+                    This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
+                    IPv4 addresses are specified as octet numeric values separated by dots ('.').
+                    IPv6 address text representation is defined in [RFC5952].<a href="#section-5.1-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ExtensionAuthenticationREPLYPacketBody">
@@ -1701,8 +1685,7 @@ XXX<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-the-extension-authenticatio" class="section-name selfRef">The Extension Authentication REPLY Packet Body</a>
         </h3>
 <p id="section-5.2-1">
- The TACACS+ server sends only one type of extended
- authentication packet to the client.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+                    The TACACS+ server sends only one type of extended authentication packet to the client.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-5.2-2">
 <pre>
  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -1731,9 +1714,9 @@ XXX<a href="#section-3.4.2-1" class="pilcrow">¶</a></p>
 +----------------+----------------+----------------+----------------+
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5.2-3">The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the 
-Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.2-3" class="pilcrow">¶</a></p>
-<p id="section-5.2-4">The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <span><a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Common Authentication flows</a> (<a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Section 5.1</a>)</span>.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">
+                    The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>].<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <span><a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Common Authentication flows</a> (<a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Section 5.1</a>)</span>.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ExtendedAuthenticationCONTINUEPacketBody">
@@ -1742,17 +1725,14 @@ Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.2-3" class="p
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-the-extended-authentication-" class="section-name selfRef">The Extended Authentication CONTINUE Packet Body</a>
         </h3>
 <p id="section-5.3-1">
- This packet is sent from the client to the server
- following the
- receipt
- of an Extended REPLY packet.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+                    This packet is sent from the client to the server following the receipt of an Extended REPLY packet.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-5.3-2">
 <pre>
  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
 +----------------+----------------+----------------+----------------+
 |          user_msg len           |            data_len             |
 +----------------+----------------+----------------+----------------+
-|     flags
+|     flags                                                         |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -1776,9 +1756,10 @@ Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.2-3" class="p
 +----------------+----------------+----------------+----------------+
 </pre><a href="#section-5.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-5.3-3">The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the 
-Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.3-3" class="pilcrow">¶</a></p>
-<p id="section-5.3-4">The arg_cnt, arg_1 ... arg_N, arg_1_len .... arg_N_len fields are used as defined in <span><a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Common Authentication flows</a> (<a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Section 5.1</a>)</span>.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
+<p id="section-5.3-3">
+                    The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.3-4">
+                    The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <span><a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Common Authentication flows</a> (<a href="#ExtendedAuthenticationSTARTPacketBody" class="xref">Section 5.1</a>)</span>.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1786,29 +1767,73 @@ Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.3-3" class="p
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">
- This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.
- This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
- That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">
- It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
- It would be highly desirable for the TLS working group to publish a single document that evolves with TLS and its algorithms that RFCs such as this one could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
- As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.<a href="#section-6-2" class="pilcrow">¶</a></p>
-<p id="section-6-3">
- TLS encryption SHOULD be used in deployments when both the clients and servers support it.
- Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <a href="#wellknown" class="xref">Section 3.1</a>.
- Unsecure Connections would be better served by separate Servers from the TLS Servers.<a href="#section-6-3" class="pilcrow">¶</a></p>
-<p id="section-6-4">
- It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<section id="section-6.1">
+        <h3 id="name-tls">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-tls" class="section-name selfRef">TLS</a>
+        </h3>
+<p id="section-6.1-1">
+     This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.
+     This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
+     That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<section id="section-6.1.1">
+          <h4 id="name-tls-options">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-tls-options" class="section-name selfRef">TLS Options</a>
+          </h4>
+<p id="section-6.1.1-1">
+     It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
+     It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which RFCs using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
+     As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+</section>
+<section id="section-6.1.2">
+          <h4 id="name-tls-use">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-tls-use" class="section-name selfRef">TLS Use</a>
+          </h4>
+<p id="section-6.1.2-1">
+     TLS encryption SHOULD be used in deployments when both the clients and servers support it.
+     Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <a href="#wellknown" class="xref">Section 6.2</a>.
+     Unsecure Connections would be better served by separate Servers from the TLS Servers.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-2">
+     It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</section>
+<div id="wellknown">
+<section id="section-6.2">
+        <h3 id="name-well-known-tcp-ip-port-2">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-well-known-tcp-ip-port-2" class="section-name selfRef">Well-Known TCP/IP Port</a>
+        </h3>
+<p id="section-6.2-1">
+     A new port is considered appropriate and superior to a "STARTTLS" command because it allows:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-2.1">ease of blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,<a href="#section-6.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-6.2-2.2">passive Intrusion Detection Systems (IDSs) monitoring the unencrypted version to be unaffected by the introduction of TLS,<a href="#section-6.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-6.2-2.3">avoidance of Man in the Middle (MitM) attacks that can interfere with STARTTLS,<a href="#section-6.2-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-6.2-2.4">and helps prevent the accidental exposure of sensitive information due to misconfiguration.<a href="#section-6.2-2.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-6.2-3">
+     However, co-existence of inferior authentication and encryption, whether an Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
+     Causing failure of connections to the TLS-enabled service or the negotiation of shared algorithm support are two such down-grade attacks.
+     The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
+     Another approach is mutual configuration that requires TLS.
+     Clients and servers SHOULD support configuration that requires Peers, globally and individually, use TLS.
+     Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">
+     Servers and clients could also maintain a cache of Peers that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
+     However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a sever to believe that a client that does not support TLS has successfully connected with TLS.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 <section id="section-7">
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-7-1">
- The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <span><a href="#RFC4020" class="xref">RFC4020</a> [<a href="#RFC4020" class="xref">RFC4020</a>]</span> and <span><a href="#RFC6335" class="xref">RFC6335</a> [<a href="#RFC6335" class="xref">RFC6335</a>]</span>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
+ The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <span>[<a href="#RFC4020" class="xref">RFC4020</a>]</span> and <span><a href="#RFC6335" class="xref">RFC6335</a> [<a href="#RFC6335" class="xref">RFC6335</a>]</span>, of a new well-known system TCP/IP port number for "tacacss", described as "TACACS+ over TLS".
  The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
- This allocation is justified in <a href="#wellknown" class="xref">Section 3.1</a>.<a href="#section-7-1" class="pilcrow">¶</a></p>
+ This allocation is justified in <a href="#wellknown" class="xref">Section 6.2</a>.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">
  RFC EDITOR: this port number should replace "[TBD]" within this document.<a href="#section-7-2" class="pilcrow">¶</a></p>
 </section>
@@ -1883,7 +1908,7 @@ Authentication REPLY Packet Body in [RFC 8907].<a href="#section-5.3-3" class="p
 </section>
 </section>
 <div id="authors-addresses">
-<section id="section-appendix.a">
+<section id="appendix-A">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
