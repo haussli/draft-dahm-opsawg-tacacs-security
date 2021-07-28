@@ -98,6 +98,16 @@
          The Technical Definitions section of the <xref target="RFC8907">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
          The following terms are also used in this document.
        </t>
+       <section title="AVP">
+         <t>
+           An Attribute-Value Pair or AVP is another name a TACACS+ argument as defined in <xref target="RFC8907"/> Sections 6.1 and 8.
+         </t>
+       </section>
+       <section title="Empty Value">
+         <t>
+           An empty or zero-length value of an AVP as defined in <xref target="RFC8907"/> Sections 8.1.
+         </t>
+       </section>
        <section title="Unsecure Connection">
          <t>
            This is another term for a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
@@ -431,6 +441,42 @@ s.
        </section>
      </section>
 
+     <section title="SSH">
+       <t>
+         Most network equipment now support <xref target="RFC4251">SSH</xref> for Command Line Interface (CLI) and <xref target="RFC6242">Netconf</xref>.
+         Operators want to use SSH public keys for authentication.
+         Some devices support public keys in native configuration, but there is desire to centrally manage keys and SSH subsystem authorization.
+       </t>
+
+       <section title="SSH Public Key Support">
+         <t>
+           To support central management of SSH public keys via TACACS+, this document extends the Authentication sequence of <xref target="RFC8907"/> Section 5.4.2 and the <xref target="ExtendedAuthenticationPacketType">Extended Authenication</xref> sequence to deliver SSH public keys to devices for local verification.
+         </t>
+         <t>
+XXX describe the authenication sequences in Extended Authentication Packet format.
+         </t>
+       </section>
+
+       <section title="SSH Authorization and Accounting">
+         <t>
+           To support central management via TACACS+ of SSH and SSH subsystem authorization, this document adds an <xref target="RFC8907">RFC8907 Section 6.1 Authorization REQUEST authen_method</xref> and well-known AVPs to <xref target="RFC8907">RFC8907 Section 8.2 Authorization Arguments</xref>.
+         </t>
+         <t>New Authorization and Accounting authen_method values:</t>
+         <dl newline="true">
+           <dt>TAC_PLUS_AUTHEN_METH_SSHPUBKEY := 0x21</dt>
+           <dd>This value indicates that the user authenticated by SSH public key.</dd>
+         </dl>
+         <t>New Authorization and Accounting Arguments:</t>
+         <dl newline="true" indent="8">
+           <dt>ssh-subsystem (String)</dt>
+           <dd>This AVP defines the SSH subsystem for which the authorization is requested and is Mandatory when the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.
+               Valid values are the Empty Value or a SSH Subsystem Name as defined in the <xref target="SSHPARAM">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
+               An invalid name MUST result in an Authorization REPLY packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.
+           </dd>
+         </dl>
+       </section>
+     </section>
+
      <section title="Security Considerations">
        <section title="TLS">
          <t>
@@ -510,14 +556,25 @@ tance.
          <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
        </referencegroup>
        <?rfc include="reference.RFC.4279.xml"?>
+       <?rfc include="reference.RFC.4250.xml"?>
        <?rfc include="reference.RFC.4716.xml"?>
        <?rfc include="reference.RFC.5246.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
+       <reference anchor="SSHPARAM" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml">
+         <front>
+           <title>SSH Protocol Parameters</title>
+           <author fullname="James Clark">
+             <address><email>jjc@jclark.com</email></address>
+           </author>
+         </front>
+       </reference>
      </references>
      <references title="Informative References">
        <?rfc include="reference.RFC.3365.xml"?>
        <?rfc include="reference.RFC.4020.xml"?>
+       <?rfc include="reference.RFC.4251.xml"?>
+       <?rfc include="reference.RFC.6242.xml"?>
        <?rfc include="reference.RFC.6335.xml"?>
        <?rfc include="reference.RFC.7605.xml"?>
      </references>
