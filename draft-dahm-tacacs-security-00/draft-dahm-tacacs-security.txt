@@ -4,14 +4,14 @@
 
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
-Intended status: Standards Track                                 D. Gash
-Expires: 25 January 2022                             Cisco Systems, Inc.
-                                                                  A. Ota
-                                                            24 July 2021
+Updates: RFC8097 (if approved)                                   D. Gash
+Intended status: Informational                       Cisco Systems, Inc.
+Expires: 29 January 2022                                          A. Ota
+                                                            28 July 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
-                     draft-dahm-tacacs-security-00
+                           xml2rfc-docs-3.9.1
 
 Abstract
 
@@ -28,9 +28,9 @@ Requirements Language
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
+   "OPTIONAL" in this document are to be interpreted as described in
+   [BCP14] when, and only when, they appear in all capitals, as shown
+   here.
 
 Status of This Memo
 
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 January 2022.
+   This Internet-Draft will expire on 29 January 2022.
 
 
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 1]
+Dahm, et al.             Expires 29 January 2022                [Page 1]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 Copyright Notice
@@ -99,9 +99,8 @@ Table of Contents
      6.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  12
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
    8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  13
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  14
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .  13
+   10. Informative References  . . . . . . . . . . . . . . . . . . .  14
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 
@@ -109,9 +108,10 @@ Table of Contents
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 2]
+
+Dahm, et al.             Expires 29 January 2022                [Page 2]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 3]
+Dahm, et al.             Expires 29 January 2022                [Page 3]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 2.3.  TLS Connection
@@ -221,9 +221,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 4]
+Dahm, et al.             Expires 29 January 2022                [Page 4]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 3.3.  Cipher Requirements
@@ -249,11 +249,11 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    maintain simplicity of current TACACS+ configuration using pre-shared
    secrets, the server implementation MUST implement:
 
-   *  TLS-DHE-PSK-WITH-AES-128-GCM-SHA256
+   1.  TLS-DHE-PSK-WITH-AES-128-GCM-SHA256
 
-   *  TLS_DHE_PSK_WITH_AES_128_CBC_SHA
+   2.  TLS_DHE_PSK_WITH_AES_128_CBC_SHA
 
-   *  TLS_DHE_PSK_WITH_AES_256_CBC_SHA
+   3.  TLS_DHE_PSK_WITH_AES_256_CBC_SHA
 
    A Client MUST implement at least one of the cipher suites which are
    implemented on the Server, and MAY implement all of them.
@@ -277,9 +277,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 5]
+Dahm, et al.             Expires 29 January 2022                [Page 5]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 3.4.  Authentication
@@ -303,13 +303,13 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
    Process to change pre-shared keys on server and client is then:
 
-   1  Add new key with new PSK identity on the server.
+   1.  Add new key with new PSK identity on the server.
 
-   2  Add new key with new PSK identity on the client.
+   2.  Add new key with new PSK identity on the client.
 
-   3  Remove old key with old PSK identity from the client.
+   3.  Remove old key with old PSK identity from the client.
 
-   4  Remove old key with old PSK identity from the server.
+   4.  Remove old key with old PSK identity from the server.
 
    XXX reference "key life" in rfc8645 ???
 
@@ -333,9 +333,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 6]
+Dahm, et al.             Expires 29 January 2022                [Page 6]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
    Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
@@ -379,7 +379,7 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    information to the request, the Extended Authentication Packets
    brings the Authentication phase of the protocol inline with the
    Authorization and Accounting Phase by incorporating extensible
-   arguments.
+   argument s.
 
    The server should expect Extended Authentication Packet Bodies if the
    minor version in the Packet Header is: 0x2
@@ -389,9 +389,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022                [Page 7]
+Dahm, et al.             Expires 29 January 2022                [Page 7]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -425,6 +425,8 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    |    arg_N ...
    +----------------+----------------+----------------+----------------+
 
+                                  Figure 1
+
    The action, priv_level, authen_type, authen_service, user_len,
    port_len, rem_addr_len, data_len, user, port, rem_addr and data
    fields are used exactly as defined in the Authentication START Packet
@@ -438,17 +440,19 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
    arg_1_len ... arg_N_len, arg_1 ... arg_N
 
+
+
+
+
+
+Dahm, et al.             Expires 29 January 2022                [Page 8]
+
+Internet-Draft              TACACS+ Security                   July 2021
+
+
    Each argument is encoded in the packet as a single arg field (arg_1
    ... arg_N) with a corresponding length field that indicates the
    length of each argument in bytes.
-
-
-
-
-Dahm, et al.             Expires 25 January 2022                [Page 8]
-
-Internet-Draft                 TACACS+ TLS                     July 2021
-
 
    The arguments are argument-value pairs.  The argument and the value
    are in a single string and are separated by either a "=" (0X3D) or a
@@ -497,13 +501,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-
-
-
-
-Dahm, et al.             Expires 25 January 2022                [Page 9]
+Dahm, et al.             Expires 29 January 2022                [Page 9]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -531,6 +531,8 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    |    arg_N ...
    +----------------+----------------+----------------+----------------+
 
+                                  Figure 2
+
    The status, flags, server_msg_len, data_len, server_msg, and data
    fields are used exactly as defined in the Authentication REPLY Packet
    Body in [RFC8907]].
@@ -555,11 +557,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-
-
-Dahm, et al.             Expires 25 January 2022               [Page 10]
+Dahm, et al.             Expires 29 January 2022               [Page 10]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -589,6 +589,8 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    |    arg_N ...
    +----------------+----------------+----------------+----------------+
 
+                                  Figure 3
+
    The user_msg len, data_len, flags, user_msg, and data fields are used
    exactly as defined in the Authentication REPLY Packet Body in
    [RFC8907].
@@ -611,11 +613,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-
-
-Dahm, et al.             Expires 25 January 2022               [Page 11]
+Dahm, et al.             Expires 29 January 2022               [Page 11]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
 6.1.1.  TLS Options
@@ -626,7 +626,7 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    group to publish a single document, that evolves with TLS and its
    algorithms, which RFCs using TLS, such as this one, could reference
    without the need to update those RFCs, thus allowing them to evolve
-   by inheritance.  As no such document exists, implementers and
+   by inheri tance.  As no such document exists, implementers and
    operators SHOULD make informed use of RFCs to determine which TLS
    versions and algorithms should be supported, deprecated, or
    abandoned, in the absence of updates to this RFC.
@@ -669,9 +669,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022               [Page 12]
+Dahm, et al.             Expires 29 January 2022               [Page 12]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
    to address the exposure from Unsecure Connection methods is to refuse
@@ -708,14 +708,15 @@ Internet-Draft                 TACACS+ TLS                     July 2021
    Stephen Farrell, Alan DeKok, and Tom Petch for their support,
    insightful review, and/or comments.
 
-9.  References
+9.  Normative References
 
-9.1.  Normative References
+   [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
+              Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, May 2017.
+
+              <https://www.rfc-editor.org/bcp/bcp14.txt>
 
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",
@@ -724,10 +725,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-
-Dahm, et al.             Expires 25 January 2022               [Page 13]
+Dahm, et al.             Expires 29 January 2022               [Page 13]
 
-Internet-Draft                 TACACS+ TLS                     July 2021
+Internet-Draft              TACACS+ Security                   July 2021
 
 
    [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
@@ -739,10 +739,6 @@ Internet-Draft                 TACACS+ TLS                     July 2021
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
@@ -753,7 +749,7 @@ Internet-Draft                 TACACS+ TLS                     July 2021
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
 
-9.2.  Informative References
+10.  Informative References
 
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
@@ -778,17 +774,16 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 Authors' Addresses
 
-
-
-
-Dahm, et al.             Expires 25 January 2022               [Page 14]
-
-Internet-Draft                 TACACS+ TLS                     July 2021
-
-
    Thorsten Dahm
 
    Email: thorsten.dahm@gmail.com
+
+
+
+
+Dahm, et al.             Expires 29 January 2022               [Page 14]
+
+Internet-Draft              TACACS+ Security                   July 2021
 
 
    Douglas Gash
@@ -837,4 +832,9 @@ Internet-Draft                 TACACS+ TLS                     July 2021
 
 
 
-Dahm, et al.             Expires 25 January 2022               [Page 15]
+
+
+
+
+
+Dahm, et al.             Expires 29 January 2022               [Page 15]

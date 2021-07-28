@@ -7,10 +7,9 @@ XMLNAME=${BASENAME}${EXT}
 DRAFTNAME=${BASENAME}-${VERSION}
 
 HTML=${DRAFTNAME}/${BASENAME}.html
-RAW=${DRAFTNAME}/${BASENAME}.raw.txt
 TEXT=${DRAFTNAME}/${BASENAME}.txt
 
-all: ${DRAFTNAME} ${XMLNAME} ${HTML} ${RAW} ${TEXT}
+all: ${DRAFTNAME} ${XMLNAME} ${HTML} ${TEXT}
 
 ${DRAFTNAME}:
 	if test ! -e ${DRAFTNAME}; then					\
@@ -23,16 +22,12 @@ ${XMLNAME}: ${SOURCEIN} Makefile
 		-e 's,@DRAFTNAME\@,$(DRAFTNAME),g'			\
 		${SOURCEIN} > $@
 
-${DRAFTNAME}/${BASENAME}.raw.txt: ${DRAFTNAME} ${XMLNAME} Makefile
-	xml2rfc --v2 ${XMLNAME} -b ${DRAFTNAME} --raw
-text: ${DRAFTNAME}/${BASENAME}.raw.txt
-
 ${DRAFTNAME}/${BASENAME}.txt: ${DRAFTNAME} ${XMLNAME} Makefile
-	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --text
-paginated: ${DRAFTNAME}/${BASENAME}.txt
+	xml2rfc --v3 ${XMLNAME} -b ${DRAFTNAME} --text
+paginated text: ${DRAFTNAME}/${BASENAME}.txt
 
 ${DRAFTNAME}/${BASENAME}.html: ${DRAFTNAME} ${XMLNAME} Makefile
-	xml2rfc ${XMLNAME} -b ${DRAFTNAME} --html
+	xml2rfc --v3 ${XMLNAME} -b ${DRAFTNAME} --html
 html: ${DRAFTNAME}/${BASENAME}.html
 
 clean:
