@@ -133,7 +133,7 @@
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
        <t>
-                It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"></xref> dictates the need for end-to-end security.
+                It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"/> dictates the need for end-to-end security.
                 The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
        </t>
        <section title="Well-Known TCP/IP Port">
@@ -141,7 +141,7 @@
                 All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
                 Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
                 For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
-                Instead, following <xref target="RFC7605"></xref>, a different well-known system TCP/IP port is assigned by IANA, port [TBD], for the TLS connection.
+                Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port [TBD], for the TLS connection.
             </t>
        </section>
        <section title="TLS Protocol Version" anchor="TLSProtoVers">
@@ -267,7 +267,7 @@ XXX
                 
      <section title="TACACS+ Extended Authentication Packet Types" anchor="ExtendedAuthenticationPacketType">
        <t>
-                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"></xref>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
+                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
 which may be used to give context to the request.
        </t>
        <t>
@@ -322,7 +322,7 @@ s.
 ]]></artwork>
          </figure>
          <t>
-           The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"></xref>.
+           The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"/>.
          </t>
          <t>The new fields are as follows:</t>
          <t>arg_cnt</t>
@@ -391,7 +391,7 @@ s.
 ]]></artwork>
          </figure>
          <t>
-           The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"></xref>].
+           The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>].
          </t>
          <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
@@ -433,7 +433,7 @@ s.
 ]]></artwork>
          </figure>
          <t>
-           The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"></xref>.
+           The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
          </t>
          <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
@@ -531,7 +531,7 @@ tance.
 
      <section title="IANA Considerations">
        <t>
-         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"></xref> and <xref target="RFC6335"></xref>, of a new well-known system TCP/IP port number for
+         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/> and <xref target="RFC6335"/>, of a new well-known system TCP/IP port number for
  "tacacss", described as "TACACS+ over TLS".
          The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
          This allocation is justified in <xref target="wellknown"/>.
@@ -564,9 +564,7 @@ tance.
        <reference anchor="SSHPARAM" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml">
          <front>
            <title>SSH Protocol Parameters</title>
-           <author fullname="James Clark">
-             <address><email>jjc@jclark.com</email></address>
-           </author>
+           <author fullname="IANA"></author>
          </front>
        </reference>
      </references>

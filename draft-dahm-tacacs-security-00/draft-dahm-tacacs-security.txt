@@ -810,7 +810,7 @@ Internet-Draft              TACACS+ Security                   July 2021
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
 
-   [SSHPARAM] Clark, J., "SSH Protocol Parameters",
+   [SSHPARAM] IANA, "SSH Protocol Parameters",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
               parameters.xhtml>.
 
