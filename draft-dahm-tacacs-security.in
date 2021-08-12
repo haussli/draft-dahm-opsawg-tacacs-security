@@ -263,8 +263,11 @@ XXX
        <t>
          A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
        </t>
+       <t>
+         XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
+       </t>
      </section>
-                
+
      <section title="TACACS+ Extended Authentication Packet Types" anchor="ExtendedAuthenticationPacketType">
        <t>
                 Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
@@ -448,12 +451,142 @@ s.
          Some devices support public keys in native configuration, but there is desire to centrally manage keys and SSH subsystem authorization.
        </t>
 
+       <section title="New TACACS+ Code Points and AVPs">
+         <t>The following new TACACS+ code points and AVPs are needed to support SSH in the subsequent sections.</t>
+         <t>New code points are added to <xref target="RFC8907"/> Section 5.1 - 5.3 as follows:</t>
+	 <dl newline="true">
+	   <dt>TAC_PLUS_AUTHEN_TYPE_SSHPK := 0x07</dt>
+           <dd>This authen_type value is used for Authentication START Packet.</dd>
+
+	   <dt>TAC_PLUS_AUTHEN_METH_SSHPK := 0x21</dt>
+           <dd>This authen_method value is used for Authorization and Accounting.</dd>
+
+	   <dt>TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE := 0x08</dt>
+           <dd>This Authentication REPLY Packet status XXX .</dd>
+         </dl>
+       </section>
+
        <section title="SSH Public Key Support">
          <t>
-           To support central management of SSH public keys via TACACS+, this document extends the Authentication sequence of <xref target="RFC8907"/> Section 5.4.2 and the <xref target="ExtendedAuthenticationPacketType">Extended Authenication</xref> sequence to deliver SSH public keys to devices for local verification.
-         </t>
+	   To support central management of SSH public keys via TACACS+, this document extends the Authentication sequence of <xref target="RFC8907"/> Section 5.4 using <xref target="ExtendedAuthenticationPacketType">Extended Authenication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
+	 </t>
          <t>
+           The XXX SSH authentication Flow commences and is encoded as follows:
 XXX describe the authenication sequences in Extended Authentication Packet format.
+</t>
+<ol>
+<li>
+1) The START packet may include a username and if so may include comma-
+seperated AVPs encoded in the data field of ssh_pubkey_type=keytypename
+(reference IANA pubkey alg names
+https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-paramet
+ers-19).
+
+ssh_pubkey_type=null indicates that all key types are wanted; ie: all
+keys held by the server.
+
+XXX Is this use of the data field appropriate?  Should this AVP just be
+    disallowed in START or a new field created?  Allowing it or creating
+    anew both seem messy, but 8907 seems to imply it is the discretion of
+    the AUTHEN_TYPE.
+
+XXX Should the client indicate the ssh subsystem in another AVP?  The server
+    could deny access to cli, but allow netconf, for example.
+
+XXX Should there be an ssh_pubkey_type AVP?  Why not just send all keys types,
+    which could mean much more data is sent?  Or should it allow multiple
+    ssh_pubkey_type AVPs at once?
+    data=ssh_pubkey_type=keytypename,ssh_pubkey_type=keytypename, ...
+
+XXX Is this use of the "null" type too kinky?
+</li>
+
+
+<li>
+2) If the username was not present, the data field is ignored, and the
+server replies with status AUTHEN_STATUS_GETUSER.  The client must respond
+with the username in an Authentication CONTINUE packet and may include an
+ssh_pubkey_type AVP as in START.
+
+XXX should this Authen CONTINUE packet allow the ssh_pubkey_type AVP to
+    be included in the data field?
+
+XXX Can AUTHEN_STATUS_GETUSER be altered in this manner?  Or should we add
+    an AUTHEN_STATUS_GETSSHUSER?
+</li>
+
+<li>
+3) Else, if the ssh_pubkey_type AVP was not supplied in the START or CONTINUE
+packets, the server replies with the new status code:
+      TAC_PLUS_AUTHEN_STATUS_GETSSHPUBKEYTYPE := 0x08
+The client must respond with the key type that it wants in a ssh_pubkey_type
+AVP encoded in the data field.
+</li>
+
+<li>
+4) If none of the wanted ssh_pubkey_type(s) are present, the server must reply
+with AUTHEN_STATUS_FAIL.  The client must start a new authentication session
+to retrieve other ssh_pubkey_type(s) or use another authentication method.
+</li>
+
+<li>
+5) Else, the server replies with the appropriate null-byte separated
+ssh_pubkey_type(s) in "insert-rfc-ssh-pubkey-format" (rfc4716) in the data field
+with the new status code:
+      TAC_PLUS_AUTHEN_SSHPUBKEY := 0x09
+The final null byte must be present and must be included in the data_len.
+If the total length of the ssh_pubkey_type(s) to be provide exceeds the
+maximum payload length of a T+ message of lessthanorequalto  0xffff, limited by the data_len
+field size and other factors, the reply packet must set the new flag:
+      TAC_PLUS_REPLY_FLAG_MORE := 0x10          XXX better name?
+to indicate that the client should request the balance of data.  Subsequently,
+The data should be concatenated together to form the complete list, implying
+that a single key may span multiple t+ messages.
+</li>
+
+<li>
+6) If the REPLY_FLAG_MORE flag is set, the client may reply with the same
+CONTINUE packet as before with the new flag set:
+      TAC_PLUS_CONTINUE_FLAG_MORE := 0x05       XXX better name?
+The server replies with the next chunk.  When tha last chunk is sent,
+the REPLY_FLAG_MORE is cleared.
+</li>
+
+<li>
+7) Once the client has all of the pubkeys, it should perform the ssh pubkey
+authentication with its ssh client.  The client must then reply to the
+server with the status of that authentication with one of the following new
+or existing CONTINUE flags:
+      TAC_PLUS_CONTINUE_FLAG_ABORT := 0x01
+      TAC_PLUS_CONTINUE_FLAG_PASS := 0x02
+      TAC_PLUS_CONTINUE_FLAG_FAIL := 0x04
+      TAC_PLUS_CONTINUE_FLAG_ERROR := 0x08
+
+XXX should any data be included in the data field?  Such as the matching
+    key or ssh_pubkey_type AVP or ???.
+</li>
+
+<li>
+8) The client must give the server the final word, by waiting for a REPLY packet
+with one of the status:
+      TAC_PLUS_AUTHEN_STATUS_PASS := 0x01
+      TAC_PLUS_AUTHEN_STATUS_FAIL := 0x02
+      TAC_PLUS_AUTHEN_STATUS_ERROR := 0x07
+Thus ending the authentication session.
+</li>
+</ol>
+<t>
+
+Such a format might utilize more pubkey status
+codes from:
+        Public Key subsystem Status Codes
+        https://datatracker.ietf.org/doc/html/rfc4819#section-6.6
+        https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-26
+
+XXX should the a "ssh subsystem" AVP be added for authorization?
+            </t>
+         <t>
+ the Authentication sequence of <xref target="RFC8907">RFC8907 Section 5.4.2</xref> and the <xref target="ExtendedAuthenticationPacketType">Extended Authenication</xref> sequence to deliver SSH public keys to devices for local verification.
          </t>
        </section>
 
@@ -474,6 +607,9 @@ XXX describe the authenication sequences in Extended Authentication Packet forma
                An invalid name MUST result in an Authorization REPLY packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.
            </dd>
          </dl>
+<t>
+XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subsystem name with "_acct" postfix?
+</t>
        </section>
      </section>
 
