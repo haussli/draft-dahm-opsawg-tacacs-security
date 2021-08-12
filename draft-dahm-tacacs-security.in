@@ -327,6 +327,7 @@ s.
          <t>
            The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"/>.
          </t>
+         <t>The following fields contain the arguments that may be used to extend the authentication process. These are common to the Extended Authentication START, Extended Authentication REPLY, and Extended Authentication CONTINUE packet bodies; these fields represent the sole update from the previous START, REPLY and CONTIMUE packet bodies.</t>
          <t>The new fields are as follows:</t>
          <t>arg_cnt</t>
          <t>This represents the number of arguments in the packet.</t>
@@ -340,22 +341,18 @@ s.
            The arguments are argument-value pairs.
            The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
            The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
-           An argument name MUST NOT contain either of the separators.
-           An argument value MAY contain the separators.
-           The value part of an argument-value pair may be empty, that is, the length of the value may be zero.
+           For the rules regarding optional and mandatory arguments, refer to <xref target="RFC8907"/>
          </t>
          <t>
-           Optional arguments are ones that may be disregarded by the server.
-           Mandatory arguments require that the server implementation and configuration includes the details of how to act on it.
-         </t>
-         <t>
-           Though the arguments allow extensibility through the rule above, the argument to encode the originating client will be defined here:
+           The addition of arguments to the authentication packets is intended to permit the flexibility for TACACS+ phase that has been available previously for authorization and accounting.
+           These fields are intended to be used as needed in deployment, they are used in this document in the enhancments for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
          </t>
 
          <t>origin_client</t>
          <t>
            The IP-Address of the originating TACACS+ client.
            This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
+           This argument is optional.
            IPv4 addresses are specified as octet numeric values separated by dots ('.').
            IPv6 address text representation is defined in [RFC5952].
          </t>
@@ -371,7 +368,7 @@ s.
 +----------------+----------------+----------------+----------------+
 |     status     |      flags     |        server_msg_len           |
 +----------------+----------------+----------------+----------------+
-|           data_len              |        server_msg ...
+|           data_len              |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -382,6 +379,8 @@ s.
 |    arg_N_len                                                      |
 +----------------+----------------+----------------+----------------+
 |    data ...
++----------------+----------------+----------------+----------------+
+|    server_msg ...
 +----------------+----------------+----------------+----------------+
 |    arg_1 ...
 +----------------+----------------+----------------+----------------+
@@ -397,7 +396,7 @@ s.
            The status, flags, server_msg_len, data_len, server_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>].
          </t>
          <t>
-           The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+           The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
        </section>
 
@@ -411,7 +410,7 @@ s.
 +----------------+----------------+----------------+----------------+
 |          user_msg len           |            data_len             |
 +----------------+----------------+----------------+----------------+
-|     flags                                                         |
+|     flags      |                                                  |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -439,12 +438,12 @@ s.
            The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
          </t>
          <t>
-           The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">Common Authentication flows</xref>.
+           The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
        </section>
      </section>
 
-     <section title="SSH">
+     <section anchor="SSH" title="SSH">
        <t>
          Most network equipment now support <xref target="RFC4251">SSH</xref> for Command Line Interface (CLI) and <xref target="RFC6242">Netconf</xref>.
          Operators want to use SSH public keys for authentication.

@@ -92,13 +92,13 @@ Table of Contents
    4.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .   7
    5.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
      5.1.  The Extended Authentication START Packet Body . . . . . .   8
-     5.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
+     5.2.  The Extension Authentication REPLY Packet Body  . . . . .  10
      5.3.  The Extended Authentication CONTINUE Packet Body  . . . .  10
    6.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     6.1.  New TACACS+ Code Points and AVPs  . . . . . . . . . . . .  11
+     6.1.  New TACACS+ Code Points and AVPs  . . . . . . . . . . . .  12
      6.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  12
      6.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  14
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  15
      7.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  15
        7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  15
        7.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  15
@@ -455,6 +455,13 @@ Internet-Draft              TACACS+ Security                 August 2021
    fields are used exactly as defined in the Authentication START Packet
    Body in [RFC8907].
 
+   The following fields contain the arguments that may be used to extend
+   the authentication process.  These are common to the Extended
+   Authentication START, Extended Authentication REPLY, and Extended
+   Authentication CONTINUE packet bodies; these fields represent the
+   sole update from the previous START, REPLY and CONTIMUE packet
+   bodies.
+
    The new fields are as follows:
 
    arg_cnt
@@ -470,30 +477,23 @@ Internet-Draft              TACACS+ Security                 August 2021
    The arguments are argument-value pairs.  The argument and the value
    are in a single string and are separated by either a "=" (0X3D) or a
    "*" (0X2A).  The equals sign indicates a mandatory argument.  The
-   asterisk indicates an optional one.  An argument name MUST NOT
-   contain either of the separators.  An argument value MAY contain the
-   separators.  The value part of an argument-value pair may be empty,
-   that is, the length of the value may be zero.
+   asterisk indicates an optional one.  For the rules regarding optional
+   and mandatory arguments, refer to [RFC8907]
 
-   Optional arguments are ones that may be disregarded by the server.
-   Mandatory arguments require that the server implementation and
-   configuration includes the details of how to act on it.
-
-   Though the arguments allow extensibility through the rule above, the
-   argument to encode the originating client will be defined here:
+   The addition of arguments to the authentication packets is intended
+   to permit the flexibility for TACACS+ phase that has been available
+   previously for authorization and accounting.  These fields are
+   intended to be used as needed in deployment, they are used in this
+   document in the enhancments for SSH (Section 6), and to support the
+   origin client to enhance TACACS+ Proxy:
 
    origin_client
 
    The IP-Address of the originating TACACS+ client.  This is text
    encoded in line with the rest of the TACACS+ protocol, and may be
-   IPv4 or IPv6.  IPv4 addresses are specified as octet numeric values
-   separated by dots ('.').  IPv6 address text representation is defined
-   in [RFC5952].
-
-5.2.  The Extension Authentication REPLY Packet Body
-
-   The TACACS+ server sends only one type of extended authentication
-   packet to the client.
+   IPv4 or IPv6.  This argument is optional.  IPv4 addresses are
+   specified as octet numeric values separated by dots ('.').  IPv6
+   address text representation is defined in [RFC5952].
 
 
 
@@ -506,11 +506,16 @@ Dahm, et al.            Expires 13 February 2022                [Page 9]
 Internet-Draft              TACACS+ Security                 August 2021
 
 
+5.2.  The Extension Authentication REPLY Packet Body
+
+   The TACACS+ server sends only one type of extended authentication
+   packet to the client.
+
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
    |     status     |      flags     |        server_msg_len           |
    +----------------+----------------+----------------+----------------+
-   |           data_len              |        server_msg ...
+   |           data_len              |
    +----------------+----------------+----------------+----------------+
    |    arg_cnt                                                        |
    +----------------+----------------+----------------+----------------+
@@ -521,6 +526,8 @@ Internet-Draft              TACACS+ Security                 August 2021
    |    arg_N_len                                                      |
    +----------------+----------------+----------------+----------------+
    |    data ...
+   +----------------+----------------+----------------+----------------+
+   |    server_msg ...
    +----------------+----------------+----------------+----------------+
    |    arg_1 ...
    +----------------+----------------+----------------+----------------+
@@ -538,20 +545,13 @@ Internet-Draft              TACACS+ Security                 August 2021
    Body in [RFC8907]].
 
    The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields
-   are used as defined in Common Authentication flows (Section 5.1).
+   are used as defined in The Extended Authentication START Packet Body
+   (Section 5.1).
 
 5.3.  The Extended Authentication CONTINUE Packet Body
 
    This packet is sent from the client to the server following the
    receipt of an Extended REPLY packet.
-
-
-
-
-
-
-
-
 
 
 
@@ -566,7 +566,7 @@ Internet-Draft              TACACS+ Security                 August 2021
    +----------------+----------------+----------------+----------------+
    |          user_msg len           |            data_len             |
    +----------------+----------------+----------------+----------------+
-   |     flags                                                         |
+   |     flags      |                                                  |
    +----------------+----------------+----------------+----------------+
    |    arg_cnt                                                        |
    +----------------+----------------+----------------+----------------+
@@ -596,7 +596,8 @@ Internet-Draft              TACACS+ Security                 August 2021
    [RFC8907].
 
    The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields
-   are used as defined in Common Authentication flows (Section 5.1).
+   are used as defined in The Extended Authentication START Packet Body
+   (Section 5.1).
 
 6.  SSH
 
@@ -606,10 +607,9 @@ Internet-Draft              TACACS+ Security                 August 2021
    native configuration, but there is desire to centrally manage keys
    and SSH subsystem authorization.
 
-6.1.  New TACACS+ Code Points and AVPs
 
-   The following new TACACS+ code points and AVPs are needed to support
-   SSH in the subsequent sections.
+
+
 
 
 
@@ -617,6 +617,11 @@ Dahm, et al.            Expires 13 February 2022               [Page 11]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
+
+6.1.  New TACACS+ Code Points and AVPs
+
+   The following new TACACS+ code points and AVPs are needed to support
+   SSH in the subsequent sections.
 
    New code points are added to [RFC8907] Section 5.1 - 5.3 as follows:
 
@@ -661,11 +666,6 @@ Internet-Draft              TACACS+ Security                 August 2021
    2.  2) If the username was not present, the data field is ignored,
        and the server replies with status AUTHEN_STATUS_GETUSER.  The
        client must respond with the username in an Authentication
-       CONTINUE packet and may include an ssh_pubkey_type AVP as in
-       START.  XXX should this Authen CONTINUE packet allow the
-       ssh_pubkey_type AVP to be included in the data field?  XXX Can
-       AUTHEN_STATUS_GETUSER be altered in this manner?  Or should we
-       add an AUTHEN_STATUS_GETSSHUSER?
 
 
 
@@ -673,6 +673,12 @@ Dahm, et al.            Expires 13 February 2022               [Page 12]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
+
+       CONTINUE packet and may include an ssh_pubkey_type AVP as in
+       START.  XXX should this Authen CONTINUE packet allow the
+       ssh_pubkey_type AVP to be included in the data field?  XXX Can
+       AUTHEN_STATUS_GETUSER be altered in this manner?  Or should we
+       add an AUTHEN_STATUS_GETSSHUSER?
 
    3.  3) Else, if the ssh_pubkey_type AVP was not supplied in the START
        or CONTINUE packets, the server replies with the new status code:
@@ -715,12 +721,6 @@ Internet-Draft              TACACS+ Security                 August 2021
        included in the data field?  Such as the matching key or
        ssh_pubkey_type AVP or ???.
 
-   8.  8) The client must give the server the final word, by waiting for
-       a REPLY packet with one of the status:
-       TAC_PLUS_AUTHEN_STATUS_PASS := 0x01 TAC_PLUS_AUTHEN_STATUS_FAIL
-       := 0x02 TAC_PLUS_AUTHEN_STATUS_ERROR := 0x07 Thus ending the
-       authentication session.
-
 
 
 
@@ -729,6 +729,12 @@ Dahm, et al.            Expires 13 February 2022               [Page 13]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
+
+   8.  8) The client must give the server the final word, by waiting for
+       a REPLY packet with one of the status:
+       TAC_PLUS_AUTHEN_STATUS_PASS := 0x01 TAC_PLUS_AUTHEN_STATUS_FAIL
+       := 0x02 TAC_PLUS_AUTHEN_STATUS_ERROR := 0x07 Thus ending the
+       authentication session.
 
    Such a format might utilize more pubkey status codes from: Public Key
    subsystem Status Codes https://datatracker.ietf.org/doc/html/
@@ -769,12 +775,6 @@ Internet-Draft              TACACS+ Security                 August 2021
    XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?
    or ssh subsystem name with "_acct" postfix?
 
-7.  Security Considerations
-
-
-
-
-
 
 
 
@@ -785,6 +785,8 @@ Dahm, et al.            Expires 13 February 2022               [Page 14]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
+
+7.  Security Considerations
 
 7.1.  TLS
 
@@ -832,8 +834,6 @@ Internet-Draft              TACACS+ Security                 August 2021
 
    *  passive Intrusion Detection Systems (IDSs) monitoring the
       unencrypted version to be unaffected by the introduction of TLS,
-
-
 
 
 
