@@ -244,30 +244,6 @@ XXX
        </section>
      </section>
 
-     <section title="Deprecation of TACACS+ PSK and Encryption">
-       <t>
-         The <xref target="RFC8907">TACACS+ Protocol</xref> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
-         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
-       </t>
-       <t>
-         Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
-         Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
-         A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.
-       </t>
-       <t>
-         A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/
-       </t>
-       <t>
-         A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
-       </t>
-       <t>
-         A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
-       </t>
-       <t>
-         XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
-       </t>
-     </section>
-
      <section title="TACACS+ Extended Authentication Packet Types" anchor="ExtendedAuthenticationPacketType">
        <t>
                 Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
@@ -610,6 +586,30 @@ XXX should the a "ssh subsystem" AVP be added for authorization?
 XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subsystem name with "_acct" postfix?
 </t>
        </section>
+     </section>
+
+     <section title="Deprecation of TACACS+ PSK and Encryption">
+       <t>
+         The <xref target="RFC8907">TACACS+ Protocol</xref> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
+         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
+       </t>
+       <t>
+         Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
+         Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
+         A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.
+       </t>
+       <t>
+         A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/
+       </t>
+       <t>
+         A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
+       </t>
+       <t>
+         A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
+       </t>
+       <t>
+         XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
+       </t>
      </section>
 
      <section title="Security Considerations">
