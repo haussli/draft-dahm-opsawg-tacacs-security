@@ -427,142 +427,128 @@ s.
        </t>
 
        <section title="New TACACS+ Code Points and AVPs">
-         <t>The following new TACACS+ code points and AVPs are needed to support SSH in the subsequent sections.</t>
-         <t>New code points are added to <xref target="RFC8907"/> Section 5.1 - 5.3 as follows:</t>
+         <t>
+           The following new TACACS+ code points and AVPs are needed to support SSH in the subsequent sections.
+           These new code points augment those in <xref target="RFC8907"/> Section 5.1 - 5.3 as follows:
+XXX these values should be double-checked against rfc8907 and "The Draft" to check for duplication.
+         </t>
 	 <dl newline="true">
 	   <dt>TAC_PLUS_AUTHEN_TYPE_SSHPK := 0x07</dt>
-           <dd>This authen_type value is used for Authentication START Packet.</dd>
+           <dd>Extended Authentication START Packet authen_type for SSH pubkeys.</dd>
 
-	   <dt>TAC_PLUS_AUTHEN_METH_SSHPK := 0x21</dt>
-           <dd>This authen_method value is used for Authorization and Accounting.</dd>
+	   <dt>TAC_PLUS_AUTHEN_SVC_XXX := 0xXXX</dt>
+           <dd>XXX are authen_service values needed for netconf, restconf, etc?  or just use TAC_PLUS_AUTHEN_SVC_LOGIN?</dd>
 
-	   <dt>TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE := 0x08</dt>
-           <dd>This Authentication REPLY Packet status XXX .</dd>
+	   <dt>TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE := 0x22</dt>
+           <dd>Extended Authentication REPLY Packet status to solicit SSH pubkey type.</dd>
+	   <dt>TAC_PLUS_AUTHEN_STATUS_SSHPK := 0x23</dt>
+           <dd>Extended Authentication REPLY Packet status to provide SSH pubkeys.</dd>
+
+	   <dt>TAC_PLUS_REPLY_FLAG_MORE := 0x02</dt>
+           <dd>Extended Authentication REPLY Packet flag indicating the REPLY is incomplete.  XXX better name for this flag?</dd>
+	   <dt>TAC_PLUS_CONTINUE_FLAG_MORE := 0x02</dt>
+           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.  XXX better name for this flag?</dd>
+	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.  XXX should continue have a status field?</dd>
+	   <dt>TAC_PLUS_CONTINUE_FLAG_FAIL := 0x08</dt>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.  XXX should continue have a status field?</dd>
+	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.  XXX should continue have a status field?</dd>
+
+	   <dt>AVP ssh_pubkey_type</dt>
+           <dd>Attribute to carry SSH public key type names.</dd>
+
+	   <dt>AVP ssh_pubkey</dt>
+           <dd>Attribute to carry SSH public keys.</dd>
+
          </dl>
        </section>
 
        <section title="SSH Public Key Support">
          <t>
-	   To support central management of SSH public keys via TACACS+, this document extends the Authentication sequence of <xref target="RFC8907"/> Section 5.4 using <xref target="ExtendedAuthenticationPacketType">Extended Authenication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
+	   To support central management of SSH public keys via TACACS+, the Authentication sequence of <xref target="RFC8907"/> Section 5.4 is extended using <xref target="ExtendedAuthenticationPacketType">Extended Authenication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
 	 </t>
          <t>
-           The XXX SSH authentication Flow commences and is encoded as follows:
-XXX describe the authenication sequences in Extended Authentication Packet format.
-</t>
-<ol>
-<li>
-1) The START packet may include a username and if so may include comma-
-seperated AVPs encoded in the data field of ssh_pubkey_type=keytypename
-(reference IANA pubkey alg names
-https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-paramet
-ers-19).
+           Besides new header values and flags and AVPs for Extended Authentication Packets, the SSH public key authentication process differs from other TACACS+ authentication types in that there may be more Authentication Reply and Authentication Continue Packets pairs than previously.
+         </t>
+         <t>The process follows:</t>
+         <ol>
+         <li>
+            The client begins an authentication session with an Extended Authentication START Packet.
+            The START packet MUST include a non-zero-length username and the server MUST send an Authentication REPLY Packet with status TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
+            The client MAY include one or multiple instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
+            The set of permissible values for this AVP are the SSH public algorithm names in the IANA pubkey alg names registry, <xref target="SSHPARAM"/>.
+            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
+            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
+            The client MAY send algorithm name "null" to request all type available for the given user.
+           The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
 
-ssh_pubkey_type=null indicates that all key types are wanted; ie: all
-keys held by the server.
-
-XXX Is this use of the data field appropriate?  Should this AVP just be
-    disallowed in START or a new field created?  Allowing it or creating
-    anew both seem messy, but 8907 seems to imply it is the discretion of
-    the AUTHEN_TYPE.
-
-XXX Should the client indicate the ssh subsystem in another AVP?  The server
-    could deny access to cli, but allow netconf, for example.
+XXX Can mandatory and optional AVPs of the same name be mixed in the same
+    request?
 
 XXX Should there be an ssh_pubkey_type AVP?  Why not just send all keys types,
-    which could mean much more data is sent?  Or should it allow multiple
-    ssh_pubkey_type AVPs at once?
-    data=ssh_pubkey_type=keytypename,ssh_pubkey_type=keytypename, ...
+    which could mean much more data is sent?
 
-XXX Is this use of the "null" type too kinky?
-</li>
+XXX Is this use of the "null" type too kinky?  See S5 of RFC4462. use the
+    empty string instead?
 
+XXX Should the client indicate the ssh subsystem in another AVP?  The server
+    could deny access to cli, but allow netconf, for example.  Thinks this
+    should move to authorization.
 
-<li>
-2) If the username was not present, the data field is ignored, and the
-server replies with status AUTHEN_STATUS_GETUSER.  The client must respond
-with the username in an Authentication CONTINUE packet and may include an
-ssh_pubkey_type AVP as in START.
+XXX Is the username required constraint too strict?  is the reply status the
+    correct one?
 
-XXX should this Authen CONTINUE packet allow the ssh_pubkey_type AVP to
-    be included in the data field?
+XXX grumble grumble - how does one insert line breaks in rfc xml?
+         </li>
 
-XXX Can AUTHEN_STATUS_GETUSER be altered in this manner?  Or should we add
-    an AUTHEN_STATUS_GETSSHUSER?
-</li>
+         <li>
+           If a ssh_pubkey_type AVP was not provided in the START packet, the server replies with the status code TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE.
+           The client MUST send a CONTINUE packet with one or more ssh_pubkey_type AVPs, else the server sends a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_ERROR.
+         </li>
 
-<li>
-3) Else, if the ssh_pubkey_type AVP was not supplied in the START or CONTINUE
-packets, the server replies with the new status code:
-      TAC_PLUS_AUTHEN_STATUS_GETSSHPUBKEYTYPE := 0x08
-The client must respond with the key type that it wants in a ssh_pubkey_type
-AVP encoded in the data field.
-</li>
+         <li>
+           If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPKi with the relevant ssh_pubkey_type AVP(s).
+           The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
 
-<li>
-4) If none of the wanted ssh_pubkey_type(s) are present, the server must reply
-with AUTHEN_STATUS_FAIL.  The client must start a new authentication session
-to retrieve other ssh_pubkey_type(s) or use another authentication method.
-</li>
+XXX does it need to mention all cases where a new session is required?
 
-<li>
-5) Else, the server replies with the appropriate null-byte separated
-ssh_pubkey_type(s) in "insert-rfc-ssh-pubkey-format" (rfc4716) in the data field
-with the new status code:
-      TAC_PLUS_AUTHEN_SSHPUBKEY := 0x09
-The final null byte must be present and must be included in the data_len.
-If the total length of the ssh_pubkey_type(s) to be provide exceeds the
-maximum payload length of a T+ message of lessthanorequalto  0xffff, limited by the data_len
-field size and other factors, the reply packet must set the new flag:
-      TAC_PLUS_REPLY_FLAG_MORE := 0x10          XXX better name?
-to indicate that the client should request the balance of data.  Subsequently,
-The data should be concatenated together to form the complete list, implying
-that a single key may span multiple t+ messages.
-</li>
+XXX does SSHNOPK or ERROR (rfc8907 s5.4.3) imply that the client should use
+    local keys if it has any?
+         </li>
 
-<li>
-6) If the REPLY_FLAG_MORE flag is set, the client may reply with the same
-CONTINUE packet as before with the new flag set:
-      TAC_PLUS_CONTINUE_FLAG_MORE := 0x05       XXX better name?
-The server replies with the next chunk.  When tha last chunk is sent,
-the REPLY_FLAG_MORE is cleared.
-</li>
+         <li>
+           The server send REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
+           The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
+           As such, client MUST be prepared to accept Key File Headers.
+           Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_MORE if two or more packets are required, indicating that the client SHOULD request the remainder.
+           An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
 
-<li>
-7) Once the client has all of the pubkeys, it should perform the ssh pubkey
-authentication with its ssh client.  The client must then reply to the
-server with the status of that authentication with one of the following new
-or existing CONTINUE flags:
-      TAC_PLUS_CONTINUE_FLAG_ABORT := 0x01
-      TAC_PLUS_CONTINUE_FLAG_PASS := 0x02
-      TAC_PLUS_CONTINUE_FLAG_FAIL := 0x04
-      TAC_PLUS_CONTINUE_FLAG_ERROR := 0x08
+XXX is optional correct for the ssh_pubkey AVP?
 
-XXX should any data be included in the data field?  Such as the matching
-    key or ssh_pubkey_type AVP or ???.
-</li>
+XXX is rfc4716 format the best choice?
 
-<li>
-8) The client must give the server the final word, by waiting for a REPLY packet
-with one of the status:
-      TAC_PLUS_AUTHEN_STATUS_PASS := 0x01
-      TAC_PLUS_AUTHEN_STATUS_FAIL := 0x02
-      TAC_PLUS_AUTHEN_STATUS_ERROR := 0x07
-Thus ending the authentication session.
-</li>
-</ol>
-<t>
+XXX should an AVP be allowed to span multiple packets?  ie: that the packet
+    payload should be concatenated.  This has implications for more than
+    just ssh pubkeys.
+         </li>
 
-Such a format might utilize more pubkey status
-codes from:
-        Public Key subsystem Status Codes
-        https://datatracker.ietf.org/doc/html/rfc4819#section-6.6
-        https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-26
+         <li>
+           If the TAC_PLUS_REPLY_FLAG_MORE flag is set, the client MAY reply with the same CONTINUE packet as before with the new TAC_PLUS_CONTINUE_FLAG_MORE flag set.
+           The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_MORE flag of the last REPLY packet.
+           This repeats until the last REPLY packet is received, the client aborts the authentication process, or an error occurs.
+           The client MUST NOT set TAC_PLUS_REPLY_FLAG_MORE if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_MORE flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
+         </li>
 
-XXX should the a "ssh subsystem" AVP be added for authorization?
-            </t>
-         <t>
- the Authentication sequence of <xref target="RFC8907">RFC8907 Section 5.4.2</xref> and the <xref target="ExtendedAuthenticationPacketType">Extended Authenication</xref> sequence to deliver SSH public keys to devices for local verification.
-         </t>
+         <li>
+           Once the client has all of the pubkeys, it perform the ssh pubkey authentication with its ssh client.
+           The client must then reply to the server with the status of that authentication by sending a CONTINUE packet with one of the following new or existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT, TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or TAC_PLUS_CONTINUE_FLAG_ERROR.
+         </li>
+
+         <li>
+           The client must give the server the final consent, by waiting for a REPLY packet with one of the status: TAC_PLUS_AUTHEN_STATUS_PASS, TAC_PLUS_AUTHEN_STATUS_FAIL, or TAC_PLUS_AUTHEN_STATUS_ERROR, thus ending the authentication session.
+         </li>
+         </ol>
        </section>
 
        <section title="SSH Authorization and Accounting">
@@ -580,6 +566,8 @@ XXX should the a "ssh subsystem" AVP be added for authorization?
            <dd>This AVP defines the SSH subsystem for which the authorization is requested and is Mandatory when the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.
                Valid values are the Empty Value or a SSH Subsystem Name as defined in the <xref target="SSHPARAM">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
                An invalid name MUST result in an Authorization REPLY packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.
+
+XXX should the a "ssh subsystem" AVP be added for authorization?
            </dd>
          </dl>
 <t>
