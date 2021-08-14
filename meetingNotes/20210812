@@ -1,0 +1,21 @@
+ - I think that I'd like to move S5 to S3, followed by SSH pubkeys, then
+      TLS.  If Douglas is actively editing S5, we should wait until he is
+      done to avoid unpleasant merging.
+
+   Douglas> I'm happy for that move.
+
+   we decided take the order tls, extended packets, ssh, deprecation.  This
+   has been done.
+
+- regarding referencing rfc8097 vs duplicating; douglas has converted the
+  extended packet format text to references.  More may be needed to the
+  rest of the doc when we review.
+
+- We'd talked about deprecating MS-CHAP v1,
+      https://en.wikipedia.org/wiki/MS-CHAP ?  anything else.  MD4 support,
+      used primarily by MS-CHAP (rfc2433, 2759)?
+
+  We decided that we must review 8097 and for other deprecation and ensure
+  md4 deprecation can be done without side-effects.
+
+
