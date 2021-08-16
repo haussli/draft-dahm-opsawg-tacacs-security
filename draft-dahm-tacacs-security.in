@@ -422,14 +422,14 @@ s.
      <section anchor="SSH" title="SSH">
        <t>
          Most network equipment now support <xref target="RFC4251">SSH</xref> for Command Line Interface (CLI) and <xref target="RFC6242">Netconf</xref>.
-         Operators want to use SSH public keys for authentication.
+         Operators SHOULD use SSH public keys for authentication.
          Some devices support public keys in native configuration, but there is desire to centrally manage keys and SSH subsystem authorization.
        </t>
 
-       <section title="New TACACS+ Code Points and AVPs">
+       <section title="New TACACS+ Code Points and well-known AVPs">
          <t>
-           The following new TACACS+ code points and AVPs are needed to support SSH in the subsequent sections.
-           These new code points augment those in <xref target="RFC8907"/> Section 5.1 - 5.3 as follows:
+           The following new TACACS+ code points and well-known AVPs are needed to support SSH in the subsequent sections.
+           These new code points augment those in <xref target="RFC8907"/> Sections 5.1 - 5.3, 6.1, and 8.2 as follows:
 XXX these values should be double-checked against rfc8907 and "The Draft" to check for duplication.
          </t>
 	 <dl newline="true">
@@ -444,9 +444,9 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
 	   <dt>TAC_PLUS_AUTHEN_STATUS_SSHPK := 0x23</dt>
            <dd>Extended Authentication REPLY Packet status to provide SSH pubkeys.</dd>
 
-	   <dt>TAC_PLUS_REPLY_FLAG_MORE := 0x02</dt>
+	   <dt>TAC_PLUS_REPLY_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication REPLY Packet flag indicating the REPLY is incomplete.  XXX better name for this flag?</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_MORE := 0x02</dt>
+	   <dt>TAC_PLUS_CONTINUE_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.  XXX better name for this flag?</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.  XXX should continue have a status field?</dd>
@@ -455,12 +455,17 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
 	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.  XXX should continue have a status field?</dd>
 
-	   <dt>AVP ssh_pubkey_type</dt>
+	   <dt>AVP ssh_pubkey_type (String)</dt>
            <dd>Attribute to carry SSH public key type names.</dd>
 
-	   <dt>AVP ssh_pubkey</dt>
+	   <dt>AVP ssh_pubkey (String)</dt>
            <dd>Attribute to carry SSH public keys.</dd>
 
+           <dt>TAC_PLUS_AUTHEN_METH_SSHPK := 0x21</dt>
+           <dd>Authorization REQUEST Packet authen_method for SSH pubkey authentication.</dd>
+
+           <dt>AVP ssh-subsystem (String)</dt>
+           <dd>Attribute to carry SSH subsystem name for authorization</dd>
          </dl>
        </section>
 
@@ -521,7 +526,7 @@ XXX does SSHNOPK or ERROR (rfc8907 s5.4.3) imply that the client should use
            The server send REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
            The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
            As such, client MUST be prepared to accept Key File Headers.
-           Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_MORE if two or more packets are required, indicating that the client SHOULD request the remainder.
+           Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
 
 XXX is optional correct for the ssh_pubkey AVP?
@@ -534,10 +539,10 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
          </li>
 
          <li>
-           If the TAC_PLUS_REPLY_FLAG_MORE flag is set, the client MAY reply with the same CONTINUE packet as before with the new TAC_PLUS_CONTINUE_FLAG_MORE flag set.
-           The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_MORE flag of the last REPLY packet.
+           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the new TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
+           The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY packet.
            This repeats until the last REPLY packet is received, the client aborts the authentication process, or an error occurs.
-           The client MUST NOT set TAC_PLUS_REPLY_FLAG_MORE if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_MORE flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
+           The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
          </li>
 
          <li>
@@ -553,23 +558,17 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
 
        <section title="SSH Authorization and Accounting">
          <t>
-           To support central management via TACACS+ of SSH and SSH subsystem authorization, this document adds an <xref target="RFC8907">RFC8907 Section 6.1 Authorization REQUEST authen_method</xref> and well-known AVPs to <xref target="RFC8907">RFC8907 Section 8.2 Authorization Arguments</xref>.
+           To support central management of SSH and SSH subsystem authorization via TACACS+, this document adds a new authen_method to <xref target="RFC8907">RFC8907 Section 6.1 Authorization REQUEST</xref> and well-known AVPs to <xref target="RFC8907">RFC8907 Section 8.2 Authorization Arguments</xref>.
          </t>
-         <t>New Authorization and Accounting authen_method values:</t>
-         <dl newline="true">
-           <dt>TAC_PLUS_AUTHEN_METH_SSHPUBKEY := 0x21</dt>
-           <dd>This value indicates that the user authenticated by SSH public key.</dd>
-         </dl>
-         <t>New Authorization and Accounting Arguments:</t>
-         <dl newline="true" indent="8">
-           <dt>ssh-subsystem (String)</dt>
-           <dd>This AVP defines the SSH subsystem for which the authorization is requested and is Mandatory when the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.
+         <t>
+           ssh-subsystem (String)
+           This AVP defines the SSH subsystem for which the authorization is requested and is Mandatory when the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.
                Valid values are the Empty Value or a SSH Subsystem Name as defined in the <xref target="SSHPARAM">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
                An invalid name MUST result in an Authorization REPLY packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.
 
 XXX should the a "ssh subsystem" AVP be added for authorization?
-           </dd>
-         </dl>
+
+         </t>
 <t>
 XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subsystem name with "_acct" postfix?
 </t>
