@@ -430,6 +430,9 @@ s.
          <t>
            The following new enumerated TACACS+ protocol values and well-known AVPs are needed to support SSH in the subsequent sections.
            These new values augment those in <xref target="RFC8907"/> Sections 5.1 - 5.3, 6.1, and 8.2 as follows:
+         </t>
+         <t>
+<br/>
 XXX these values should be double-checked against rfc8907 and "The Draft" to check for duplication.
          </t>
 	 <dl newline="true">
@@ -444,13 +447,13 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
 	   <dt>TAC_PLUS_REPLY_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication REPLY Packet flag indicating the REPLY is incomplete.</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_FRAGMENT := 0x02</dt>
-           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.  XXX better name for this flag?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.  XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.  <br/>XXX should continue have a status field?</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_FAIL := 0x08</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.  XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.  <br/>XXX should continue have a status field?</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.  XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.  <br/>XXX should continue have a status field?</dd>
 
 	   <dt>AVP ssh_pubkey_type (String)</dt>
            <dd>Attribute to carry SSH public key type names.</dd>
@@ -484,7 +487,7 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
             If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
             The client MAY send an empty algorithm name to request all type available for the given user.
             The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
-
+<br/>
 XXX Can mandatory and optional AVPs of the same name be mixed in the same
     request?  They can not.  so what happens if that occurs?
 
@@ -497,7 +500,8 @@ XXX Is this use of the "null" type too kinky?  See S5 of RFC4462. use the
 XXX Should the client indicate the ssh subsystem in another AVP?  The server
     could deny access to cli, but allow netconf, for example.  Thinks this
     should move to authorization.  Yes, will do this entirely in authorization.
-
+<br/>
+<br/>
 XXX grumble grumble - how does one insert line breaks in rfc xml?
          </li>
 
@@ -509,11 +513,8 @@ XXX grumble grumble - how does one insert line breaks in rfc xml?
          <li>
            If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPKi with the relevant ssh_pubkey_type AVP(s).
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
-
+<br/>
 XXX does it need to mention all cases where a new session is required?
-
-XXX does SSHNOPK or ERROR (rfc8907 s5.4.3) imply that the client should use
-    local keys if it has any?
          </li>
 
          <li>
