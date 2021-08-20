@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 19 February 2022                                         A. Ota
-                                                          18 August 2021
+Expires: 21 February 2022                                         A. Ota
+                                                          20 August 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 February 2022.
+   This Internet-Draft will expire on 21 February 2022.
 
 
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 1]
+Dahm, et al.            Expires 21 February 2022                [Page 1]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -98,24 +98,24 @@ Table of Contents
            AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
      5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  13
      5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  15
-   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  15
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
-     7.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
-       7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  16
+   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  16
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
+     7.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
+       7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
        7.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
-     7.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+     7.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 2]
+Dahm, et al.            Expires 21 February 2022                [Page 2]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
 
-   10. Normative References  . . . . . . . . . . . . . . . . . . . .  18
-   11. Informative References  . . . . . . . . . . . . . . . . . . .  19
+   10. Normative References  . . . . . . . . . . . . . . . . . . . .  19
+   11. Informative References  . . . . . . . . . . . . . . . . . . .  20
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 3]
+Dahm, et al.            Expires 21 February 2022                [Page 3]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 4]
+Dahm, et al.            Expires 21 February 2022                [Page 4]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 5]
+Dahm, et al.            Expires 21 February 2022                [Page 5]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 6]
+Dahm, et al.            Expires 21 February 2022                [Page 6]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 7]
+Dahm, et al.            Expires 21 February 2022                [Page 7]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 8]
+Dahm, et al.            Expires 21 February 2022                [Page 8]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022                [Page 9]
+Dahm, et al.            Expires 21 February 2022                [Page 9]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022               [Page 10]
+Dahm, et al.            Expires 21 February 2022               [Page 10]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022               [Page 11]
+Dahm, et al.            Expires 21 February 2022               [Page 11]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 19 February 2022               [Page 12]
+Dahm, et al.            Expires 21 February 2022               [Page 12]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -717,23 +717,25 @@ Internet-Draft              TACACS+ Security                 August 2021
        request all type available for the given user.  The process ends
        and the client MUST start a new authentication session if it
        receives status SSHNOPK or ERROR.
+
+       XXX Are there rules for algorithm names like there are for
+       subsystem names?
        XXX Can mandatory and optional AVPs of the same name be mixed in
        the same request?  They can not.  so what happens if that occurs?
-       XXX Should there be an ssh_pubkey_type AVP?  Why not just send
-       all keys types, which could mean much more data is sent?  XXX Is
-       this use of the "null" type too kinky?  See S5 of RFC4462. use
 
 
 
-Dahm, et al.            Expires 19 February 2022               [Page 13]
+Dahm, et al.            Expires 21 February 2022               [Page 13]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
 
-       the empty string instead?  XXX Should the client indicate the ssh
-       subsystem in another AVP?  The server could deny access to cli,
-       but allow netconf, for example.  Thinks this should move to
-       authorization.  Yes, will do this entirely in authorization.
+       XXX Should there be an ssh_pubkey_type AVP?  Why not just send
+       all keys types, which could mean much more data is sent?
+       XXX Should the client indicate the ssh subsystem in another AVP?
+       The server could deny access to cli, but allow netconf, for
+       example.  Thinks this should move to authorization.  Yes, will do
+       this entirely in authorization.
 
        XXX grumble grumble - how does one insert line breaks in rfc xml?
 
@@ -750,6 +752,7 @@ Internet-Draft              TACACS+ Security                 August 2021
        TAC_PLUS_AUTHEN_STATUS_SSHNOPKi with the relevant ssh_pubkey_type
        AVP(s).  The process ends and the client MUST start a new
        authentication session if it receives status SSHNOPK or ERROR.
+
        XXX does it need to mention all cases where a new session is
        required?
 
@@ -763,29 +766,31 @@ Internet-Draft              TACACS+ Security                 August 2021
        flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are
        required, indicating that the client SHOULD request the
        remainder.  An AVP SHALL NOT span multiple packet; each must be
-       contained entirely in the packet in which it begins.  XXX is
-       optional correct for the ssh_pubkey AVP?  XXX is rfc4716 format
-       the best choice?  XXX should an AVP be allowed to span multiple
-       packets?  ie: that the packet payload should be concatenated.
-       This has implications for more than just ssh pubkeys.  We decided
-       no; Douglas will add text.
+       contained entirely in the packet in which it begins.
+
+       XXX is optional correct for the ssh_pubkey AVP?
+       XXX is rfc4716 format the best choice?
+       XXX should an AVP be allowed to span multiple packets?  ie: that
+       the packet payload should be concatenated.  This has implications
+       for more than just ssh pubkeys.  We decided no; Douglas will add
+       text.
 
    5.  If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY
        reply with the same CONTINUE packet as before with the new
        TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.  The server replies
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 14]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
+
        with the next REPLY packet as before, clearing the
        TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY packet.  This
        repeats until the last REPLY packet is received, the client
        aborts the authentication process, or an error occurs.  The
        client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY
-
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 14]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
        packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and
        the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it
        does so.
@@ -807,19 +812,58 @@ Internet-Draft              TACACS+ Security                 August 2021
 5.3.  SSH Authorization and Accounting
 
    To support central management of SSH and SSH subsystem authorization
-   via TACACS+, this document adds a new authen_method to RFC8907
-   Section 6.1 Authorization REQUEST [RFC8907] and well-known AVPs to
-   RFC8907 Section 8.2 Authorization Arguments [RFC8907].
+   and accounting via TACACS+, this document adds a new authen_method to
+   RFC8907 Section 6.1 Authorization REQUEST [RFC8907] and a well-known
+   AVP to Section 8.2 Authorization Arguments [RFC8907].
 
-   ssh-subsystem (String) This AVP defines the SSH subsystem for which
-   the authorization is requested and is Mandatory when the
-   authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.  Valid values are
-   the Empty Value or a SSH Subsystem Name as defined in the IANA SSH
-   Connection Protocol Subsystem Names Registry [SSHPARAM], which are
-   case-sensitive as specified and otherwise constrained by [RFC4250]
-   Section 4.6.1.  An invalid name MUST result in an Authorization REPLY
-   packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.  XXX should the a
-   "ssh subsystem" AVP be added for authorization?
+   The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that
+   the user was authenticated with a SSH public key.
+
+   XXX This where an TAC_PLUS_AUTHEN_SVC_SSH, as opposed to
+   TAC_PLUS_AUTHEN_SVC_LOGIN, might be sensible.  Perhaps only for
+   _SVC_SSHSUBSYS??  Is the type of auth interesting for authorization?
+
+   The new well-known ssh-subsystem AVP defines the SSH subsystem for
+   which the authorization is requested and MUST be present if the
+   authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present
+   any time the authorization is for a SSH connection..
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 15]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
+
+   The set of permissible values for this AVP are the SSH Subsystem
+   Names defined in the IANA SSH Connection Protocol Subsystem Names
+   Registry [SSHSUBSYS], which are case-sensitive as specified and
+   otherwise constrained by [RFC4250] Section 4.6.1.  The client MAY
+   send an empty subsystem name to indicate no subsystem, also known as
+   a shell or CLI.  The server MUST NOT reply with status
+   TAC_PLUS_AUTHEN_STATUS_ERROR if it receives a subsystem name whose
+   syntax is valid but whose value is not recognized.
+
+   These new authen_methods and AVPs apply equally to accounting.
+
+   XXX what if the _AUTHEN_METH_ is not _SSHPUBKEY, perhaps just _LOCAL;
+   the subsystem is still relevant.  is a _SVC_SSH needed?
+
+   XXX is the "ssh subsystem" AVP for authorization a bad idea?
+
+   XXX are any other AVPs or text needed to describe authorization for
+   the existing registered subsystems?  do they need anything
+   specifically or generally to support authorization for them?  Perhaps
+   any such text should be a separate per-subsys draft?
+
+   XXX why is sftp missing from the registered subsystem list?
 
    XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?
    or ssh subsystem name with "_acct" postfix?
@@ -833,15 +877,6 @@ Internet-Draft              TACACS+ Security                 August 2021
    authentication and TLS encryption to TACACS+ obsolesces these former
    mechanisms and so are hereby deprecated.
 
-
-
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 15]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
    Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
    header, the least significant bit (LSB) of the flags field, is also
    deprecated.  Peers compliant with this document should set the
@@ -852,6 +887,16 @@ Internet-Draft              TACACS+ Security                 August 2021
 
    A Client that is compliant with this document MUST NOT utilize these
    deprecated authentication or encryption methods on TLS Connections/
+
+
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 16]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
 
    A TACACS+ Server or Client implementation SHOULD, and is strongly
    encouraged to, offer a configuration mechanism to disable non-TLS
@@ -888,16 +933,6 @@ Internet-Draft              TACACS+ Security                 August 2021
    versions and algorithms should be supported, deprecated, or
    abandoned, in the absence of updates to this RFC.
 
-
-
-
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 16]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
 7.1.2.  TLS Use
 
    TLS encryption SHOULD be used in deployments when both the clients
@@ -910,6 +945,14 @@ Internet-Draft              TACACS+ Security                 August 2021
 
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
    and encryption, except for test and debug environments.
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 17]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
 
 7.2.  Well-Known TCP/IP Port
 
@@ -942,18 +985,6 @@ Internet-Draft              TACACS+ Security                 August 2021
    recognized TLS versions and algorithms to those recommended by
    standards bodies and implementers.
 
-
-
-
-
-
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 17]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
    Servers and clients could also maintain a cache of Peers that have
    engaged in TACACS+ TLS connections and demand TLS from that point
    forward.  However, this has potential to be a Denial of Service (DoS)
@@ -969,6 +1000,15 @@ Internet-Draft              TACACS+ Security                 August 2021
    The name "tacacss" follows the common practice of appending an "s" to
    the name given to the non-TLS well-known port.  This allocation is
    justified in Section 7.2.
+
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 18]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
 
    RFC EDITOR: this port number should replace "[TBD]" within this
    document.
@@ -1003,13 +1043,6 @@ Internet-Draft              TACACS+ Security                 August 2021
               Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
               November 2006, <https://www.rfc-editor.org/info/rfc4716>.
 
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 18]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
               DOI 10.17487/RFC5246, August 2008,
@@ -1025,9 +1058,22 @@ Internet-Draft              TACACS+ Security                 August 2021
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
 
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 19]
+
+Internet-Draft              TACACS+ Security                 August 2021
+
+
    [SSHPARAM] IANA, "SSH Protocol Parameters",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
               parameters.xhtml>.
+
+   [SSHSUBSYS]
+              IANA, "SSH Protocol Subsystem Names",
+              <https://www.iana.org/assignments/ssh-parameters/ssh-
+              parameters.xhtml#ssh-parameters-15>.
 
 11.  Informative References
 
@@ -1056,16 +1102,6 @@ Internet-Draft              TACACS+ Security                 August 2021
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
 
-
-
-
-
-
-Dahm, et al.            Expires 19 February 2022               [Page 19]
-
-Internet-Draft              TACACS+ Security                 August 2021
-
-
    [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
               Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
               August 2015, <https://www.rfc-editor.org/info/rfc7605>.
@@ -1075,6 +1111,15 @@ Authors' Addresses
    Thorsten Dahm
 
    Email: thorsten.dahm@gmail.com
+
+
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 20]
+
+Internet-Draft              TACACS+ Security                 August 2021
 
 
    Douglas Gash
@@ -1117,4 +1162,15 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires 19 February 2022               [Page 20]
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 21 February 2022               [Page 21]

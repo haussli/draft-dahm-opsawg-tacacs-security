@@ -487,16 +487,15 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
             If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
             The client MAY send an empty algorithm name to request all type available for the given user.
             The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
+<br/><br/>
+XXX Are there rules for algorithm names like there are for subsystem names?
 <br/>
 XXX Can mandatory and optional AVPs of the same name be mixed in the same
     request?  They can not.  so what happens if that occurs?
-
+<br/>
 XXX Should there be an ssh_pubkey_type AVP?  Why not just send all keys types,
     which could mean much more data is sent?
-
-XXX Is this use of the "null" type too kinky?  See S5 of RFC4462. use the
-    empty string instead?
-
+<br/>
 XXX Should the client indicate the ssh subsystem in another AVP?  The server
     could deny access to cli, but allow netconf, for example.  Thinks this
     should move to authorization.  Yes, will do this entirely in authorization.
@@ -514,6 +513,7 @@ XXX grumble grumble - how does one insert line breaks in rfc xml?
            If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPKi with the relevant ssh_pubkey_type AVP(s).
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
 <br/>
+<br/>
 XXX does it need to mention all cases where a new session is required?
          </li>
 
@@ -523,11 +523,12 @@ XXX does it need to mention all cases where a new session is required?
            As such, client MUST be prepared to accept Key File Headers.
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
-
+<br/>
+<br/>
 XXX is optional correct for the ssh_pubkey AVP?
-
+<br/>
 XXX is rfc4716 format the best choice?
-
+<br/>
 XXX should an AVP be allowed to span multiple packets?  ie: that the packet
     payload should be concatenated.  This has implications for more than
     just ssh pubkeys.  We decided no; Douglas will add text.
@@ -553,20 +554,34 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
 
        <section title="SSH Authorization and Accounting">
          <t>
-           To support central management of SSH and SSH subsystem authorization via TACACS+, this document adds a new authen_method to <xref target="RFC8907">RFC8907 Section 6.1 Authorization REQUEST</xref> and well-known AVPs to <xref target="RFC8907">RFC8907 Section 8.2 Authorization Arguments</xref>.
+           To support central management of SSH and SSH subsystem authorization and accounting via TACACS+, this document adds a new authen_method to <xref target="RFC8907">RFC8907 Section 6.1 Authorization REQUEST</xref> and a well-known AVP to <xref target="RFC8907">Section 8.2 Authorization Arguments</xref>.
          </t>
          <t>
-           ssh-subsystem (String)
-           This AVP defines the SSH subsystem for which the authorization is requested and is Mandatory when the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY.
-               Valid values are the Empty Value or a SSH Subsystem Name as defined in the <xref target="SSHPARAM">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
-               An invalid name MUST result in an Authorization REPLY packet with status TAC_PLUS_AUTHOR_STATUS_ERROR.
-
-XXX should the a "ssh subsystem" AVP be added for authorization?
-
+           The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that the user was authenticated with a SSH public key.
+<br/><br/>
+XXX This where an TAC_PLUS_AUTHEN_SVC_SSH, as opposed to TAC_PLUS_AUTHEN_SVC_LOGIN, might be sensible.  Perhaps only for _SVC_SSHSUBSYS??  Is the type of auth interesting for authorization?
          </t>
-<t>
+         <t>
+           The new well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection..
+         </t>
+         <t>
+           The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
+           The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
+           The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+         </t>
+         <t>
+           These new authen_methods and AVPs apply equally to accounting.
+<br/><br/>
+XXX what if the _AUTHEN_METH_ is not _SSHPUBKEY, perhaps just _LOCAL; the subsystem is still relevant.  is a _SVC_SSH needed?
+<br/><br/>
+XXX is the "ssh subsystem" AVP for authorization a bad idea?
+<br/><br/>
+XXX are any other AVPs or text needed to describe authorization for the existing registered subsystems?  do they need anything specifically or generally to support authorization for them?  Perhaps any such text should be a separate per-subsys draft?
+<br/><br/>
+XXX why is sftp missing from the registered subsystem list?
+<br/><br/>
 XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subsystem name with "_acct" postfix?
-</t>
+         </t>
        </section>
      </section>
 
@@ -590,7 +605,7 @@ XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subs
          A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
        </t>
        <t>
-         XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
+XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
        </t>
      </section>
 
@@ -681,6 +696,12 @@ tance.
        <reference anchor="SSHPARAM" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml">
          <front>
            <title>SSH Protocol Parameters</title>
+           <author fullname="IANA"></author>
+         </front>
+       </reference>
+       <reference anchor="SSHSUBSYS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-15">
+         <front>
+           <title>SSH Protocol Subsystem Names</title>
            <author fullname="IANA"></author>
          </front>
        </reference>
