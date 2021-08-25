@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 21 February 2022                                         A. Ota
-                                                          20 August 2021
+Expires: 26 February 2022                                         A. Ota
+                                                          25 August 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 February 2022.
+   This Internet-Draft will expire on 26 February 2022.
 
 
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 1]
+Dahm, et al.            Expires 26 February 2022                [Page 1]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 2]
+Dahm, et al.            Expires 26 February 2022                [Page 2]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 3]
+Dahm, et al.            Expires 26 February 2022                [Page 3]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 4]
+Dahm, et al.            Expires 26 February 2022                [Page 4]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 5]
+Dahm, et al.            Expires 26 February 2022                [Page 5]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 6]
+Dahm, et al.            Expires 26 February 2022                [Page 6]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 7]
+Dahm, et al.            Expires 26 February 2022                [Page 7]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 8]
+Dahm, et al.            Expires 26 February 2022                [Page 8]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022                [Page 9]
+Dahm, et al.            Expires 26 February 2022                [Page 9]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 10]
+Dahm, et al.            Expires 26 February 2022               [Page 10]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 11]
+Dahm, et al.            Expires 26 February 2022               [Page 11]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 12]
+Dahm, et al.            Expires 26 February 2022               [Page 12]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 13]
+Dahm, et al.            Expires 26 February 2022               [Page 13]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 14]
+Dahm, et al.            Expires 26 February 2022               [Page 14]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -826,7 +826,7 @@ Internet-Draft              TACACS+ Security                 August 2021
    The new well-known ssh-subsystem AVP defines the SSH subsystem for
    which the authorization is requested and MUST be present if the
    authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present
-   any time the authorization is for a SSH connection..
+   any time the authorization is for a SSH connection.
 
 
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 15]
+Dahm, et al.            Expires 26 February 2022               [Page 15]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -848,7 +848,7 @@ Internet-Draft              TACACS+ Security                 August 2021
    otherwise constrained by [RFC4250] Section 4.6.1.  The client MAY
    send an empty subsystem name to indicate no subsystem, also known as
    a shell or CLI.  The server MUST NOT reply with status
-   TAC_PLUS_AUTHEN_STATUS_ERROR if it receives a subsystem name whose
+   TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose
    syntax is valid but whose value is not recognized.
 
    These new authen_methods and AVPs apply equally to accounting.
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 16]
+Dahm, et al.            Expires 26 February 2022               [Page 16]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -949,7 +949,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 17]
+Dahm, et al.            Expires 26 February 2022               [Page 17]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 18]
+Dahm, et al.            Expires 26 February 2022               [Page 18]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 19]
+Dahm, et al.            Expires 26 February 2022               [Page 19]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -1117,7 +1117,7 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 20]
+Dahm, et al.            Expires 26 February 2022               [Page 20]
 
 Internet-Draft              TACACS+ Security                 August 2021
 
@@ -1173,4 +1173,4 @@ Internet-Draft              TACACS+ Security                 August 2021
 
 
 
-Dahm, et al.            Expires 21 February 2022               [Page 21]
+Dahm, et al.            Expires 26 February 2022               [Page 21]

@@ -562,12 +562,12 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
 XXX This where an TAC_PLUS_AUTHEN_SVC_SSH, as opposed to TAC_PLUS_AUTHEN_SVC_LOGIN, might be sensible.  Perhaps only for _SVC_SSHSUBSYS??  Is the type of auth interesting for authorization?
          </t>
          <t>
-           The new well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection..
+           The new well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
            The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
-           The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+           The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
