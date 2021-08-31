@@ -1,0 +1,26 @@
+- Would prefer issues not be in the doc (XXXs).  decided to try issues system
+  in github.
+
+- Douglas asks whether splitting the ssh pubkey retrieval process and the
+  authentication process with pubkeys would solve the unconventional process
+  of step 7 in the current draft.  And, whether it would be useful in general
+  to have these separately.
+
+	- Authentication would be able to proceed without keys being sent,
+	  such as if keys were locally configured or I (heasley) suppose,
+	  as I write the notes, that the client could have cached keys.
+
+	  - Would caching be negative, security wise?  it would mean that
+	    keys could not be immediately revoked.  tacacs could have a
+	    cache timer for keys; 0 seconds == no caching.
+
+- There was a discussion about disambiguating users in a credential-less
+  environment.  If there is no pubkey exchange, what is the assurance that
+  the useer has been authenticated?  The conclusion was that the same issue
+  exists for authorization and accounting.
+
+- Maybe we should comment about preference of locally-configured keys?
+
+- Thorsten, I believe, suggested we try to avoid ops-specific issues with
+  client configuration.  I think this was in referece to the previous note
+  about key location.
