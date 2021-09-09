@@ -484,20 +484,10 @@ s.
             The client MAY send an empty algorithm name to request all type available for the given user.
             The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
 <br/><br/>
-XXX Are there rules for algorithm names like there are for subsystem names?
-<br/>
-XXX Can mandatory and optional AVPs of the same name be mixed in the same
-    request?  They can not.  so what happens if that occurs?
-<br/>
-XXX Should there be an ssh_pubkey_type AVP?  Why not just send all keys types,
-    which could mean much more data is sent?
-<br/>
 XXX Should the client indicate the ssh subsystem in another AVP?  The server
     could deny access to cli, but allow netconf, for example.  Thinks this
     should move to authorization.  Yes, will do this entirely in authorization.
 <br/>
-<br/>
-XXX grumble grumble - how does one insert line breaks in rfc xml?
          </li>
 
          <li>

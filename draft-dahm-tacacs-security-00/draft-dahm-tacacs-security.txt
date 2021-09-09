@@ -97,15 +97,15 @@ Table of Contents
      5.1.  New Enumerated TACACS+ Protocol Values and well-known
            AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
      5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  13
-     5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  16
-   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  17
+     5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  15
+   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  16
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
      7.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
-       7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  18
-       7.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  18
-     7.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
+       7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
+       7.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
+     7.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
 
 
 
@@ -114,9 +114,9 @@ Dahm, et al.              Expires 13 March 2022                 [Page 2]
 Internet-Draft              TACACS+ Security              September 2021
 
 
-   10. Normative References  . . . . . . . . . . . . . . . . . . . .  19
-   11. Informative References  . . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   10. Normative References  . . . . . . . . . . . . . . . . . . . .  18
+   11. Informative References  . . . . . . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -692,44 +692,6 @@ Internet-Draft              TACACS+ Security              September 2021
 
    The process follows:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 13]
-
-Internet-Draft              TACACS+ Security              September 2021
-
-
    1.  The client begins an authentication session with an Extended
        Authentication START Packet.  The START packet MUST include a
        non-zero-length username and the server MUST send an
@@ -749,18 +711,10 @@ Internet-Draft              TACACS+ Security              September 2021
        and the client MUST start a new authentication session if it
        receives status SSHNOPK or ERROR.
 
-       XXX Are there rules for algorithm names like there are for
-       subsystem names?
-       XXX Can mandatory and optional AVPs of the same name be mixed in
-       the same request?  They can not.  so what happens if that occurs?
-       XXX Should there be an ssh_pubkey_type AVP?  Why not just send
-       all keys types, which could mean much more data is sent?
        XXX Should the client indicate the ssh subsystem in another AVP?
        The server could deny access to cli, but allow netconf, for
        example.  Thinks this should move to authorization.  Yes, will do
        this entirely in authorization.
-
-       XXX grumble grumble - how does one insert line breaks in rfc xml?
 
    2.  If a ssh_pubkey_type AVP was not provided in the START packet,
        the server replies with the status code
@@ -768,6 +722,13 @@ Internet-Draft              TACACS+ Security              September 2021
        CONTINUE packet with one or more ssh_pubkey_type AVPs, else the
        server sends a REPLY packet with status
        TAC_PLUS_AUTHEN_STATUS_ERROR.
+
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 13]
+
+Internet-Draft              TACACS+ Security              September 2021
+
 
    3.  If the server has none of the wanted ssh_pubkey_type(s) or any of
        the mandatory ssh_pubkey_types for the user or no pubkeys at all,
@@ -778,13 +739,6 @@ Internet-Draft              TACACS+ Security              September 2021
 
        XXX does it need to mention all cases where a new session is
        required?
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 14]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
    4.  The server send REPLY packets with status
        TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey
@@ -825,22 +779,18 @@ Internet-Draft              TACACS+ Security              September 2021
        TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or
        TAC_PLUS_CONTINUE_FLAG_ERROR.
 
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 14]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
    7.  The client must give the server the final consent, by waiting for
        a REPLY packet with one of the status:
        TAC_PLUS_AUTHEN_STATUS_PASS, TAC_PLUS_AUTHEN_STATUS_FAIL, or
        TAC_PLUS_AUTHEN_STATUS_ERROR, thus ending the authentication
        session.
-
-
-
-
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 15]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
 5.3.  SSH Authorization and Accounting
 
@@ -870,6 +820,28 @@ Internet-Draft              TACACS+ Security              September 2021
    TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose
    syntax is valid but whose value is not recognized.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 15]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
    These new authen_methods and AVPs apply equally to accounting.
 
    XXX what if the _AUTHEN_METH_ is not _SSHPUBKEY, perhaps just _LOCAL;
@@ -886,17 +858,6 @@ Internet-Draft              TACACS+ Security              September 2021
 
    XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?
    or ssh subsystem name with "_acct" postfix?
-
-
-
-
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 16]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
 6.  Deprecation of TACACS+ PSK and Encryption
 
@@ -928,6 +889,15 @@ Internet-Draft              TACACS+ Security              September 2021
    XXX Anything else to deprecate?  We had discussed deprecation of MS-
    CHAP v1. ????
 
+
+
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 16]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
 7.  Security Considerations
 
 7.1.  TLS
@@ -939,20 +909,6 @@ Internet-Draft              TACACS+ Security              September 2021
    role.  That role is to diligently follow current best practices for
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 17]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
 7.1.1.  TLS Options
 
@@ -991,6 +947,13 @@ Internet-Draft              TACACS+ Security              September 2021
    *  passive Intrusion Detection Systems (IDSs) monitoring the
       unencrypted version to be unaffected by the introduction of TLS,
 
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 17]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
    *  avoidance of Man in the Middle (MitM) attacks that can interfere
       with STARTTLS,
 
@@ -1002,14 +965,6 @@ Internet-Draft              TACACS+ Security              September 2021
    also presents opportunity for down-grade attacks.  Causing failure of
    connections to the TLS-enabled service or the negotiation of shared
    algorithm support are two such down-grade attacks.  The simplest way
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 18]
-
-Internet-Draft              TACACS+ Security              September 2021
-
-
    to address the exposure from Unsecure Connection methods is to refuse
    Unsecure Connections at the server entirely, perhaps using separate
    servers for Unsecure Connections and TLS.  Another approach is mutual
@@ -1046,6 +1001,15 @@ Internet-Draft              TACACS+ Security              September 2021
 
 10.  Normative References
 
+
+
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 18]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
@@ -1058,13 +1022,6 @@ Internet-Draft              TACACS+ Security              September 2021
               Protocol Assigned Numbers", RFC 4250,
               DOI 10.17487/RFC4250, January 2006,
               <https://www.rfc-editor.org/info/rfc4250>.
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 19]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",
@@ -1101,6 +1058,14 @@ Internet-Draft              TACACS+ Security              September 2021
 
 11.  Informative References
 
+
+
+
+Dahm, et al.              Expires 13 March 2022                [Page 19]
+
+Internet-Draft              TACACS+ Security              September 2021
+
+
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
               RFC 3365, DOI 10.17487/RFC3365, August 2002,
@@ -1114,13 +1079,6 @@ Internet-Draft              TACACS+ Security              September 2021
    [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
               January 2006, <https://www.rfc-editor.org/info/rfc4251>.
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 20]
-
-Internet-Draft              TACACS+ Security              September 2021
-
 
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
@@ -1159,18 +1117,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.              Expires 13 March 2022                [Page 21]
+Dahm, et al.              Expires 13 March 2022                [Page 20]
