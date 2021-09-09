@@ -483,11 +483,6 @@ s.
             If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
             The client MAY send an empty algorithm name to request all type available for the given user.
             The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
-<br/><br/>
-XXX Should the client indicate the ssh subsystem in another AVP?  The server
-    could deny access to cli, but allow netconf, for example.  Thinks this
-    should move to authorization.  Yes, will do this entirely in authorization.
-<br/>
          </li>
 
          <li>
