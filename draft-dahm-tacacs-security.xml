@@ -431,10 +431,6 @@ s.
            The following new enumerated TACACS+ protocol values and well-known AVPs are needed to support SSH in the subsequent sections.
            These new values augment those in <xref target="RFC8907"/> Sections 5.1 - 5.3, 6.1, and 8.2 as follows:
          </t>
-         <t>
-<br/>
-XXX these values should be double-checked against rfc8907 and "The Draft" to check for duplication.
-         </t>
 	 <dl newline="true">
 	   <dt>TAC_PLUS_AUTHEN_TYPE_SSHPK := 0x07</dt>
            <dd>Extended Authentication START Packet authen_type for SSH pubkeys.</dd>
@@ -449,11 +445,11 @@ XXX these values should be double-checked against rfc8907 and "The Draft" to che
 	   <dt>TAC_PLUS_CONTINUE_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.  <br/>XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_FAIL := 0x08</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.  <br/>XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.</dd>
 	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
-           <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.  <br/>XXX should continue have a status field?</dd>
+           <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.</dd>
 
 	   <dt>AVP ssh_pubkey_type (String)</dt>
            <dd>Attribute to carry SSH public key type names.</dd>
