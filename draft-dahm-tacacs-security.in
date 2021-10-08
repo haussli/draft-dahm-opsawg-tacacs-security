@@ -490,14 +490,17 @@ s.
          <t>The process follows:</t>
          <ol>
          <li>
-            The client begins an authentication session with an Extended Authentication START Packet.
-            The START packet MUST include a non-zero-length username and the server MUST send an Authentication REPLY Packet with status TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
-            The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
-            The set of permissible values for this AVP are the SSH public algorithm names in the IANA pubkey alg names registry, <xref target="SSHPARAM"/>.
-            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
-            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
-            The client MAY send an empty algorithm name to request all type available for the given user.
-            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
+           The client begins an authentication session with an Extended Authentication START Packet.
+           The START packet MUST include a non-zero-length username and the server MUST send an Authentication REPLY Packet with status TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
+           <br/><br/>
+           The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
+           The set of permissible values for this AVP are the SSH public algorithm names in the IANA pubkey alg names registry, <xref target="SSHPARAM"/>.
+           The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
+           If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
+           <br/><br/>
+           The client MAY send an empty algorithm name to request all type available for the given user.
+           <br/><br/>
+           The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
          </li>
 
          <li>
@@ -506,32 +509,23 @@ s.
          </li>
 
          <li>
-           If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPKi with the relevant ssh_pubkey_type AVP(s).
+           If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant ssh_pubkey_type AVP(s).
+           <br/><br/>
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
-<br/>
-<br/>
-XXX does it need to mention all cases where a new session is required?
          </li>
 
          <li>
-           The server send REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
+           The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
            The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
            As such, client MUST be prepared to accept Key File Headers.
+           <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
+           <br/><br/>
            An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
-<br/>
-<br/>
-XXX is optional correct for the ssh_pubkey AVP?
-<br/>
-XXX is rfc4716 format the best choice?
-<br/>
-XXX should an AVP be allowed to span multiple packets?  ie: that the packet
-    payload should be concatenated.  This has implications for more than
-    just ssh pubkeys.  We decided no; Douglas will add text.
          </li>
 
          <li>
-           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the new TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
+           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
            The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY packet.
            This repeats until the last REPLY packet is received, the client aborts the authentication process, or an error occurs.
            The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
@@ -543,7 +537,7 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
          </li>
 
          <li>
-           The client must give the server the final consent, by waiting for a REPLY packet with one of the status: TAC_PLUS_AUTHEN_STATUS_PASS, TAC_PLUS_AUTHEN_STATUS_FAIL, or TAC_PLUS_AUTHEN_STATUS_ERROR, thus ending the authentication session.
+           The client MUST give the server the final consent, by waiting for a REPLY packet with one of the status: TAC_PLUS_AUTHEN_STATUS_PASS, TAC_PLUS_AUTHEN_STATUS_FAIL, or TAC_PLUS_AUTHEN_STATUS_ERROR, thus ending the authentication session.
          </li>
          </ol>
        </section>
@@ -555,10 +549,9 @@ XXX should an AVP be allowed to span multiple packets?  ie: that the packet
          <t>
            The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that the user was authenticated with a SSH public key.
 <br/><br/>
-XXX This where an TAC_PLUS_AUTHEN_SVC_SSH, as opposed to TAC_PLUS_AUTHEN_SVC_LOGIN, might be sensible.  Perhaps only for _SVC_SSHSUBSYS??  Is the type of auth interesting for authorization?
          </t>
          <t>
-           The new well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
+           The well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
@@ -567,16 +560,6 @@ XXX This where an TAC_PLUS_AUTHEN_SVC_SSH, as opposed to TAC_PLUS_AUTHEN_SVC_LOG
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
-<br/><br/>
-XXX what if the _AUTHEN_METH_ is not _SSHPUBKEY, perhaps just _LOCAL; the subsystem is still relevant.  is a _SVC_SSH needed?
-<br/><br/>
-XXX is the "ssh subsystem" AVP for authorization a bad idea?
-<br/><br/>
-XXX are any other AVPs or text needed to describe authorization for the existing registered subsystems?  do they need anything specifically or generally to support authorization for them?  Perhaps any such text should be a separate per-subsys draft?
-<br/><br/>
-XXX why is sftp missing from the registered subsystem list?
-<br/><br/>
-XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subsystem name with "_acct" postfix?
          </t>
        </section>
      </section>
@@ -599,9 +582,6 @@ XXX add netconf_acct or ssh_subsystem_acct accounting "event" type?  or ssh subs
        </t>
        <t>
          A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
-       </t>
-       <t>
-XXX Anything else to deprecate?  We had discussed deprecation of MS-CHAP v1. ????
        </t>
      </section>
 
