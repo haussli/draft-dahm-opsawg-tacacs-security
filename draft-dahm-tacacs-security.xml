@@ -329,9 +329,6 @@ s.
            <li>
              The client MUST use the same separator for all arguments with the same name. The server MUST treat a packet with multiple arguments of with the same name, but different separators, as invalid.
            </li>
-           <li>
-             There is no support for fragmentation of arguments across multiple packets. These arguments in different packets are considered as separate and independent values.
-           </li>
          </ol>      
 	       
          <t>
