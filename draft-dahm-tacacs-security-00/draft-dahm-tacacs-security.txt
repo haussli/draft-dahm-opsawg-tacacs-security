@@ -674,7 +674,7 @@ Dahm, et al.              Expires 24 April 2022                [Page 12]
 Internet-Draft              TACACS+ Security                October 2021
 
 
-   AVP ssh-subsystem (String)
+   AVP ssh_subsystem (String)
       Attribute to carry SSH subsystem name for authorization
 
 5.2.  SSH Public Key Support
@@ -803,7 +803,7 @@ Internet-Draft              TACACS+ Security                October 2021
    the user was authenticated with a SSH public key.
 
 
-   The well-known ssh-subsystem AVP defines the SSH subsystem for which
+   The well-known ssh_subsystem AVP defines the SSH subsystem for which
    the authorization is requested and MUST be present if the
    authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present
    any time the authorization is for a SSH connection.

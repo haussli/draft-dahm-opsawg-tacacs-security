@@ -472,7 +472,7 @@ s.
            <dt>TAC_PLUS_AUTHEN_METH_SSHPK := 0x21</dt>
            <dd>Authorization REQUEST Packet authen_method for SSH pubkey authentication.</dd>
 
-           <dt>AVP ssh-subsystem (String)</dt>
+           <dt>AVP ssh_subsystem (String)</dt>
            <dd>Attribute to carry SSH subsystem name for authorization</dd>
          </dl>
        </section>
@@ -548,7 +548,7 @@ s.
 <br/><br/>
          </t>
          <t>
-           The well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
+           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
