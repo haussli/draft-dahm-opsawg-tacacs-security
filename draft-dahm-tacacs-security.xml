@@ -332,7 +332,7 @@ s.
          </ol>      
 	       
          <t>
-           The addition of arguments to the authentication packets is intended to permit the flexibility for TACACS+ phase that has been available previously for authorization and accounting.
+           The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
            These fields are intended to be used as needed in deployment, they are used in this document in the enhancments for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
          </t>
 
@@ -518,7 +518,7 @@ s.
            <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            <br/><br/>
-           An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
+           An AVP SHALL NOT span multiple packets; each must be contained entirely in the packet in which it begins.
          </li>
 
          <li>

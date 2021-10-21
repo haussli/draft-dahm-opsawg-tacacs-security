@@ -477,11 +477,11 @@ Internet-Draft              TACACS+ Security                October 2021
        invalid.
 
    The addition of arguments to the authentication packets is intended
-   to permit the flexibility for TACACS+ phase that has been available
-   previously for authorization and accounting.  These fields are
-   intended to be used as needed in deployment, they are used in this
-   document in the enhancments for SSH (Section 5), and to support the
-   origin client to enhance TACACS+ Proxy:
+   to permit the flexibility for the TACACS+ authentication phase that
+   has been available previously for authorization and accounting.
+   These fields are intended to be used as needed in deployment, they
+   are used in this document in the enhancments for SSH (Section 5), and
+   to support the origin client to enhance TACACS+ Proxy:
 
    origin_client
 
@@ -758,7 +758,7 @@ Internet-Draft              TACACS+ Security                October 2021
        TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required,
        indicating that the client SHOULD request the remainder.
 
-       An AVP SHALL NOT span multiple packet; each must be contained
+       An AVP SHALL NOT span multiple packets; each must be contained
        entirely in the packet in which it begins.
 
    5.  If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY
