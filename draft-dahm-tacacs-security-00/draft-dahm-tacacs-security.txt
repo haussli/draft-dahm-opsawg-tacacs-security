@@ -6,12 +6,12 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 11 April 2022                                            A. Ota
-                                                          8 October 2021
+Expires: 24 April 2022                                            A. Ota
+                                                         21 October 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
-                           xml2rfc-docs-3.9.1
+                     draft-dahm-tacacs-security-00
 
 Abstract
 
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2022.
+   This Internet-Draft will expire on 24 April 2022.
 
 
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 1]
+Dahm, et al.              Expires 24 April 2022                 [Page 1]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -91,7 +91,7 @@ Table of Contents
        3.4.2.  TLS Certificate Identity Requirements . . . . . . . .   7
    4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
      4.1.  The Extended Authentication START Packet Body . . . . . .   7
-     4.2.  The Extension Authentication REPLY Packet Body  . . . . .  10
+     4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
      4.3.  The Extended Authentication CONTINUE Packet Body  . . . .  10
    5.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  New Enumerated TACACS+ Protocol Values and well-known
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 2]
+Dahm, et al.              Expires 24 April 2022                 [Page 2]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 3]
+Dahm, et al.              Expires 24 April 2022                 [Page 3]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 4]
+Dahm, et al.              Expires 24 April 2022                 [Page 4]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 5]
+Dahm, et al.              Expires 24 April 2022                 [Page 5]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 6]
+Dahm, et al.              Expires 24 April 2022                 [Page 6]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 7]
+Dahm, et al.              Expires 24 April 2022                 [Page 7]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                 [Page 8]
+Dahm, et al.              Expires 24 April 2022                 [Page 8]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -476,10 +476,6 @@ Internet-Draft              TACACS+ Security                October 2021
        arguments of with the same name, but different separators, as
        invalid.
 
-   3.  There is no support for fragmentation of arguments across
-       multiple packets.  These arguments in different packets are
-       considered as separate and independent values.
-
    The addition of arguments to the authentication packets is intended
    to permit the flexibility for TACACS+ phase that has been available
    previously for authorization and accounting.  These fields are
@@ -495,21 +491,20 @@ Internet-Draft              TACACS+ Security                October 2021
    specified as octet numeric values separated by dots ('.').  IPv6
    address text representation is defined in [RFC5952].
 
-
-
-
-
-
-
-Dahm, et al.              Expires 11 April 2022                 [Page 9]
-
-Internet-Draft              TACACS+ Security                October 2021
-
-
 4.2.  The Extension Authentication REPLY Packet Body
 
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
+
+
+
+
+
+
+Dahm, et al.              Expires 24 April 2022                 [Page 9]
+
+Internet-Draft              TACACS+ Security                October 2021
+
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -557,7 +552,12 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 10]
+
+
+
+
+
+Dahm, et al.              Expires 24 April 2022                [Page 10]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 11]
+Dahm, et al.              Expires 24 April 2022                [Page 11]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 12]
+Dahm, et al.              Expires 24 April 2022                [Page 12]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 13]
+Dahm, et al.              Expires 24 April 2022                [Page 13]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 14]
+Dahm, et al.              Expires 24 April 2022                [Page 14]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 15]
+Dahm, et al.              Expires 24 April 2022                [Page 15]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 16]
+Dahm, et al.              Expires 24 April 2022                [Page 16]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -949,7 +949,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 17]
+Dahm, et al.              Expires 24 April 2022                [Page 17]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 18]
+Dahm, et al.              Expires 24 April 2022                [Page 18]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 19]
+Dahm, et al.              Expires 24 April 2022                [Page 19]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -1117,4 +1117,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.              Expires 11 April 2022                [Page 20]
+Dahm, et al.              Expires 24 April 2022                [Page 20]
