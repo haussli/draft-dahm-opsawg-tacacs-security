@@ -758,8 +758,8 @@ Internet-Draft              TACACS+ Security                October 2021
        TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required,
        indicating that the client SHOULD request the remainder.
 
-       An AVP SHALL NOT span multiple packets; each must be contained
-       entirely in the packet in which it begins.
+       An AVP SHALL NOT span multiple fragments; each must be contained
+       entirely in the fragment in which it begins.
 
    5.  If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY
        reply with the same CONTINUE packet as before with the
