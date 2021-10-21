@@ -98,7 +98,7 @@ Table of Contents
            AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
      5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  13
      5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  15
-   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  15
+   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  16
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
      7.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
        7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  16
@@ -701,8 +701,10 @@ Internet-Draft              TACACS+ Security                October 2021
        The client MAY include one or more instances of the
        ssh_pubkey_type AVP, indicating the SSH public key types that it
        wants.  The set of permissible values for this AVP are the SSH
-       public algorithm names in the IANA pubkey alg names registry,
-       [SSHPARAM].  The server MUST NOT reply with status
+       public algorithm names defined in the IANA SSH Protocol
+       Parameters Registry [SSHALGS], which are case-sensitive as
+       specified and otherwise constrained by [RFC4250] Section 4.6.1
+       The server MUST NOT reply with status
        TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name
        that it does not recognize.  If the client marks a
        ssh_pubkey_type AVP as mandatory, the server MUST reply with at
@@ -715,12 +717,10 @@ Internet-Draft              TACACS+ Security                October 2021
        The process ends and the client MUST start a new authentication
        session if it receives status SSHNOPK or ERROR.
 
-   2.  If a ssh_pubkey_type AVP was not provided in the START packet,
-       the server replies with the status code
-       TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE.  The client MUST send a
-       CONTINUE packet with one or more ssh_pubkey_type AVPs, else the
-       server sends a REPLY packet with status
-       TAC_PLUS_AUTHEN_STATUS_ERROR.
+
+
+
+
 
 
 
@@ -729,6 +729,13 @@ Dahm, et al.              Expires 24 April 2022                [Page 13]
 
 Internet-Draft              TACACS+ Security                October 2021
 
+
+   2.  If a ssh_pubkey_type AVP was not provided in the START packet,
+       the server replies with the status code
+       TAC_PLUS_AUTHEN_STATUS_GETSSHPKTYPE.  The client MUST send a
+       CONTINUE packet with one or more ssh_pubkey_type AVPs, else the
+       server sends a REPLY packet with status
+       TAC_PLUS_AUTHEN_STATUS_ERROR.
 
    3.  If the server has none of the wanted ssh_pubkey_type(s) or any of
        the mandatory ssh_pubkey_types for the user or no pubkeys at all,
@@ -766,13 +773,6 @@ Internet-Draft              TACACS+ Security                October 2021
        the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it
        does so.
 
-   6.  Once the client has all of the pubkeys, it performs the ssh
-       pubkey authentication with its ssh client.  The client MUST then
-       reply to the server with the status of that authentication by
-       sending a CONTINUE packet with one of the following new or
-       existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT,
-       TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or
-       TAC_PLUS_CONTINUE_FLAG_ERROR.
 
 
 
@@ -785,6 +785,14 @@ Dahm, et al.              Expires 24 April 2022                [Page 14]
 
 Internet-Draft              TACACS+ Security                October 2021
 
+
+   6.  Once the client has all of the pubkeys, it performs the ssh
+       pubkey authentication with its ssh client.  The client MUST then
+       reply to the server with the status of that authentication by
+       sending a CONTINUE packet with one of the following new or
+       existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT,
+       TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or
+       TAC_PLUS_CONTINUE_FLAG_ERROR.
 
    7.  The client MUST give the server the final consent, by waiting for
        a REPLY packet with one of the status:
@@ -819,14 +827,6 @@ Internet-Draft              TACACS+ Security                October 2021
 
    These new authen_methods and AVPs apply equally to accounting.
 
-6.  Deprecation of TACACS+ PSK and Encryption
-
-   The TACACS+ Protocol [RFC8907] specified a form of encryption and
-   Peer authentication using a pre-shared key that is wholly inadequate
-   by modern standards and is diminutively referred to as data
-   obfuscation.  The introduction of TLS PSK and certificate Peer
-   authentication and TLS encryption to TACACS+ obsolesces these former
-   mechanisms and so are hereby deprecated.
 
 
 
@@ -841,6 +841,15 @@ Dahm, et al.              Expires 24 April 2022                [Page 15]
 
 Internet-Draft              TACACS+ Security                October 2021
 
+
+6.  Deprecation of TACACS+ PSK and Encryption
+
+   The TACACS+ Protocol [RFC8907] specified a form of encryption and
+   Peer authentication using a pre-shared key that is wholly inadequate
+   by modern standards and is diminutively referred to as data
+   obfuscation.  The introduction of TLS PSK and certificate Peer
+   authentication and TLS encryption to TACACS+ obsolesces these former
+   mechanisms and so are hereby deprecated.
 
    Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
    header, the least significant bit (LSB) of the flags field, is also
@@ -881,15 +890,6 @@ Internet-Draft              TACACS+ Security                October 2021
    algorithms, which RFCs using TLS, such as this one, could reference
    without the need to update those RFCs, thus allowing them to evolve
    by inheri tance.  As no such document exists, implementers and
-   operators SHOULD make informed use of RFCs to determine which TLS
-   versions and algorithms should be supported, deprecated, or
-   abandoned, in the absence of updates to this RFC.
-
-
-
-
-
-
 
 
 
@@ -897,6 +897,10 @@ Dahm, et al.              Expires 24 April 2022                [Page 16]
 
 Internet-Draft              TACACS+ Security                October 2021
 
+
+   operators SHOULD make informed use of RFCs to determine which TLS
+   versions and algorithms should be supported, deprecated, or
+   abandoned, in the absence of updates to this RFC.
 
 7.1.2.  TLS Use
 
@@ -941,10 +945,6 @@ Internet-Draft              TACACS+ Security                October 2021
    TLS.  Furthermore, Peers SHOULD be configurable to limit offered or
    recognized TLS versions and algorithms to those recommended by
    standards bodies and implementers.
-
-
-
-
 
 
 
@@ -1025,9 +1025,9 @@ Internet-Draft              TACACS+ Security                October 2021
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
 
-   [SSHPARAM] IANA, "SSH Protocol Parameters",
+   [SSHALGS]  IANA, "Public Key Algorithm Names",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
-              parameters.xhtml>.
+              parameters.xhtml#ssh-parameters-19>.
 
    [SSHSUBSYS]
               IANA, "SSH Protocol Subsystem Names",

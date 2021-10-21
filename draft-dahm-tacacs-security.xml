@@ -491,7 +491,7 @@ s.
            The START packet MUST include a non-zero-length username and the server MUST send an Authentication REPLY Packet with status TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
            <br/><br/>
            The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
-           The set of permissible values for this AVP are the SSH public algorithm names in the IANA pubkey alg names registry, <xref target="SSHPARAM"/>.
+           The set of permissible values for this AVP are the SSH public algorithm names defined in the <xref target="SSHALGS">IANA SSH Protocol Parameters Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1
            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
            <br/><br/>
@@ -666,9 +666,9 @@ tance.
        <?rfc include="reference.RFC.5246.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
-       <reference anchor="SSHPARAM" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml">
+       <reference anchor="SSHALGS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-19">
          <front>
-           <title>SSH Protocol Parameters</title>
+           <title>Public Key Algorithm Names</title>
            <author fullname="IANA"></author>
          </front>
        </reference>
