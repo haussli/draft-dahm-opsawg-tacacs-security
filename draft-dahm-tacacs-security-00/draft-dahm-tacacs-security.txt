@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 24 April 2022                                            A. Ota
-                                                         21 October 2021
+Expires: 25 April 2022                                            A. Ota
+                                                         22 October 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2022.
+   This Internet-Draft will expire on 25 April 2022.
 
 
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 1]
+Dahm, et al.              Expires 25 April 2022                 [Page 1]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -77,7 +77,7 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Technical Definitions . . . . . . . . . . . . . . . . . . . .   3
      2.1.  AVP . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     2.2.  Empty Value . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.2.  Empty Value . . . . . . . . . . . . . . . . . . . . . . .   4
      2.3.  Unsecure Connection . . . . . . . . . . . . . . . . . . .   4
      2.4.  Peer  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      2.5.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   4
@@ -104,16 +104,17 @@ Table of Contents
        7.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  16
        7.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
      7.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+     7.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 2]
+Dahm, et al.              Expires 25 April 2022                 [Page 2]
 
 Internet-Draft              TACACS+ Security                October 2021
 
 
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
    10. Normative References  . . . . . . . . . . . . . . . . . . . .  18
    11. Informative References  . . . . . . . . . . . . . . . . . . .  19
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
@@ -158,17 +159,21 @@ Internet-Draft              TACACS+ Security                October 2021
    An Attribute-Value Pair or AVP is another name a TACACS+ argument as
    defined in [RFC8907] Sections 6.1 and 8.
 
+
+
+
+
+
+
+Dahm, et al.              Expires 25 April 2022                 [Page 3]
+
+Internet-Draft              TACACS+ Security                October 2021
+
+
 2.2.  Empty Value
 
    An empty or zero-length value of an AVP as defined in [RFC8907]
    Sections 8.1.
-
-
-
-Dahm, et al.              Expires 24 April 2022                 [Page 3]
-
-Internet-Draft              TACACS+ Security                October 2021
-
 
 2.3.  Unsecure Connection
 
@@ -216,12 +221,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-
-
-
-
-
-Dahm, et al.              Expires 24 April 2022                 [Page 4]
+Dahm, et al.              Expires 25 April 2022                 [Page 4]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 5]
+Dahm, et al.              Expires 25 April 2022                 [Page 5]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 6]
+Dahm, et al.              Expires 25 April 2022                 [Page 6]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 7]
+Dahm, et al.              Expires 25 April 2022                 [Page 7]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 8]
+Dahm, et al.              Expires 25 April 2022                 [Page 8]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                 [Page 9]
+Dahm, et al.              Expires 25 April 2022                 [Page 9]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 10]
+Dahm, et al.              Expires 25 April 2022                [Page 10]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 11]
+Dahm, et al.              Expires 25 April 2022                [Page 11]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 12]
+Dahm, et al.              Expires 25 April 2022                [Page 12]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 13]
+Dahm, et al.              Expires 25 April 2022                [Page 13]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 14]
+Dahm, et al.              Expires 25 April 2022                [Page 14]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 15]
+Dahm, et al.              Expires 25 April 2022                [Page 15]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 16]
+Dahm, et al.              Expires 25 April 2022                [Page 16]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -949,7 +949,7 @@ Internet-Draft              TACACS+ Security                October 2021
 
 
 
-Dahm, et al.              Expires 24 April 2022                [Page 17]
+Dahm, et al.              Expires 25 April 2022                [Page 17]
 
 Internet-Draft              TACACS+ Security                October 2021
 
@@ -959,6 +959,15 @@ Internet-Draft              TACACS+ Security                October 2021
    forward.  However, this has potential to be a Denial of Service (DoS)
    vector, whereby an attacker causes a sever to believe that a client
    that does not support TLS has successfully connected with TLS.
+
+7.3.  SSH Public Key Caching
+
+   A client implementation MUST NOT cache SSH public keys received from
+   a TACACS+ server for future SSH client authentication.  Doing so
+   would deny the TACACS+ server the opportunity to deny authentication
+   for other reasons than key validity or to revoke a key.  The TACACS+
+   server has no method to revoke a key, except by not offering the key
+   in future authentication sessions.
 
 8.  IANA Considerations
 
@@ -994,6 +1003,13 @@ Internet-Draft              TACACS+ Security                October 2021
               DOI 10.17487/RFC4250, January 2006,
               <https://www.rfc-editor.org/info/rfc4250>.
 
+
+
+Dahm, et al.              Expires 25 April 2022                [Page 18]
+
+Internet-Draft              TACACS+ Security                October 2021
+
+
    [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
               Ciphersuites for Transport Layer Security (TLS)",
               RFC 4279, DOI 10.17487/RFC4279, December 2005,
@@ -1002,13 +1018,6 @@ Internet-Draft              TACACS+ Security                October 2021
    [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
               Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
               November 2006, <https://www.rfc-editor.org/info/rfc4716>.
-
-
-
-Dahm, et al.              Expires 24 April 2022                [Page 18]
-
-Internet-Draft              TACACS+ Security                October 2021
-
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
@@ -1050,21 +1059,16 @@ Internet-Draft              TACACS+ Security                October 2021
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
               January 2006, <https://www.rfc-editor.org/info/rfc4251>.
 
-   [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
-              Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
-              <https://www.rfc-editor.org/info/rfc6242>.
 
 
-
-
-
-
-
-
-Dahm, et al.              Expires 24 April 2022                [Page 19]
+Dahm, et al.              Expires 25 April 2022                [Page 19]
 
 Internet-Draft              TACACS+ Security                October 2021
 
+
+   [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
+              Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
+              <https://www.rfc-editor.org/info/rfc6242>.
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -1113,8 +1117,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Dahm, et al.              Expires 24 April 2022                [Page 20]
+Dahm, et al.              Expires 25 April 2022                [Page 20]

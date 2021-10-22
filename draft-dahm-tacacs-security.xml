@@ -632,6 +632,13 @@ tance.
            However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a sever to believe that a client that does not support TLS has successfully connected with TLS.
          </t>
        </section>
+       <section title="SSH Public Key Caching" anchor="pubkeycache">
+         <t>
+	   A client implementation MUST NOT cache SSH public keys received from a TACACS+ server for future SSH client authentication.
+	   Doing so would deny the TACACS+ server the opportunity to deny authentication for other reasons than key validity or to revoke a key.
+	   The TACACS+ server has no method to revoke a key, except by not offering the key in future authentication sessions.
+         </t>
+       </section>
      </section>
 
      <section title="IANA Considerations">
