@@ -497,7 +497,7 @@ s.
            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
            <br/><br/>
-           The client MAY send an empty algorithm name to request all type available for the given user.
+           The client MAY send an empty algorithm name to request all types available for the given user.
            <br/><br/>
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
          </li>
@@ -515,7 +515,7 @@ s.
 
          <li>
            The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
-           The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
+           The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>.
            As such, the client MUST be prepared to accept keys with Key File Markers and to address AVP concatenation the server MUST terminate key file End Markers with a Line Termination sequence as specified in RFC4716 Section 3.1.
            <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
@@ -525,8 +525,8 @@ s.
 
          <li>
            If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
-           The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY packet.
-           This repeats until the last REPLY packet is received, the client aborts the authentication process, or an error occurs.
+           The server replies with the next REPLY fragment as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY fragment.
+           This repeats until the last REPLY fragment is received, the client aborts the authentication process, or an error occurs.
            The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
          </li>
 
