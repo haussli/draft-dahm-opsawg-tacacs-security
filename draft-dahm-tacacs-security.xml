@@ -325,6 +325,7 @@ s.
          <ol>
            <li>
              The client MAY send multiple arguments with the same name. The server MUST concatenate the values of these arguments in the order they appear in the packet.
+	     Any separator of concatenated AVP instances is application specific and MUST have been prepended or appended by the sender, not the receiver.
            </li>
            <li>
              The client MUST use the same separator for all arguments with the same name. The server MUST treat a packet with multiple arguments of with the same name, but different separators, as invalid.
@@ -492,6 +493,7 @@ s.
            <br/><br/>
            The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
            The set of permissible values for this AVP are the SSH public algorithm names defined in the <xref target="SSHALGS">IANA SSH Protocol Parameters Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1
+	   Multiple values should should be separated by a comma.
            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
            <br/><br/>
@@ -514,7 +516,7 @@ s.
          <li>
            The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
            The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
-           As such, client MUST be prepared to accept Key File Headers.
+           As such, the client MUST be prepared to accept keys with Key File Markers and to address AVP concatenation the server MUST terminate key file End Markers with a Line Termination sequence as specified in RFC4716 Section 3.1.
            <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            <br/><br/>
