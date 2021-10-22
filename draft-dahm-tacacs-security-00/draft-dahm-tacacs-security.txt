@@ -703,22 +703,22 @@ Internet-Draft              TACACS+ Security                October 2021
        wants.  The set of permissible values for this AVP are the SSH
        public algorithm names defined in the IANA SSH Protocol
        Parameters Registry [SSHALGS], which are case-sensitive as
-       specified and otherwise constrained by [RFC4250] Section 4.6.1
-       Multiple values should should be separated by a comma.  The
-       server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if
-       it receives an algorithm name that it does not recognize.  If the
-       client marks a ssh_pubkey_type AVP as mandatory, the server MUST
-       reply with at least one key of that type for the given user or
-       reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the
-       relevant AVP.
+       specified and otherwise constrained by [RFC4250] Section 4.6.1.
+       Multiple values MUST be separated by a comma and multiple AVPs
+       MUST include commas for separation when the Peer concatenates
+       them.  The server MUST NOT reply with status
+       TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name
+       that it does not recognize.  If the client marks a
+       ssh_pubkey_type AVP as mandatory, the server MUST reply with at
+       least one key of that type for the given user or reply with
+       status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant
+       ssh_pubkey_type AVP.
 
        The client MAY send an empty algorithm name to request all types
        available for the given user.
 
        The process ends and the client MUST start a new authentication
        session if it receives status SSHNOPK or ERROR.
-
-
 
 
 
@@ -737,23 +737,23 @@ Internet-Draft              TACACS+ Security                October 2021
        server sends a REPLY packet with status
        TAC_PLUS_AUTHEN_STATUS_ERROR.
 
-   3.  If the server has none of the wanted ssh_pubkey_type(s) or any of
-       the mandatory ssh_pubkey_types for the user or no pubkeys at all,
-       the server MUST send a REPLY packet with status
-       TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant ssh_pubkey_type
-       AVP(s).
+   3.  If the server has none of the requested ssh_pubkey_type(s) or any
+       of the mandatory ssh_pubkey_types for the user or no pubkeys at
+       all, the server MUST send a REPLY packet with status
+       TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the ssh_pubkey_type AVP(s)
+       that it received.
 
        The process ends and the client MUST start a new authentication
        session if it receives status SSHNOPK or ERROR.
 
    4.  The server sends REPLY packets with status
        TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey
-       optional AVPs.  The ssh_pubkey AVPs are formatted according to
-       the rules of SSH Public Key File Format [RFC4716].  As such, the
-       client MUST be prepared to accept keys with Key File Markers and
-       to address AVP concatenation the server MUST terminate key file
-       End Markers with a Line Termination sequence as specified in
-       RFC4716 Section 3.1.
+       optional AVPs, each containing one or more keys.  The ssh_pubkey
+       AVPs are formatted according to the rules of SSH Public Key File
+       Format [RFC4716].  As such, the client MUST be prepared to accept
+       keys with Key File Markers and to address AVP concatenation the
+       server MUST terminate key file End Markers with a Line
+       Termination sequence as specified in RFC4716 Section 3.1.
 
        Since it is possible to have more ssh_pubkey AVPs than fit in a
        REPLY packet, the server SHOULD set the REPLY packet flag
