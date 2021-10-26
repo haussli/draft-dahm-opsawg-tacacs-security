@@ -555,7 +555,7 @@ s.
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
            The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
-           The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+           The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized. Subsystems might need additional data for authorization or accounting that will be particular to that subsystem and are therefore out of scope for this document.
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
