@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>  <!-- -*- indent-with-tabs: 0 -*- -->
 <!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent">
-<rfc docName="xml2rfc-docs-3.9.1"
+<rfc docName="draft-dahm-tacacs-security-00"
      category="info"
      ipr="trust200902"
      submissionType='IETF'
@@ -326,7 +326,7 @@ s.
          </t>
 	       
          <t>
-           The addition of arguments to the authentication packets is intended to permit the flexibility for TACACS+ phase that has been available previously for authorization and accounting.
+           The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
            These fields are intended to be used as needed in deployment, they are used in this document in the enhancments for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
          </t>
 
@@ -466,7 +466,7 @@ s.
            <dt>TAC_PLUS_AUTHEN_METH_SSHPK := 0x21</dt>
            <dd>Authorization REQUEST Packet authen_method for SSH pubkey authentication.</dd>
 
-           <dt>AVP ssh-subsystem (String)</dt>
+           <dt>AVP ssh_subsystem (String)</dt>
            <dd>Attribute to carry SSH subsystem name for authorization</dd>
          </dl>
        </section>
@@ -485,11 +485,12 @@ s.
            The START packet MUST include a non-zero-length username and the server MUST send an Authentication REPLY Packet with status TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
            <br/><br/>
            The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
-           The set of permissible values for this AVP are the SSH public algorithm names in the IANA pubkey alg names registry, <xref target="SSHPARAM"/>.
+           The set of permissible values for this AVP are the SSH public algorithm names defined in the <xref target="SSHALGS">IANA SSH Protocol Parameters Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
+	   Multiple values MUST be separated by a comma and multiple AVPs MUST include commas for separation when the Peer concatenates them.
            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
-           If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant AVP.
+           If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant ssh_pubkey_type AVP.
            <br/><br/>
-           The client MAY send an empty algorithm name to request all type available for the given user.
+           The client MAY send an empty algorithm name to request all types available for the given user.
            <br/><br/>
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
          </li>
@@ -500,25 +501,25 @@ s.
          </li>
 
          <li>
-           If the server has none of the wanted ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant ssh_pubkey_type AVP(s).
+           If the server has none of the requested ssh_pubkey_type(s) or any of the mandatory ssh_pubkey_types for the user or no pubkeys at all, the server MUST send a REPLY packet with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the ssh_pubkey_type AVP(s) that it received.
            <br/><br/>
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
          </li>
 
          <li>
-           The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs.
-           The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>; one key per AVP.
-           As such, client MUST be prepared to accept Key File Headers.
+           The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs, each containing one or more keys.
+           The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>.
+           As such, the client MUST be prepared to accept keys with Key File Markers and to address AVP concatenation the server MUST terminate key file End Markers with a Line Termination sequence as specified in RFC4716 Section 3.1.
            <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            <br/><br/>
-           An AVP SHALL NOT span multiple packet; each must be contained entirely in the packet in which it begins.
+           An AVP SHALL NOT span multiple fragments; each must be contained entirely in the fragment in which it begins.
          </li>
 
          <li>
            If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
-           The server replies with the next REPLY packet as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY packet.
-           This repeats until the last REPLY packet is received, the client aborts the authentication process, or an error occurs.
+           The server replies with the next REPLY fragment as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY fragment.
+           This repeats until the last REPLY fragment is received, the client aborts the authentication process, or an error occurs.
            The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
          </li>
 
@@ -542,12 +543,12 @@ s.
 <br/><br/>
          </t>
          <t>
-           The well-known ssh-subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
+           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
            The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
-           The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+           The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized. Subsystems might need additional data for authorization or accounting that will be particular to that subsystem and are therefore out of scope for this document.
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
@@ -626,6 +627,13 @@ tance.
            However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a sever to believe that a client that does not support TLS has successfully connected with TLS.
          </t>
        </section>
+       <section title="SSH Public Key Caching" anchor="pubkeycache">
+         <t>
+	   A client implementation MUST NOT cache SSH public keys received from a TACACS+ server for future SSH client authentication.
+	   Doing so would deny the TACACS+ server the opportunity to deny authentication for other reasons than key validity or to revoke a key.
+	   The TACACS+ server has no method to revoke a key, except by not offering the key in future authentication sessions.
+         </t>
+       </section>
      </section>
 
      <section title="IANA Considerations">
@@ -671,9 +679,9 @@ tance.
        <?rfc include="reference.RFC.5246.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
-       <reference anchor="SSHPARAM" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml">
+       <reference anchor="SSHALGS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-19">
          <front>
-           <title>SSH Protocol Parameters</title>
+           <title>Public Key Algorithm Names</title>
            <author fullname="IANA"></author>
          </front>
        </reference>
