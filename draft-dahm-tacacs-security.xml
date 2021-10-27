@@ -318,18 +318,12 @@ s.
            The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
            The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
            For the rules regarding optional and mandatory arguments, refer to <xref target="RFC8907"/>
-         </t>     
-         <t>
-           The following rules for arguments are defined in addition to those described in <xref target="RFC8907"/>
          </t>
-         <ol>
-           <li>
-             The client MAY send multiple arguments with the same name. The server MUST concatenate the values of these arguments in the order they appear in the packet.
-           </li>
-           <li>
-             The client MUST use the same separator for all arguments with the same name. The server MUST treat a packet with multiple arguments of with the same name, but different separators, as invalid.
-           </li>
-         </ol>      
+         <t>
+           Multiple arguments with the same name are permitted within a packet, a common example is cmd-arg.
+           The handling of repeated arguments is specific to the semantics of the argument and so are documented with that argument.
+           Order is significant when processing arguments.
+         </t>
 	       
          <t>
            The addition of arguments to the authentication packets is intended to permit the flexibility for TACACS+ phase that has been available previously for authorization and accounting.
