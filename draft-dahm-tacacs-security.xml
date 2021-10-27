@@ -587,7 +587,7 @@ s.
        <t>
            TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be supported, as it permits the leak of sensitive information.
        </t>
-     </section>`
+     </section>
 
      <section title="Security Considerations">
        <section title="TLS">
