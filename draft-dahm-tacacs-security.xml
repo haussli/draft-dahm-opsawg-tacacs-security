@@ -647,7 +647,7 @@ tance.
          RFC EDITOR: this port number should replace "[TBD]" within this document.
        </t>
      </section>
-       <section title="Protocol Deprecations" anchor="Protocol Deprecation">
+       <section title="Protocol Deprecations" anchor="ProtocolDeprecation">
            <t>
                This section deprecates features from the TACACS+ Protocol.
            </t>
