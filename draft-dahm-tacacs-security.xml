@@ -639,6 +639,17 @@ tance.
          RFC EDITOR: this port number should replace "[TBD]" within this document.
        </t>
      </section>
+       <section title="Protocol Deprecations" anchor="Protocol Deprecation">
+           <t>
+               This section deprecates features from the TACACS+ Protocol.
+           </t>
+           <t>
+               MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition.
+           </t>
+           <t>
+               TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be supported, as it permits the leak of sensitive information.
+           </t>
+       </section>
 
      <section title="Acknowledgments">
        <t>
