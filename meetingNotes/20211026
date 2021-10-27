@@ -1,0 +1,17 @@
+- discussion about AVP concatenation, delimiters, and other rules from various
+  PRs and emails.  Following Douglas' note about the cmd-arg AVP and the
+  discussion about rules for other AVPs, including implementation-specific AVPs,
+  it was concluded that we should not attempt to specify generic rules; each
+  AVP must define their own rules.
+
+  We also discuss things that are in fact generic; such as maintaining order.
+  I have to ask Douglas/Thorsten to comment, because I've forgotten what we
+  decided about this.
+
+  There was also discussion about PR #24; Douglas will review the _REPL
+  behavior in code and comment on the PR.
+
+  Heasley will wait for these actions before updating S5 of the draft as
+  appropriate.
+
+- discussion about PR #18; we will add subsystem info as noted in PR.
