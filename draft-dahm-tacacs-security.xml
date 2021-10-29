@@ -582,7 +582,9 @@ s.
            This section deprecates features from the TACACS+ Protocol.
        </t>
        <t>
-           MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition.
+           MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition. MD4 is still required to 
+	   support MS-CHAPv2 so cannot be deprecated at this point It should be noted that the use of MD4 is purely to allow compatible MS-CHAPv2 operation and
+	   not for security; the TLS transport is intended to provide that function.
        </t>
        <t>
            TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be supported, as it permits the leak of sensitive information.
