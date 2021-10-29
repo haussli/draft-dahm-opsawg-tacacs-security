@@ -583,7 +583,7 @@ s.
        </t>
        <t>
            MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition. MD4 is still required to 
-	   support MS-CHAPv2 so can not be deprecated at this point It should be noted that the use of MD4 is purely to allow compatible MS-CHAPv2 operation and
+	   support MS-CHAPv2 so cannot be deprecated at this point It should be noted that the use of MD4 is purely to allow compatible MS-CHAPv2 operation and
 	   not for security; the TLS transport is intended to provide that function.
        </t>
        <t>
