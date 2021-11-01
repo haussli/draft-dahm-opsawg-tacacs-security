@@ -318,19 +318,12 @@ s.
            The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
            The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
            For the rules regarding optional and mandatory arguments, refer to <xref target="RFC8907"/>
-         </t>     
-         <t>
-           The following rules for arguments are defined in addition to those described in <xref target="RFC8907"/>
          </t>
-         <ol>
-           <li>
-             The client MAY send multiple arguments with the same name. The server MUST concatenate the values of these arguments in the order they appear in the packet.
-	     Any separator of concatenated AVP instances is application specific and MUST have been prepended or appended by the sender, not the receiver.
-           </li>
-           <li>
-             The client MUST use the same separator for all arguments with the same name. The server MUST treat a packet with multiple arguments of with the same name, but different separators, as invalid.
-           </li>
-         </ol>      
+         <t>
+           Multiple arguments with the same name are permitted within a packet, a common example is cmd-arg.
+           The handling of repeated arguments is specific to the semantics of the argument and so are documented with that argument.
+           Order is significant when processing arguments.
+         </t>
 	       
          <t>
            The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
@@ -556,6 +549,7 @@ s.
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
            The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
            The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+           Subsystems might need additional data for authorization or accounting that will be particular to that subsystem and are therefore out of scope for this document.
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
@@ -581,6 +575,20 @@ s.
        </t>
        <t>
          A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
+       </t>
+     </section>
+
+     <section title="Protocol Deprecations" anchor="ProtocolDeprecation">
+       <t>
+           This section deprecates features from the TACACS+ Protocol.
+       </t>
+       <t>
+           MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition. MD4 is still required to 
+	   support MS-CHAPv2 so cannot be deprecated at this point It should be noted that the use of MD4 is purely to allow compatible MS-CHAPv2 operation and
+	   not for security; the TLS transport is intended to provide that function.
+       </t>
+       <t>
+           TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be supported, as it permits the leak of sensitive information.
        </t>
      </section>
 
