@@ -714,8 +714,8 @@ Internet-Draft              TACACS+ Security               November 2021
        status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant
        ssh_pubkey_type AVP.
 
-       The client MAY send an empty algorithm name to request all types
-       available for the given user.
+       The client MAY send an Empty Value for the algorithm name to
+       request all types available for the given user.
 
        The process ends and the client MUST start a new authentication
        session if it receives status SSHNOPK or ERROR.
@@ -817,8 +817,8 @@ Internet-Draft              TACACS+ Security               November 2021
    Names defined in the IANA SSH Connection Protocol Subsystem Names
    Registry [SSHSUBSYS], which are case-sensitive as specified and
    otherwise constrained by [RFC4250] Section 4.6.1.  The client MAY
-   send an empty subsystem name to indicate no subsystem, also known as
-   a shell or CLI.  The server MUST NOT reply with status
+   send an Empty Value for the subsystem name to indicate no subsystem,
+   also known as a shell or CLI.  The server MUST NOT reply with status
    TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose
    syntax is valid but whose value is not recognized.  Subsystems might
    need additional data for authorization or accounting that will be
