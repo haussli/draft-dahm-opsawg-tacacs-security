@@ -543,7 +543,7 @@ s.
            The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that the user was authenticated with a SSH public key.
          </t>
          <t>
-           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
+           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.

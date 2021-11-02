@@ -811,9 +811,8 @@ Internet-Draft              TACACS+ Security               November 2021
    the user was authenticated with a SSH public key.
 
    The well-known ssh_subsystem AVP defines the SSH subsystem for which
-   the authorization is requested and MUST be present if the
-   authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present
-   any time the authorization is for a SSH connection.
+   the authorization is requested and MUST be present any time the
+   authorization is for a SSH connection.
 
    The set of permissible values for this AVP are the SSH Subsystem
    Names defined in the IANA SSH Connection Protocol Subsystem Names
@@ -830,6 +829,7 @@ Internet-Draft              TACACS+ Security               November 2021
    therefore out of scope for this document.
 
    These new authen_methods and AVPs apply equally to accounting.
+
 
 
 
