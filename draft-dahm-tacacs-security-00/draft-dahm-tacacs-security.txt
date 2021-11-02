@@ -810,7 +810,6 @@ Internet-Draft              TACACS+ Security               November 2021
    The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that
    the user was authenticated with a SSH public key.
 
-
    The well-known ssh_subsystem AVP defines the SSH subsystem for which
    the authorization is requested and MUST be present if the
    authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present
@@ -821,15 +820,16 @@ Internet-Draft              TACACS+ Security               November 2021
    Registry [SSHSUBSYS], which are case-sensitive as specified and
    otherwise constrained by [RFC4250] Section 4.6.1.  The client MAY
    send an Empty Value for the subsystem name to indicate no subsystem,
-   also known as a shell or CLI.  The server MUST NOT reply with status
-   TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose
-   syntax is valid but whose value is not recognized.  Subsystems might
-   need additional data for authorization or accounting that will be
-   particular to that subsystem and are therefore out of scope for this
-   document.
+   also known as a shell or CLI.  Also note that sftp is technically a
+   subsystem, but as no subsystem name has been assigned; until such
+   time as it is, sftp should be an Empty Value.  The server MUST NOT
+   reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a
+   subsystem name whose syntax is valid but whose value is not
+   recognized.  Subsystems might need additional data for authorization
+   or accounting that will be particular to that subsystem and are
+   therefore out of scope for this document.
 
    These new authen_methods and AVPs apply equally to accounting.
-
 
 
 
@@ -916,7 +916,7 @@ Internet-Draft              TACACS+ Security               November 2021
    group to publish a single document, that evolves with TLS and its
    algorithms, which RFCs using TLS, such as this one, could reference
    without the need to update those RFCs, thus allowing them to evolve
-   by inheri tance.  As no such document exists, implementers and
+   by inheritance.  As no such document exists, implementers and
    operators SHOULD make informed use of RFCs to determine which TLS
    versions and algorithms should be supported, deprecated, or
    abandoned, in the absence of updates to this RFC.
@@ -932,7 +932,8 @@ Internet-Draft              TACACS+ Security               November 2021
    Servers.
 
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
-   and encryption, except for test and debug environments.
+   and encryption, including TLS using the NULL algorithm, except for
+   within test and debug environments.
 
 8.2.  Well-Known TCP/IP Port
 
@@ -944,7 +945,6 @@ Internet-Draft              TACACS+ Security               November 2021
 
    *  passive Intrusion Detection Systems (IDSs) monitoring the
       unencrypted version to be unaffected by the introduction of TLS,
-
 
 
 
