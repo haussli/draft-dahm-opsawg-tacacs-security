@@ -132,8 +132,7 @@
          The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
-       <t>
-	 TLS is introduced into TACACS+ to fulfil the following requirements:
+       <t>TLS is introduced into TACACS+ to fulfil the following requirements:
        </t>
        <ol>
        <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
