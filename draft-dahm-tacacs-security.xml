@@ -133,7 +133,7 @@
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
        <t>
-	 TLS is introduced into TACACS+ to provide the following functions:
+	 TLS is introduced into TACACS+ to fulfil the following requirements:
        </t>
        <ol>
        <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
