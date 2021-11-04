@@ -137,9 +137,11 @@
        </t>
        <ol>
        <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is insufficient to ensure confidentiality and integrity, requiring that TACACS+ be 
-       deployed over a secured transport. Adopting TLS as transport is intended to remove the requirement to provide a secured transport.
-       </li>Peer authentication: The requirment of shared keys to add and remove the MD5 obfuscation was intended to provide peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
+       deployed over a secured transport. Adopting TLS as transport is intended to remove the requirement to provide a secured transport.    
+       </li>
+       <li>Peer authentication: The requirment of shared keys to add and remove the MD5 obfuscation was intended to provide peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
        and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.
+       <li>
        </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
