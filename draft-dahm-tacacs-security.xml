@@ -141,7 +141,7 @@
        </li>
        <li>Peer authentication: The requirment of shared keys to add and remove the MD5 obfuscation was intended to provide peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
        and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.
-       <li>
+       </li>
        </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
