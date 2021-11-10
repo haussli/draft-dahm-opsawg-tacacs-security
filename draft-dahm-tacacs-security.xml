@@ -143,8 +143,8 @@
        <section title="Well-Known TCP/IP Port">
             <t>
                 All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
-                Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
-                For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
+                Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
+                It is not desirable to use a negotiation process such as a "STARTTLS" command, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
                 Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
             </t>
        </section>
@@ -631,7 +631,7 @@ s.
 
        <section title="Well-Known TCP/IP Port" anchor="wellknown">
          <t>
-           A new port is considered appropriate and superior to a "STARTTLS" command because it allows:
+           A new port is considered appropriate and superior to a "STARTTLS" command or other negotiation method because it allows:
          </t>
          <ul>
            <li>ease of blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</li>
