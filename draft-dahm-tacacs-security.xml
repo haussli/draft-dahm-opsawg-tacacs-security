@@ -132,10 +132,14 @@
          The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
-       <t>
-                It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"/> dictates the need for end-to-end security.
-                The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
+       <t>TLS is introduced into TACACS+ to fulfil the following requirements:
        </t>
+       <ol>
+       <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
+       deployed over a secured network. Securing TACACS+ protocol with TLS is intended to provide confidentiality and integrity without requiring the provision of a secured network.</li>
+       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
+       and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.</li>
+       </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
                 All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
