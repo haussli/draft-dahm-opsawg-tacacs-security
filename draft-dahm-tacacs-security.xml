@@ -430,6 +430,7 @@ s.
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04 </li>
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05 </li>
 	  </ol> 
+	 <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
        </section>
