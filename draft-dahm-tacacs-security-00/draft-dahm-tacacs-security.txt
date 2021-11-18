@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 14 May 2022                                              A. Ota
-                                                        10 November 2021
+Expires: 22 May 2022                                              A. Ota
+                                                        18 November 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 May 2022.
+   This Internet-Draft will expire on 22 May 2022.
 
 
 
 
 
-Dahm, et al.               Expires 14 May 2022                  [Page 1]
+Dahm, et al.               Expires 22 May 2022                  [Page 1]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -82,10 +82,10 @@ Table of Contents
      2.4.  Peer  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      2.5.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   4
    3.  TLS for TACACS+ . . . . . . . . . . . . . . . . . . . . . . .   4
-     3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   4
+     3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   5
      3.2.  TLS Protocol Version  . . . . . . . . . . . . . . . . . .   5
      3.3.  Cipher Requirements . . . . . . . . . . . . . . . . . . .   5
-       3.3.1.  Mandatory Cipher Suites . . . . . . . . . . . . . . .   5
+       3.3.1.  Mandatory Cipher Suites . . . . . . . . . . . . . . .   6
      3.4.  Authentication  . . . . . . . . . . . . . . . . . . . . .   6
        3.4.1.  PSK Identity Requirements . . . . . . . . . . . . . .   6
        3.4.2.  TLS Certificate Identity Requirements . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dahm, et al.               Expires 14 May 2022                  [Page 2]
+Dahm, et al.               Expires 22 May 2022                  [Page 2]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                  [Page 3]
+Dahm, et al.               Expires 22 May 2022                  [Page 3]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -200,11 +200,31 @@ Internet-Draft              TACACS+ Security               November 2021
    Protocol [RFC8907].  A connection may be used for only a single
    Session or the multiplexing of multiple Sessions.
 
-   It is mandatory to maintain the confidentiality, integrity, and
-   authentication of these connections, as [RFC3365] dictates the need
-   for end-to-end security.  The current IETF technology best suited for
-   TACACS+ is TLS, which can provide both authentication and transport
-   encryption.
+   TLS is introduced into TACACS+ to fulfill the following requirements:
+
+   1.  Confidentiality and Integrity: The MD5 obfuscation specified in
+       the original protocol definition is not fit for purpose,
+       requiring that TACACS+ be deployed over a secured network.
+       Securing TACACS+ protocol with TLS is intended to provide
+       confidentiality and integrity without requiring the provision of
+       a secured network.
+
+   2.  Peer authentication: The use of shared keys to add and remove the
+       MD5 obfuscation was intended to provide a form of peer
+       authentication for the TACACS+ protocol.  This document
+       deprecates the MD5 obfuscation, and specifies that the
+       authentication capabilities of TLS are used to allow the peers to
+       authenticate each other.
+
+
+
+
+
+
+Dahm, et al.               Expires 22 May 2022                  [Page 4]
+
+Internet-Draft              TACACS+ Security               November 2021
+
 
 3.1.  Well-Known TCP/IP Port
 
@@ -217,14 +237,6 @@ Internet-Draft              TACACS+ Security               November 2021
    Instead, following [RFC7605], a different well-known system TCP/IP
    port is assigned by IANA, port [TBD] (Section 9), for the TLS
    connection.
-
-
-
-
-Dahm, et al.               Expires 14 May 2022                  [Page 4]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
 3.2.  TLS Protocol Version
 
@@ -259,6 +271,17 @@ Internet-Draft              TACACS+ Security               November 2021
    options described in the following sections.  XXX but should be
    allowed to evolve as TLS does.
 
+
+
+
+
+
+
+Dahm, et al.               Expires 22 May 2022                  [Page 5]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
 3.3.1.  Mandatory Cipher Suites
 
    TLS 1.2 [RFC5246] allows specifying application profiles prescribing
@@ -274,13 +297,6 @@ Internet-Draft              TACACS+ Security               November 2021
 
    A Client MUST implement at least one of the cipher suites which are
    implemented on the Server, and MAY implement all of them.
-
-
-
-Dahm, et al.               Expires 14 May 2022                  [Page 5]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    Both Clients and Servers MAY implement other cipher suites, but their
    interoperability is not guaranteed and their implementation is
@@ -314,6 +330,14 @@ Internet-Draft              TACACS+ Security               November 2021
 
    Process to change pre-shared keys on server and client is then:
 
+
+
+
+Dahm, et al.               Expires 22 May 2022                  [Page 6]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    1.  Add new key with new PSK identity on the server.
 
    2.  Add new key with new PSK identity on the client.
@@ -327,16 +351,6 @@ Internet-Draft              TACACS+ Security               November 2021
    Note: PSK identity is transmitted in clear text and must not contain
    information which could aid an attacker who can eavesdrop on the
    connection.
-
-
-
-
-
-
-Dahm, et al.               Expires 14 May 2022                  [Page 6]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
 3.4.2.  TLS Certificate Identity Requirements
 
@@ -375,21 +389,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 14 May 2022                  [Page 7]
+Dahm, et al.               Expires 22 May 2022                  [Page 7]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -436,7 +436,7 @@ Internet-Draft              TACACS+ Security               November 2021
    the authentication process.  These are common to the Extended
    Authentication START, Extended Authentication REPLY, and Extended
    Authentication CONTINUE packet bodies; these fields represent the
-   sole update from the previous START, REPLY and CONTIMUE packet
+   sole update from the previous START, REPLY and CONTINUE packet
    bodies.
 
    The new fields are as follows:
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                  [Page 8]
+Dahm, et al.               Expires 22 May 2022                  [Page 8]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -473,8 +473,8 @@ Internet-Draft              TACACS+ Security               November 2021
    to permit the flexibility for the TACACS+ authentication phase that
    has been available previously for authorization and accounting.
    These fields are intended to be used as needed in deployment, they
-   are used in this document in the enhancments for SSH (Section 5), and
-   to support the origin client to enhance TACACS+ Proxy:
+   are used in this document in the enhancements for SSH (Section 5),
+   and to support the origin client to enhance TACACS+ Proxy:
 
    origin_client
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                  [Page 9]
+Dahm, et al.               Expires 22 May 2022                  [Page 9]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 10]
+Dahm, et al.               Expires 22 May 2022                 [Page 10]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 11]
+Dahm, et al.               Expires 22 May 2022                 [Page 11]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 12]
+Dahm, et al.               Expires 22 May 2022                 [Page 12]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -681,7 +681,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
    To support central management of SSH public keys via TACACS+, the
    Authentication sequence of [RFC8907] Section 5.4 is extended using
-   Extended Authenication Packet (Section 4) sequences to deliver SSH
+   Extended Authentication Packet (Section 4) sequences to deliver SSH
    public keys to devices for local verification.
 
    Besides new header values and flags and AVPs for Extended
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 13]
+Dahm, et al.               Expires 22 May 2022                 [Page 13]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 14]
+Dahm, et al.               Expires 22 May 2022                 [Page 14]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 15]
+Dahm, et al.               Expires 22 May 2022                 [Page 15]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 16]
+Dahm, et al.               Expires 22 May 2022                 [Page 16]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -949,7 +949,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 17]
+Dahm, et al.               Expires 22 May 2022                 [Page 17]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 18]
+Dahm, et al.               Expires 22 May 2022                 [Page 18]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 19]
+Dahm, et al.               Expires 22 May 2022                 [Page 19]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1117,7 +1117,7 @@ Authors' Addresses
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 20]
+Dahm, et al.               Expires 22 May 2022                 [Page 20]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1173,4 +1173,4 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 14 May 2022                 [Page 21]
+Dahm, et al.               Expires 22 May 2022                 [Page 21]

@@ -132,10 +132,14 @@
          The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
-       <t>
-                It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"/> dictates the need for end-to-end security.
-                The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
+       <t>TLS is introduced into TACACS+ to fulfill the following requirements:
        </t>
+       <ol>
+       <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
+       deployed over a secured network. Securing TACACS+ protocol with TLS is intended to provide confidentiality and integrity without requiring the provision of a secured network.</li>
+       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
+       and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.</li>
+       </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
                 All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
@@ -303,7 +307,7 @@ s.
          <t>
            The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"/>.
          </t>
-         <t>The following fields contain the arguments that may be used to extend the authentication process. These are common to the Extended Authentication START, Extended Authentication REPLY, and Extended Authentication CONTINUE packet bodies; these fields represent the sole update from the previous START, REPLY and CONTIMUE packet bodies.</t>
+         <t>The following fields contain the arguments that may be used to extend the authentication process. These are common to the Extended Authentication START, Extended Authentication REPLY, and Extended Authentication CONTINUE packet bodies; these fields represent the sole update from the previous START, REPLY and CONTINUE packet bodies.</t>
          <t>The new fields are as follows:</t>
          <t>arg_cnt</t>
          <t>This represents the number of arguments in the packet.</t>
@@ -327,7 +331,7 @@ s.
 	       
          <t>
            The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
-           These fields are intended to be used as needed in deployment, they are used in this document in the enhancments for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
+           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
          </t>
 
          <t>origin_client</t>
@@ -473,7 +477,7 @@ s.
 
        <section title="SSH Public Key Support">
          <t>
-	   To support central management of SSH public keys via TACACS+, the Authentication sequence of <xref target="RFC8907"/> Section 5.4 is extended using <xref target="ExtendedAuthenticationPacketType">Extended Authenication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
+	   To support central management of SSH public keys via TACACS+, the Authentication sequence of <xref target="RFC8907"/> Section 5.4 is extended using <xref target="ExtendedAuthenticationPacketType">Extended Authentication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
 	 </t>
          <t>
            Besides new header values and flags and AVPs for Extended Authentication Packets, the SSH public key authentication process differs from other TACACS+ authentication types in that there may be more Authentication Reply and Authentication Continue Packets pairs than previously.
