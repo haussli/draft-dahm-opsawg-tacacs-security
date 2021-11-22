@@ -394,9 +394,9 @@ s.
            <artwork><![CDATA[
  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
 +----------------+----------------+----------------+----------------+
-|          user_msg len           |            data_len             |
+|             status              |           user_msg len          |
 +----------------+----------------+----------------+----------------+
-|     flags      |                                                  |
+|            data_len             |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -421,9 +421,16 @@ s.
 ]]></artwork>
          </figure>
          <t>
-           The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
+           The user_msg len, data_len, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
          </t>
-         <t>
+	 <ol>	 
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01 </li> 
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02 </li>
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_MORE := 03 </li>
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04 </li>
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05 </li>
+	  </ol> 
+	 <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
        </section>
