@@ -422,14 +422,19 @@ s.
          </figure>
          <t>
            The user_msg len, data_len, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
+	   However, the status field replaces the flags field and has the following enumeration:
          </t>
 	 <ol>	 
 	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01 </li> 
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02 </li>
-	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_MORE := 03 </li>
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 03 </li>
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04 </li>
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05 </li>
 	  </ol> 
+	 <t>
+	   The client may prematurely terminate a session by setting the TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR status in the CONTINUE message.
+	   The remainder are detailed in <xref target="SSH">SSH</xref>.
+	 </t>
 	 <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
@@ -459,13 +464,13 @@ s.
 
 	   <dt>TAC_PLUS_REPLY_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication REPLY Packet flag indicating the REPLY is incomplete.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_FRAGMENT := 0x02</dt>
-           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 0x01</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_FAIL := 0x08</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 0x03</dt>
+           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 0x04</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.</dd>
 
 	   <dt>AVP ssh_pubkey_type (String)</dt>
@@ -529,15 +534,15 @@ s.
          </li>
 
          <li>
-           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
+           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT flag set.
            The server replies with the next REPLY fragment as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY fragment.
            This repeats until the last REPLY fragment is received, the client aborts the authentication process, or an error occurs.
-           The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
+           The client MUST NOT set TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
          </li>
 
          <li>
            Once the client has all of the pubkeys, it performs the ssh pubkey authentication with its ssh client.
-           The client MUST then reply to the server with the status of that authentication by sending a CONTINUE packet with one of the following new or existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT, TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or TAC_PLUS_CONTINUE_FLAG_ERROR.
+           The client MUST then reply to the server with the status of that authentication by sending a CONTINUE packet with one of the following new or existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT, TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS, TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL, or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR.
          </li>
 
          <li>
