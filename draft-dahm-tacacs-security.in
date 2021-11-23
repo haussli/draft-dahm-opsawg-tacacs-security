@@ -132,16 +132,20 @@
          The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
          A connection may be used for only a single Session or the multiplexing of multiple Sessions.
        </t>
-       <t>
-                It is mandatory to maintain the confidentiality, integrity, and authentication of these connections, as <xref target="RFC3365"/> dictates the need for end-to-end security.
-                The current IETF technology best suited for TACACS+ is TLS, which can provide both authentication and transport encryption.
+       <t>TLS is introduced into TACACS+ to fulfill the following requirements:
        </t>
+       <ol>
+       <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
+       deployed over a secured network. Securing TACACS+ protocol with TLS is intended to provide confidentiality and integrity without requiring the provision of a secured network.</li>
+       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
+       and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.</li>
+       </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
                 All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
-                Therefore, encryption MUST be initiated immediately upon the establishment of the TCP/IP connection.
-                For this reason, it is desirable not to use a "STARTTLS" command process, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
-                Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port [TBD], for the TLS connection.
+                Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
+                It is not desirable to use a negotiation process such as a "STARTTLS" command, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
+                Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
             </t>
        </section>
        <section title="TLS Protocol Version" anchor="TLSProtoVers">
@@ -303,7 +307,7 @@ s.
          <t>
            The action, priv_level, authen_type, authen_service, user_len, port_len, rem_addr_len, data_len, user, port, rem_addr and data fields are used exactly as defined in the Authentication START Packet Body in <xref target="RFC8907"/>.
          </t>
-         <t>The following fields contain the arguments that may be used to extend the authentication process. These are common to the Extended Authentication START, Extended Authentication REPLY, and Extended Authentication CONTINUE packet bodies; these fields represent the sole update from the previous START, REPLY and CONTIMUE packet bodies.</t>
+         <t>The following fields contain the arguments that may be used to extend the authentication process. These are common to the Extended Authentication START, Extended Authentication REPLY, and Extended Authentication CONTINUE packet bodies; these fields represent the sole update from the previous START, REPLY and CONTINUE packet bodies.</t>
          <t>The new fields are as follows:</t>
          <t>arg_cnt</t>
          <t>This represents the number of arguments in the packet.</t>
@@ -318,23 +322,16 @@ s.
            The argument and the value are in a single string and are separated by either a "=" (0X3D) or a "*" (0X2A).
            The equals sign indicates a mandatory argument. The asterisk indicates an optional one.
            For the rules regarding optional and mandatory arguments, refer to <xref target="RFC8907"/>
-         </t>     
-         <t>
-           The following rules for arguments are defined in addition to those described in <xref target="RFC8907"/>
          </t>
-         <ol>
-           <li>
-             The client MAY send multiple arguments with the same name. The server MUST concatenate the values of these arguments in the order they appear in the packet.
-	     Any separator of concatenated AVP instances is application specific and MUST have been prepended or appended by the sender, not the receiver.
-           </li>
-           <li>
-             The client MUST use the same separator for all arguments with the same name. The server MUST treat a packet with multiple arguments of with the same name, but different separators, as invalid.
-           </li>
-         </ol>      
+         <t>
+           Multiple arguments with the same name are permitted within a packet, a common example is cmd-arg.
+           The handling of repeated arguments is specific to the semantics of the argument and so are documented with that argument.
+           Order is significant when processing arguments.
+         </t>
 	       
          <t>
            The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
-           These fields are intended to be used as needed in deployment, they are used in this document in the enhancments for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
+           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
          </t>
 
          <t>origin_client</t>
@@ -397,9 +394,9 @@ s.
            <artwork><![CDATA[
  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
 +----------------+----------------+----------------+----------------+
-|          user_msg len           |            data_len             |
+|             status              |           user_msg len          |
 +----------------+----------------+----------------+----------------+
-|     flags      |                                                  |
+|            data_len             |
 +----------------+----------------+----------------+----------------+
 |    arg_cnt                                                        |
 +----------------+----------------+----------------+----------------+
@@ -424,9 +421,21 @@ s.
 ]]></artwork>
          </figure>
          <t>
-           The user_msg len, data_len, flags, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
+           The user_msg len, data_len, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
+	   However, the status field replaces the flags field and has the following enumeration:
          </t>
-         <t>
+	 <ol>	 
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01 </li> 
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02 </li>
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 03 </li>
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04 </li>
+          <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05 </li>
+	  </ol> 
+	 <t>
+	   The client may prematurely terminate a session by setting the TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR status in the CONTINUE message.
+	   The remainder are detailed in <xref target="SSH">SSH</xref>.
+	 </t>
+	 <t>
            The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields are used as defined in <xref target="ExtendedAuthenticationSTARTPacketBody">The Extended Authentication START Packet Body</xref>.
          </t>
        </section>
@@ -455,13 +464,13 @@ s.
 
 	   <dt>TAC_PLUS_REPLY_FLAG_FRAGMENT := 0x02</dt>
            <dd>Extended Authentication REPLY Packet flag indicating the REPLY is incomplete.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_FRAGMENT := 0x02</dt>
-           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_PASS := 0x04</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 0x01</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication success.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_FAIL := 0x08</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication failure.</dd>
-	   <dt>TAC_PLUS_CONTINUE_FLAG_ERROR := 0x10</dt>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 0x03</dt>
+           <dd>Extended Authentication CONTINUE Packet flag requesting the next REPLY packet of an incomplete REPLY.</dd>
+	   <dt>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 0x04</dt>
            <dd>Extended Authentication CONTINUE Packet flag indicating authentication error.</dd>
 
 	   <dt>AVP ssh_pubkey_type (String)</dt>
@@ -480,7 +489,7 @@ s.
 
        <section title="SSH Public Key Support">
          <t>
-	   To support central management of SSH public keys via TACACS+, the Authentication sequence of <xref target="RFC8907"/> Section 5.4 is extended using <xref target="ExtendedAuthenticationPacketType">Extended Authenication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
+	   To support central management of SSH public keys via TACACS+, the Authentication sequence of <xref target="RFC8907"/> Section 5.4 is extended using <xref target="ExtendedAuthenticationPacketType">Extended Authentication Packet</xref> sequences to deliver SSH public keys to devices for local verification.
 	 </t>
          <t>
            Besides new header values and flags and AVPs for Extended Authentication Packets, the SSH public key authentication process differs from other TACACS+ authentication types in that there may be more Authentication Reply and Authentication Continue Packets pairs than previously.
@@ -493,11 +502,11 @@ s.
            <br/><br/>
            The client MAY include one or more instances of the ssh_pubkey_type AVP, indicating the SSH public key types that it wants.
            The set of permissible values for this AVP are the SSH public algorithm names defined in the <xref target="SSHALGS">IANA SSH Protocol Parameters Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
-	   Multiple values MUST be separated by a comma and multiple AVPs MUST include commas for separation when the Peer concatenates them.
+	   Multiple values MUST be separated by a comma, therefore multiple ssh_pubkey_type AVPs MUST include commas for separation when the Peer concatenates them and the Peer MUST be prepared to ignore a leading or trailing comma in the concatenated value.
            The server MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it receives an algorithm name that it does not recognize.
            If the client marks a ssh_pubkey_type AVP as mandatory, the server MUST reply with at least one key of that type for the given user or reply with status TAC_PLUS_AUTHEN_STATUS_SSHNOPK with the relevant ssh_pubkey_type AVP.
            <br/><br/>
-           The client MAY send an empty algorithm name to request all types available for the given user.
+           The client MAY send an Empty Value for the algorithm name to request all types available for the given user.
            <br/><br/>
            The process ends and the client MUST start a new authentication session if it receives status SSHNOPK or ERROR.
          </li>
@@ -516,7 +525,8 @@ s.
          <li>
            The server sends REPLY packets with status TAC_PLUS_AUTHEN_STATUS_SSHPK and includes one or more ssh_pubkey optional AVPs, each containing one or more keys.
            The ssh_pubkey AVPs are formatted according to the rules of <xref target="RFC4716">SSH Public Key File Format</xref>.
-           As such, the client MUST be prepared to accept keys with Key File Markers and to address AVP concatenation the server MUST terminate key file End Markers with a Line Termination sequence as specified in RFC4716 Section 3.1.
+           As such, the client MUST be prepared to accept keys with Key File Markers.
+	   To address concatenation of multiple ssh_pubkey AVPs or multiple keys in a single AVP, the server MUST terminate each key file End Marker with a Line Termination sequence as specified in RFC4716 Section 3.1.
            <br/><br/>
            Since it is possible to have more ssh_pubkey AVPs than fit in a REPLY packet, the server SHOULD set the REPLY packet flag TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required, indicating that the client SHOULD request the remainder.
            <br/><br/>
@@ -524,15 +534,15 @@ s.
          </li>
 
          <li>
-           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_CONTINUE_FLAG_FRAGMENT flag set.
+           If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY reply with the same CONTINUE packet as before with the TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT flag set.
            The server replies with the next REPLY fragment as before, clearing the TAC_PLUS_REPLY_FLAG_FRAGMENT flag of the last REPLY fragment.
            This repeats until the last REPLY fragment is received, the client aborts the authentication process, or an error occurs.
-           The client MUST NOT set TAC_PLUS_REPLY_FLAG_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
+           The client MUST NOT set TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT if the REPLY packet did not have the TAC_PLUS_REPLY_FLAG_FRAGMENT flag set and the server MUST reply with TAC_PLUS_AUTHEN_STATUS_ERROR if it does so.
          </li>
 
          <li>
            Once the client has all of the pubkeys, it performs the ssh pubkey authentication with its ssh client.
-           The client MUST then reply to the server with the status of that authentication by sending a CONTINUE packet with one of the following new or existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT, TAC_PLUS_CONTINUE_FLAG_PASS, TAC_PLUS_CONTINUE_FLAG_FAIL, or TAC_PLUS_CONTINUE_FLAG_ERROR.
+           The client MUST then reply to the server with the status of that authentication by sending a CONTINUE packet with one of the following new or existing CONTINUE flags: TAC_PLUS_CONTINUE_FLAG_ABORT, TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS, TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL, or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR.
          </li>
 
          <li>
@@ -547,15 +557,15 @@ s.
          </t>
          <t>
            The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that the user was authenticated with a SSH public key.
-<br/><br/>
          </t>
          <t>
-           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present if the authen_method is TAC_PLUS_AUTHEN_METH_SSHPUBKEY and SHOULD be present any time the authorization is for a SSH connection.
+           The well-known ssh_subsystem AVP defines the SSH subsystem for which the authorization is requested and MUST be present any time the authorization is for a SSH connection.
          </t>
          <t>
            The set of permissible values for this AVP are the SSH Subsystem Names defined in the <xref target="SSHSUBSYS">IANA SSH Connection Protocol Subsystem Names Registry</xref>, which are case-sensitive as specified and otherwise constrained by <xref target="RFC4250"/> Section 4.6.1.
-           The client MAY send an empty subsystem name to indicate no subsystem, also known as a shell or CLI.
+           The client MAY send an Empty Value for the subsystem name to indicate no subsystem, also known as a shell or CLI.
            The server MUST NOT reply with status TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose syntax is valid but whose value is not recognized.
+           Subsystems might need additional data for authorization or accounting that will be particular to that subsystem and are therefore out of scope for this document.
          </t>
          <t>
            These new authen_methods and AVPs apply equally to accounting.
@@ -584,6 +594,20 @@ s.
        </t>
      </section>
 
+     <section title="Protocol Deprecations" anchor="ProtocolDeprecation">
+       <t>
+           This section deprecates features from the TACACS+ Protocol.
+       </t>
+       <t>
+           MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the intent of this deprecation is to complete the transition. MD4 is still required to 
+	   support MS-CHAPv2 so cannot be deprecated at this point It should be noted that the use of MD4 is purely to allow compatible MS-CHAPv2 operation and
+	   not for security; the TLS transport is intended to provide that function.
+       </t>
+       <t>
+           TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be supported, as it permits the leak of sensitive information.
+       </t>
+     </section>
+
      <section title="Security Considerations">
        <section title="TLS">
          <t>
@@ -594,8 +618,7 @@ s.
          <section title="TLS Options">
            <t>
              It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
-             It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which RFCs using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheri
-tance.
+             It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which RFCs using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
              As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.
            </t>
          </section>
@@ -606,14 +629,14 @@ tance.
              Unsecure Connections would be better served by separate Servers from the TLS Servers.
            </t>
            <t>
-             It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, except for test and debug environments.
+             It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, including TLS using the NULL algorithm, except for within test and debug environments.
            </t>
          </section>
        </section>
 
        <section title="Well-Known TCP/IP Port" anchor="wellknown">
          <t>
-           A new port is considered appropriate and superior to a "STARTTLS" command because it allows:
+           A new port is considered appropriate and superior to a "STARTTLS" command or other negotiation method because it allows:
          </t>
          <ul>
            <li>ease of blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</li>
@@ -643,7 +666,7 @@ tance.
        </section>
      </section>
 
-     <section title="IANA Considerations">
+     <section title="IANA Considerations" anchor="ICTBD">
        <t>
          The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/> and <xref target="RFC6335"/>, of a new well-known system TCP/IP port number for
  "tacacss", described as "TACACS+ over TLS".
