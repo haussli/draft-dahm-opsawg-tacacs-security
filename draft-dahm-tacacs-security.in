@@ -424,13 +424,17 @@ s.
            The user_msg len, data_len, user_msg, and data fields are used exactly as defined in the Authentication REPLY Packet Body in <xref target="RFC8907"/>.
 	   However, the status field replaces the flags field and has the following enumeration:
          </t>
-	 <ol>	 
+	 <ul>	 
+	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE := 00 </li> 
 	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01 </li> 
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02 </li>
 	  <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 03 </li>
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04 </li>
           <li>TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05 </li>
-	  </ol> 
+	  </ul> 
+	 <t>
+            TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT MUST be used when the Extended Authentication Packets are used for the continuation of authentication flows documented in <xref target="RFC8907"/>.
+	 </t>
 	 <t>
 	   The client may prematurely terminate a session by setting the TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT or TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR status in the CONTINUE message.
 	   The remainder are detailed in <xref target="SSH">SSH</xref>.

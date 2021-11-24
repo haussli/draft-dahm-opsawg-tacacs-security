@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 27 May 2022                                              A. Ota
-                                                        23 November 2021
+Expires: 28 May 2022                                              A. Ota
+                                                        24 November 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 May 2022.
+   This Internet-Draft will expire on 28 May 2022.
 
 
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 1]
+Dahm, et al.               Expires 28 May 2022                  [Page 1]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -104,21 +104,21 @@ Table of Contents
      8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
        8.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
        8.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
      8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 2]
+Dahm, et al.               Expires 28 May 2022                  [Page 2]
 
 Internet-Draft              TACACS+ Security               November 2021
 
 
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
    12. Informative References  . . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 3]
+Dahm, et al.               Expires 28 May 2022                  [Page 3]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 4]
+Dahm, et al.               Expires 28 May 2022                  [Page 4]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 5]
+Dahm, et al.               Expires 28 May 2022                  [Page 5]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 6]
+Dahm, et al.               Expires 28 May 2022                  [Page 6]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 7]
+Dahm, et al.               Expires 28 May 2022                  [Page 7]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 8]
+Dahm, et al.               Expires 28 May 2022                  [Page 8]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                  [Page 9]
+Dahm, et al.               Expires 28 May 2022                  [Page 9]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 27 May 2022                 [Page 10]
+Dahm, et al.               Expires 28 May 2022                 [Page 10]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -596,27 +596,37 @@ Internet-Draft              TACACS+ Security               November 2021
    [RFC8907].  However, the status field replaces the flags field and
    has the following enumeration:
 
-   1.  TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE := 00
 
-   2.  TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 01
 
-   3.  TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 03
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 02
 
-   4.  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 03
 
-   5.  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04
+
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05
+
+
+
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 11]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
+   TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
+   TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT MUST be used when the Extended
+   Authentication Packets are used for the continuation of
+   authentication flows documented in [RFC8907].
 
    The client may prematurely terminate a session by setting the
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT or
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR status in the CONTINUE message.
    The remainder are detailed in SSH (Section 5).
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 11]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    The new arg_cnt, arg_1 ... arg_N, and arg_1_len .... arg_N_len fields
    are used as defined in The Extended Authentication START Packet Body
@@ -656,6 +666,14 @@ Internet-Draft              TACACS+ Security               November 2021
       Extended Authentication CONTINUE Packet flag indicating
       authentication success.
 
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 12]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
       Extended Authentication CONTINUE Packet flag indicating
       authentication failure.
@@ -663,16 +681,6 @@ Internet-Draft              TACACS+ Security               November 2021
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FRAGMENT := 0x03
       Extended Authentication CONTINUE Packet flag requesting the next
       REPLY packet of an incomplete REPLY.
-
-
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 12]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 0x04
       Extended Authentication CONTINUE Packet flag indicating
@@ -714,6 +722,14 @@ Internet-Draft              TACACS+ Security               November 2021
 
        The client MAY include one or more instances of the
        ssh_pubkey_type AVP, indicating the SSH public key types that it
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 13]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
        wants.  The set of permissible values for this AVP are the SSH
        public algorithm names defined in the IANA SSH Protocol
        Parameters Registry [SSHALGS], which are case-sensitive as
@@ -722,14 +738,6 @@ Internet-Draft              TACACS+ Security               November 2021
        ssh_pubkey_type AVPs MUST include commas for separation when the
        Peer concatenates them and the Peer MUST be prepared to ignore a
        leading or trailing comma in the concatenated value.  The server
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 13]
-
-Internet-Draft              TACACS+ Security               November 2021
-
-
        MUST NOT reply with status TAC_PLUS_AUTHEN_STATUS_ERROR if it
        receives an algorithm name that it does not recognize.  If the
        client marks a ssh_pubkey_type AVP as mandatory, the server MUST
@@ -770,21 +778,20 @@ Internet-Draft              TACACS+ Security               November 2021
        sequence as specified in RFC4716 Section 3.1.
 
        Since it is possible to have more ssh_pubkey AVPs than fit in a
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 14]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
        REPLY packet, the server SHOULD set the REPLY packet flag
        TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required,
        indicating that the client SHOULD request the remainder.
 
        An AVP SHALL NOT span multiple fragments; each must be contained
        entirely in the fragment in which it begins.
-
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 14]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    5.  If the TAC_PLUS_REPLY_FLAG_FRAGMENT flag is set, the client MAY
        reply with the same CONTINUE packet as before with the
@@ -827,6 +834,14 @@ Internet-Draft              TACACS+ Security               November 2021
    the authorization is requested and MUST be present any time the
    authorization is for a SSH connection.
 
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 15]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    The set of permissible values for this AVP are the SSH Subsystem
    Names defined in the IANA SSH Connection Protocol Subsystem Names
    Registry [SSHSUBSYS], which are case-sensitive as specified and
@@ -834,14 +849,6 @@ Internet-Draft              TACACS+ Security               November 2021
    send an Empty Value for the subsystem name to indicate no subsystem,
    also known as a shell or CLI.  The server MUST NOT reply with status
    TAC_PLUS_AUTHOR_STATUS_ERROR if it receives a subsystem name whose
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 15]
-
-Internet-Draft              TACACS+ Security               November 2021
-
-
    syntax is valid but whose value is not recognized.  Subsystems might
    need additional data for authorization or accounting that will be
    particular to that subsystem and are therefore out of scope for this
@@ -883,20 +890,20 @@ Internet-Draft              TACACS+ Security               November 2021
    MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the
    intent of this deprecation is to complete the transition.  MD4 is
    still required to support MS-CHAPv2 so cannot be deprecated at this
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 16]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    point It should be noted that the use of MD4 is purely to allow
    compatible MS-CHAPv2 operation and not for security; the TLS
    transport is intended to provide that function.
 
    TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be
    supported, as it permits the leak of sensitive information.
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 16]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
 8.  Security Considerations
 
@@ -937,6 +944,16 @@ Internet-Draft              TACACS+ Security               November 2021
    and encryption, including TLS using the NULL algorithm, except for
    within test and debug environments.
 
+
+
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 17]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
 8.2.  Well-Known TCP/IP Port
 
    A new port is considered appropriate and superior to a "STARTTLS"
@@ -944,15 +961,6 @@ Internet-Draft              TACACS+ Security               November 2021
 
    *  ease of blocking the unencrypted or inferiorly encrypted
       connections by the TCP/IP port number,
-
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 17]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    *  passive Intrusion Detection Systems (IDSs) monitoring the
       unencrypted version to be unaffected by the introduction of TLS,
@@ -992,6 +1000,16 @@ Internet-Draft              TACACS+ Security               November 2021
    server has no method to revoke a key, except by not offering the key
    in future authentication sessions.
 
+
+
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 18]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
 9.  IANA Considerations
 
    The authors request that, when this draft is accepted by the working
@@ -1001,14 +1019,6 @@ Internet-Draft              TACACS+ Security               November 2021
    The name "tacacss" follows the common practice of appending an "s" to
    the name given to the non-TLS well-known port.  This allocation is
    justified in Section 8.2.
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 18]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    RFC EDITOR: this port number should replace "[TBD]" within this
    document.
@@ -1048,6 +1058,14 @@ Internet-Draft              TACACS+ Security               November 2021
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
 
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 19]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
@@ -1057,14 +1075,6 @@ Internet-Draft              TACACS+ Security               November 2021
               System Plus (TACACS+) Protocol", RFC 8907,
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 19]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    [SSHALGS]  IANA, "Public Key Algorithm Names",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
@@ -1102,6 +1112,16 @@ Internet-Draft              TACACS+ Security               November 2021
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
 
+
+
+
+
+
+Dahm, et al.               Expires 28 May 2022                 [Page 20]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
               Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
               August 2015, <https://www.rfc-editor.org/info/rfc7605>.
@@ -1111,15 +1131,6 @@ Authors' Addresses
    Thorsten Dahm
 
    Email: thorsten.dahm@gmail.com
-
-
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 20]
-
-Internet-Draft              TACACS+ Security               November 2021
 
 
    Douglas Gash
@@ -1162,15 +1173,4 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 27 May 2022                 [Page 21]
+Dahm, et al.               Expires 28 May 2022                 [Page 21]
