@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 28 May 2022                                              A. Ota
-                                                        24 November 2021
+Expires: 29 May 2022                                              A. Ota
+                                                        25 November 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 May 2022.
+   This Internet-Draft will expire on 29 May 2022.
 
 
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 1]
+Dahm, et al.               Expires 29 May 2022                  [Page 1]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 2]
+Dahm, et al.               Expires 29 May 2022                  [Page 2]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 3]
+Dahm, et al.               Expires 29 May 2022                  [Page 3]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -198,7 +198,8 @@ Internet-Draft              TACACS+ Security               November 2021
    the Server.  The well-known TCP/IP port 49 on the Server is used for
    unencrypted and encrypted connections as defined in the TACACS+
    Protocol [RFC8907].  A connection may be used for only a single
-   Session or the multiplexing of multiple Sessions.
+   Session or the multiplexing of multiple Sessions in TACACS+ Single
+   Connection Mode..
 
    TLS is introduced into TACACS+ to fulfill the following requirements:
 
@@ -210,18 +211,17 @@ Internet-Draft              TACACS+ Security               November 2021
        a secured network.
 
    2.  Peer authentication: The use of shared keys to add and remove the
-       MD5 obfuscation was intended to provide a form of peer
+       MD5 obfuscation was intended to provide a form of Peer
        authentication for the TACACS+ protocol.  This document
        deprecates the MD5 obfuscation, and specifies that the
-       authentication capabilities of TLS are used to allow the peers to
+       authentication capabilities of TLS are used to allow the Peers to
        authenticate each other.
 
 
 
 
 
-
-Dahm, et al.               Expires 28 May 2022                  [Page 4]
+Dahm, et al.               Expires 29 May 2022                  [Page 4]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 5]
+Dahm, et al.               Expires 29 May 2022                  [Page 5]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 6]
+Dahm, et al.               Expires 29 May 2022                  [Page 6]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 7]
+Dahm, et al.               Expires 29 May 2022                  [Page 7]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 8]
+Dahm, et al.               Expires 29 May 2022                  [Page 8]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 9]
+Dahm, et al.               Expires 29 May 2022                  [Page 9]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 10]
+Dahm, et al.               Expires 29 May 2022                 [Page 10]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 11]
+Dahm, et al.               Expires 29 May 2022                 [Page 11]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 12]
+Dahm, et al.               Expires 29 May 2022                 [Page 12]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 13]
+Dahm, et al.               Expires 29 May 2022                 [Page 13]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 14]
+Dahm, et al.               Expires 29 May 2022                 [Page 14]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 15]
+Dahm, et al.               Expires 29 May 2022                 [Page 15]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 16]
+Dahm, et al.               Expires 29 May 2022                 [Page 16]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -949,7 +949,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 17]
+Dahm, et al.               Expires 29 May 2022                 [Page 17]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -979,21 +979,21 @@ Internet-Draft              TACACS+ Security               November 2021
    to address the exposure from Unsecure Connection methods is to refuse
    Unsecure Connections at the server entirely, perhaps using separate
    servers for Unsecure Connections and TLS.  Another approach is mutual
-   configuration that requires TLS.  Clients and servers SHOULD support
+   configuration that requires TLS.  Clients and Servers SHOULD support
    configuration that requires Peers, globally and individually, use
    TLS.  Furthermore, Peers SHOULD be configurable to limit offered or
    recognized TLS versions and algorithms to those recommended by
    standards bodies and implementers.
 
-   Servers and clients could also maintain a cache of Peers that have
+   Servers and Clients could also maintain a cache of Peers that have
    engaged in TACACS+ TLS connections and demand TLS from that point
    forward.  However, this has potential to be a Denial of Service (DoS)
-   vector, whereby an attacker causes a sever to believe that a client
+   vector, whereby an attacker causes a server to believe that a client
    that does not support TLS has successfully connected with TLS.
 
 8.3.  SSH Public Key Caching
 
-   A client implementation MUST NOT cache SSH public keys received from
+   A Client implementation MUST NOT cache SSH public keys received from
    a TACACS+ server for future SSH client authentication.  Doing so
    would deny the TACACS+ server the opportunity to deny authentication
    for other reasons than key validity or to revoke a key.  The TACACS+
@@ -1005,7 +1005,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 18]
+Dahm, et al.               Expires 29 May 2022                 [Page 18]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 19]
+Dahm, et al.               Expires 29 May 2022                 [Page 19]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 20]
+Dahm, et al.               Expires 29 May 2022                 [Page 20]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1173,4 +1173,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 21]
+Dahm, et al.               Expires 29 May 2022                 [Page 21]

@@ -130,15 +130,15 @@
        <t>
          TACACS+ connections are TCP/IP connections initiated by the Client to the Server.
          The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
-         A connection may be used for only a single Session or the multiplexing of multiple Sessions.
+         A connection may be used for only a single Session or the multiplexing of multiple Sessions in TACACS+ Single Connection Mode..
        </t>
        <t>TLS is introduced into TACACS+ to fulfill the following requirements:
        </t>
        <ol>
        <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
        deployed over a secured network. Securing TACACS+ protocol with TLS is intended to provide confidentiality and integrity without requiring the provision of a secured network.</li>
-       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
-       and specifies that the authentication capabilities of TLS are used to allow the peers to authenticate each other.</li>
+       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of Peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
+       and specifies that the authentication capabilities of TLS are used to allow the Peers to authenticate each other.</li>
        </ol>
        <section title="Well-Known TCP/IP Port">
             <t>
@@ -653,17 +653,17 @@ s.
            Causing failure of connections to the TLS-enabled service or the negotiation of shared algorithm support are two such down-grade attacks.
            The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
            Another approach is mutual configuration that requires TLS.
-           Clients and servers SHOULD support configuration that requires Peers, globally and individually, use TLS.
+           Clients and Servers SHOULD support configuration that requires Peers, globally and individually, use TLS.
            Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
          </t>
          <t>
-           Servers and clients could also maintain a cache of Peers that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
-           However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a sever to believe that a client that does not support TLS has successfully connected with TLS.
+           Servers and Clients could also maintain a cache of Peers that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
+           However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a server to believe that a client that does not support TLS has successfully connected with TLS.
          </t>
        </section>
        <section title="SSH Public Key Caching" anchor="pubkeycache">
          <t>
-	   A client implementation MUST NOT cache SSH public keys received from a TACACS+ server for future SSH client authentication.
+	   A Client implementation MUST NOT cache SSH public keys received from a TACACS+ server for future SSH client authentication.
 	   Doing so would deny the TACACS+ server the opportunity to deny authentication for other reasons than key validity or to revoke a key.
 	   The TACACS+ server has no method to revoke a key, except by not offering the key in future authentication sessions.
          </t>
