@@ -638,17 +638,14 @@ s.
          </section>
          <section title="TLS PSK">
            <t>
-	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs) that are not resumption keys.
+	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs), also known as external PSKs in TLS 1.3, which are not resumption PSKs.
 	     PSKs SHOULD NOT be shared among Clients or Servers to limit exposure of a compromised key and to ease key rotation.
            </t>
          </section>
          <section title="TLS Options">
            <t>
-             It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
-             It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which documents using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
-           </t>
-           <t>
-             As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this document.
+	     Unfortunately, no single and timely TLS recommendations document exists.
+	     Therefore, implementers and operators SHOULD make use of the various RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this document.
 	     Useful examples are the TLS specifications themselves (<xref target="RFC8446">TLS 1.3</xref>) and TLS Recommendations <xref target="RFC7525"/>.
            </t>
          </section>
