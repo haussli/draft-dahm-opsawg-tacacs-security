@@ -104,7 +104,7 @@ Table of Contents
      8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
        8.1.1.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
        8.1.2.  TLS 0-RTT . . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  18
        8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  18
 
 
@@ -940,12 +940,12 @@ Internet-Draft              TACACS+ Security               November 2021
    handshake completes; that is, Clients MUST NOT send 0-RTT data and
    Servers MAY abruptly disconnect Clients that do.
 
-8.1.3.  TLS PSK
 
-   Implementations MAY support TLS authentication with Pre-Shared Keys
-   (PSKs), also known as external PSKs in TLS 1.3, which are not
-   resumption PSKs.  PSKs SHOULD NOT be shared among Clients or Servers
-   to limit exposure of a compromised key and to ease key rotation.
+
+
+
+
+
 
 
 
@@ -953,6 +953,14 @@ Dahm, et al.               Expires 3 June 2022                 [Page 17]
 
 Internet-Draft              TACACS+ Security               November 2021
 
+
+8.1.3.  TLS PSK
+
+   Implementations MAY support TLS authentication with Pre-Shared Keys
+   (PSKs), also known as external PSKs in TLS 1.3, which are not
+   resumption PSKs.  PSKs SHOULD NOT be shared among Clients or Servers
+   to limit exposure of a compromised key and to ease key rotation.
+   Also see [RFC8773].
 
 8.1.4.  TLS Options
 
@@ -994,14 +1002,6 @@ Internet-Draft              TACACS+ Security               November 2021
    recognized TLS versions and algorithms to those recommended by
    standards bodies and implementers.
 
-   Servers and Clients could also maintain a cache of Peers that have
-   engaged in TACACS+ TLS connections and demand TLS from that point
-   forward.  However, this has potential to be a Denial of Service (DoS)
-   vector, whereby an attacker causes a server to believe that a client
-   that does not support TLS has successfully connected with TLS.
-
-
-
 
 
 
@@ -1009,6 +1009,12 @@ Dahm, et al.               Expires 3 June 2022                 [Page 18]
 
 Internet-Draft              TACACS+ Security               November 2021
 
+
+   Servers and Clients could also maintain a cache of Peers that have
+   engaged in TACACS+ TLS connections and demand TLS from that point
+   forward.  However, this has potential to be a Denial of Service (DoS)
+   vector, whereby an attacker causes a server to believe that a client
+   that does not support TLS has successfully connected with TLS.
 
 8.3.  SSH Public Key Caching
 
@@ -1053,18 +1059,17 @@ Internet-Draft              TACACS+ Security               November 2021
               DOI 10.17487/RFC4250, January 2006,
               <https://www.rfc-editor.org/info/rfc4250>.
 
-   [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
-              Ciphersuites for Transport Layer Security (TLS)",
-              RFC 4279, DOI 10.17487/RFC4279, December 2005,
-              <https://www.rfc-editor.org/info/rfc4279>.
-
-
 
 
 Dahm, et al.               Expires 3 June 2022                 [Page 19]
 
 Internet-Draft              TACACS+ Security               November 2021
 
+
+   [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
+              Ciphersuites for Transport Layer Security (TLS)",
+              RFC 4279, DOI 10.17487/RFC4279, December 2005,
+              <https://www.rfc-editor.org/info/rfc4279>.
 
    [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
               Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
@@ -1085,6 +1090,11 @@ Internet-Draft              TACACS+ Security               November 2021
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
+   [RFC8773]  Housley, R., "TLS 1.3 Extension for Certificate-Based
+              Authentication with an External Pre-Shared Key", RFC 8773,
+              DOI 10.17487/RFC8773, March 2020,
+              <https://www.rfc-editor.org/info/rfc8773>.
+
    [RFC8907]  Dahm, T., Ota, A., Medway Gash, D.C., Carrel, D., and L.
               Grant, "The Terminal Access Controller Access-Control
               System Plus (TACACS+) Protocol", RFC 8907,
@@ -1102,16 +1112,6 @@ Internet-Draft              TACACS+ Security               November 2021
 
 12.  Informative References
 
-   [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
-              Engineering Task Force Standard Protocols", BCP 61,
-              RFC 3365, DOI 10.17487/RFC3365, August 2002,
-              <https://www.rfc-editor.org/info/rfc3365>.
-
-   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
-              Standards Track Code Points", RFC 4020,
-              DOI 10.17487/RFC4020, February 2005,
-              <https://www.rfc-editor.org/info/rfc4020>.
-
 
 
 
@@ -1121,6 +1121,16 @@ Dahm, et al.               Expires 3 June 2022                 [Page 20]
 
 Internet-Draft              TACACS+ Security               November 2021
 
+
+   [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
+              Engineering Task Force Standard Protocols", BCP 61,
+              RFC 3365, DOI 10.17487/RFC3365, August 2002,
+              <https://www.rfc-editor.org/info/rfc3365>.
+
+   [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
+              Standards Track Code Points", RFC 4020,
+              DOI 10.17487/RFC4020, February 2005,
+              <https://www.rfc-editor.org/info/rfc4020>.
 
    [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
@@ -1157,16 +1167,6 @@ Authors' Addresses
    Andrej Ota
 
    Email: andrej@ota.si
-
-
-
-
-
-
-
-
-
-
 
 
 

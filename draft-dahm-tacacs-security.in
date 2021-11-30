@@ -640,6 +640,7 @@ s.
            <t>
 	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs), also known as external PSKs in TLS 1.3, which are not resumption PSKs.
 	     PSKs SHOULD NOT be shared among Clients or Servers to limit exposure of a compromised key and to ease key rotation.
+	     Also see <xref target="RFC8773"/>.
            </t>
          </section>
          <section title="TLS Options">
@@ -715,6 +716,7 @@ s.
        <?rfc include="reference.RFC.5246.xml"?>
        <?rfc include="reference.RFC.7525.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
+       <?rfc include="reference.RFC.8773.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
        <reference anchor="SSHALGS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-19">
          <front>
