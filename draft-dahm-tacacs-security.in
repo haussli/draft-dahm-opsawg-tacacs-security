@@ -141,37 +141,38 @@
        and specifies that the authentication capabilities of TLS are used to allow the Peers to authenticate each other.</li>
        </ol>
        <section title="Well-Known TCP/IP Port">
-            <t>
-                All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
-                Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
-                It is not desirable to use a negotiation process such as a "STARTTLS" command, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
-                Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
-            </t>
+         <t>
+           All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
+           Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
+           It is not desirable to use a negotiation process such as a "STARTTLS" command, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
+           Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
+         </t>
        </section>
        <section title="TLS Protocol Version" anchor="TLSProtoVers">
-            <t>
+         <t>
+            <xref target="RFC8446">TLS 1.3</xref> support is required, which is the current IETF-endorsed TLS version.
 XXX rfc8773 is required to have server/client certificates with PSK
                 TACACS+ implementations supporting TLS MUST implement at least <xref target="RFC8446">TLS version 1.3</xref> until it is deprecated.
                 However, implementations SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.3 and prior versions.
-            </t>
-            <t>
+         </t>
+         <t>
                 Clearly deprecation is more difficult for Servers, because support for and deployment of new TLS versions to Clients will occur with great randomness or perhaps not at all due to End of Support (EoS).
                 Therefore, it is of great value to, and implementations MAY, support deprecated versions to allow for gradual adoption and software at its End of Life (EoL).
                 A Server that supports deprecated versions SHOULD NOT enable this support except by operator configuration.
-            </t>
+         </t>
        </section>
        <section title="Cipher Requirements">
-            <t>
+         <t>
 XXX The IANA registry now has "Recommended" algorithms.  reference this for ciphers that should be supported.
                 As with <xref target="TLSProtoVers">TLS Protocol Versions</xref>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.
                 However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.
-            </t>
-            <t>
+         </t>
+         <t>
                 TACACS+ Servers supporting TLS MUST utilize the TLS encryption options described in the following sections.
 
 XXX but should be allowed to evolve as TLS does.
 
-            </t>
+         </t>
                 <section title="Mandatory Cipher Suites">
                 <t>
                 <xref target="RFC5246">TLS 1.2</xref> allows specifying application profiles prescribing which cipher suites to implement for interoperability purposes.
@@ -627,6 +628,7 @@ s.
            </t>
            <t>
              It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, including TLS using the NULL algorithm, except for within test and debug environments.
+             Also see <xref target="RFC3365"/>
            </t>
          </section>
          <section title="TLS 0-RTT">
@@ -641,9 +643,9 @@ s.
 	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs), also known as external PSKs in TLS 1.3, which are not resumption PSKs.
 	     PSKs SHOULD NOT be shared among Clients or Servers to limit exposure of a compromised key and to ease key rotation.
 	     Also see <xref target="RFC8773"/>.
+           </t>
            <t>
 	     PSKs are otherwise considered out-of-scope for this document.
-           </t>
            </t>
          </section>
          <section title="TLS Options">
