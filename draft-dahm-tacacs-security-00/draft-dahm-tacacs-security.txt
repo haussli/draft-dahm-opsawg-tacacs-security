@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 29 May 2022                                              A. Ota
-                                                        25 November 2021
+Expires: 3 June 2022                                              A. Ota
+                                                        30 November 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 May 2022.
+   This Internet-Draft will expire on 3 June 2022.
 
 
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 1]
+Dahm, et al.               Expires 3 June 2022                  [Page 1]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -102,18 +102,19 @@ Table of Contents
    7.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  16
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
      8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.1.  TLS 0-RTT . . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.2.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.3.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  18
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
+       8.1.1.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.2.  TLS 0-RTT . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  18
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 2]
+Dahm, et al.               Expires 3 June 2022                  [Page 2]
 
 Internet-Draft              TACACS+ Security               November 2021
 
 
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
      8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  19
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
@@ -164,8 +165,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-
-Dahm, et al.               Expires 29 May 2022                  [Page 3]
+Dahm, et al.               Expires 3 June 2022                  [Page 3]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 4]
+Dahm, et al.               Expires 3 June 2022                  [Page 4]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -277,7 +277,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 5]
+Dahm, et al.               Expires 3 June 2022                  [Page 5]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -333,7 +333,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 6]
+Dahm, et al.               Expires 3 June 2022                  [Page 6]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -389,7 +389,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 7]
+Dahm, et al.               Expires 3 June 2022                  [Page 7]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -445,7 +445,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 8]
+Dahm, et al.               Expires 3 June 2022                  [Page 8]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -501,7 +501,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                  [Page 9]
+Dahm, et al.               Expires 3 June 2022                  [Page 9]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 10]
+Dahm, et al.               Expires 3 June 2022                 [Page 10]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 11]
+Dahm, et al.               Expires 3 June 2022                 [Page 11]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 12]
+Dahm, et al.               Expires 3 June 2022                 [Page 12]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 13]
+Dahm, et al.               Expires 3 June 2022                 [Page 13]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 14]
+Dahm, et al.               Expires 3 June 2022                 [Page 14]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 15]
+Dahm, et al.               Expires 3 June 2022                 [Page 15]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 16]
+Dahm, et al.               Expires 3 June 2022                 [Page 16]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -910,56 +910,19 @@ Internet-Draft              TACACS+ Security               November 2021
 8.1.  TLS
 
    This document improves the confidentiality, integrity, and
-   authentication of the connection and network traffic between the
-   TACACS+ Peers by adding TLS support.  This does not in itself protect
-   the server nor clients; the operator and equipment vendors have a
-   role.  That role is to diligently follow current best practices for
+   authentication of the connection and network traffic between TACACS+
+   Peers by adding TLS support.  This does not in itself protect the
+   server nor clients; the operator and equipment vendors have a role.
+   That role is to diligently follow current best practices for
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
 
-8.1.1.  TLS 0-RTT
+8.1.1.  TLS Use
 
-   TLS 1.3 resumption and PSK techniques make it possible to send Early
-   Data, aka. 0-RTT data, data that is sent before the TLS handshake
-   completes.  Replay of this data is possible.  Given the sensitivity
-   of TACACS+ data, a Client MUST NOT send data until the full TLS
-   handshake completes; that is, Clients MUST NOT send 0-RTT data.
-
-8.1.2.  TLS Options
-
-   It is not and never will be reasonable to expect RFCs be updated in
-   perpetuity as each new TLS version and/or algorithm emerges nor at a
-   rate to keep pace.  It would be highly desirable for the TLS working
-   group to publish a single document, that evolves with TLS and its
-   algorithms, which RFCs using TLS, such as this one, could reference
-   without the need to update those RFCs, thus allowing them to evolve
-   by inheritance.  As no such document exists, implementers and
-   operators SHOULD make informed use of RFCs to determine which TLS
-   versions and algorithms should be supported, deprecated, or
-   abandoned, in the absence of updates to this RFC.
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 29 May 2022                 [Page 17]
-
-Internet-Draft              TACACS+ Security               November 2021
-
-
-8.1.3.  TLS Use
-
-   TLS encryption SHOULD be used in deployments when both the clients
-   and servers support it.  Servers that support TLS encryption MAY be
+   TLS encryption SHOULD be used in deployments when both the Clients
+   and Servers support it.  Servers that support TLS encryption MAY be
    configured to allow Unsecure Connections when TLS encryption is not
-   supported by the client, but this is NOT RECOMMENDED because of the
+   supported by the Client, but this is NOT RECOMMENDED because of the
    threat of downgrade attacks, as described in Section 8.2.  Unsecure
    Connections would be better served by separate Servers from the TLS
    Servers.
@@ -967,6 +930,45 @@ Internet-Draft              TACACS+ Security               November 2021
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
    and encryption, including TLS using the NULL algorithm, except for
    within test and debug environments.
+
+8.1.2.  TLS 0-RTT
+
+   TLS 1.3 resumption and PSK techniques make it possible to send Early
+   Data, aka. 0-RTT data, data that is sent before the TLS handshake
+   completes.  Replay of this data is possible.  Given the sensitivity
+   of TACACS+ data, a Client MUST NOT send data until the full TLS
+   handshake completes; that is, Clients MUST NOT send 0-RTT data and
+   Servers MAY abruptly disconnect Clients that do.
+
+8.1.3.  TLS PSK
+
+   Implementations MAY support TLS authentication with Pre-Shared Keys
+   (PSKs) that are not resumption keys.  PSKs SHOULD NOT be shared among
+   Clients or Servers to limit exposure of a compromised key and to ease
+   key rotation.
+
+
+
+Dahm, et al.               Expires 3 June 2022                 [Page 17]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
+8.1.4.  TLS Options
+
+   It is not and never will be reasonable to expect RFCs be updated in
+   perpetuity as each new TLS version and/or algorithm emerges nor at a
+   rate to keep pace.  It would be highly desirable for the TLS working
+   group to publish a single document, that evolves with TLS and its
+   algorithms, which documents using TLS, such as this one, could
+   reference without the need to update those RFCs, thus allowing them
+   to evolve by inheritance.
+
+   As no such document exists, implementers and operators SHOULD make
+   informed use of RFCs to determine which TLS versions and algorithms
+   should be supported, deprecated, or abandoned, in the absence of
+   updates to this document.  Useful examples are the TLS specifications
+   themselves (TLS 1.3 [RFC8446]) and TLS Recommendations [RFC7525].
 
 8.2.  Well-Known TCP/IP Port
 
@@ -1003,9 +1005,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-
-
-Dahm, et al.               Expires 29 May 2022                 [Page 18]
+Dahm, et al.               Expires 3 June 2022                 [Page 18]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1018,12 +1018,12 @@ Internet-Draft              TACACS+ Security               November 2021
 
 8.3.  SSH Public Key Caching
 
-   A Client implementation MUST NOT cache SSH public keys received from
-   a TACACS+ server for future SSH client authentication.  Doing so
-   would deny the TACACS+ server the opportunity to deny authentication
-   for other reasons than key validity or to revoke a key.  The TACACS+
-   server has no method to revoke a key, except by not offering the key
-   in future authentication sessions.
+   A Client MUST NOT cache SSH public keys received from a Server for
+   future SSH client authentication.  Doing so would deny the Server the
+   opportunity to deny authentication for other reasons than key
+   validity or to revoke a key.  The Server has no method to revoke a
+   key, except by not offering the key in future authentication
+   sessions.
 
 9.  IANA Considerations
 
@@ -1061,7 +1061,7 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 29 May 2022                 [Page 19]
+Dahm, et al.               Expires 3 June 2022                 [Page 19]
 
 Internet-Draft              TACACS+ Security               November 2021
 
@@ -1079,6 +1079,12 @@ Internet-Draft              TACACS+ Security               November 2021
               (TLS) Protocol Version 1.2", RFC 5246,
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
+
+   [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
+              "Recommendations for Secure Use of Transport Layer
+              Security (TLS) and Datagram Transport Layer Security
+              (DTLS)", BCP 195, RFC 7525, DOI 10.17487/RFC7525, May
+              2015, <https://www.rfc-editor.org/info/rfc7525>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
@@ -1106,6 +1112,16 @@ Internet-Draft              TACACS+ Security               November 2021
               RFC 3365, DOI 10.17487/RFC3365, August 2002,
               <https://www.rfc-editor.org/info/rfc3365>.
 
+
+
+
+
+
+Dahm, et al.               Expires 3 June 2022                 [Page 20]
+
+Internet-Draft              TACACS+ Security               November 2021
+
+
    [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
               Standards Track Code Points", RFC 4020,
               DOI 10.17487/RFC4020, February 2005,
@@ -1114,13 +1130,6 @@ Internet-Draft              TACACS+ Security               November 2021
    [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
               January 2006, <https://www.rfc-editor.org/info/rfc4251>.
-
-
-
-Dahm, et al.               Expires 29 May 2022                 [Page 20]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
@@ -1164,13 +1173,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 29 May 2022                 [Page 21]
+Dahm, et al.               Expires 3 June 2022                 [Page 21]

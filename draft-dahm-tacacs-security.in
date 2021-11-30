@@ -615,32 +615,41 @@ s.
      <section title="Security Considerations">
        <section title="TLS">
          <t>
-           This document improves the confidentiality, integrity, and authentication of the connection and network traffic between the TACACS+ Peers by adding TLS support.
+           This document improves the confidentiality, integrity, and authentication of the connection and network traffic between TACACS+ Peers by adding TLS support.
            This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
            That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
          </t>
+         <section title="TLS Use">
+           <t>
+             TLS encryption SHOULD be used in deployments when both the Clients and Servers support it.
+             Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the Client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
+             Unsecure Connections would be better served by separate Servers from the TLS Servers.
+           </t>
+           <t>
+             It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, including TLS using the NULL algorithm, except for within test and debug environments.
+           </t>
+         </section>
          <section title="TLS 0-RTT">
            <t>
 	     TLS 1.3 resumption and PSK techniques make it possible to send Early Data, aka. 0-RTT data, data that is sent before the TLS handshake completes.
 	     Replay of this data is possible.
-	     Given the sensitivity of TACACS+ data, a Client MUST NOT send data until the full TLS handshake completes; that is, Clients MUST NOT send 0-RTT data.
+	     Given the sensitivity of TACACS+ data, a Client MUST NOT send data until the full TLS handshake completes; that is, Clients MUST NOT send 0-RTT data and Servers MAY abruptly disconnect Clients that do.
+           </t>
+         </section>
+         <section title="TLS PSK">
+           <t>
+	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs) that are not resumption keys.
+	     PSKs SHOULD NOT be shared among Clients or Servers to limit exposure of a compromised key and to ease key rotation.
            </t>
          </section>
          <section title="TLS Options">
            <t>
              It is not and never will be reasonable to expect RFCs be updated in perpetuity as each new TLS version and/or algorithm emerges nor at a rate to keep pace.
-             It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which RFCs using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
-             As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this RFC.
-           </t>
-         </section>
-         <section title="TLS Use">
-           <t>
-             TLS encryption SHOULD be used in deployments when both the clients and servers support it.
-             Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
-             Unsecure Connections would be better served by separate Servers from the TLS Servers.
+             It would be highly desirable for the TLS working group to publish a single document, that evolves with TLS and its algorithms, which documents using TLS, such as this one, could reference without the need to update those RFCs, thus allowing them to evolve by inheritance.
            </t>
            <t>
-             It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, including TLS using the NULL algorithm, except for within test and debug environments.
+             As no such document exists, implementers and operators SHOULD make informed use of RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this document.
+	     Useful examples are the TLS specifications themselves (<xref target="RFC8446">TLS 1.3</xref>) and TLS Recommendations <xref target="RFC7525"/>.
            </t>
          </section>
        </section>
@@ -670,9 +679,9 @@ s.
        </section>
        <section title="SSH Public Key Caching" anchor="pubkeycache">
          <t>
-	   A Client implementation MUST NOT cache SSH public keys received from a TACACS+ server for future SSH client authentication.
-	   Doing so would deny the TACACS+ server the opportunity to deny authentication for other reasons than key validity or to revoke a key.
-	   The TACACS+ server has no method to revoke a key, except by not offering the key in future authentication sessions.
+	   A Client MUST NOT cache SSH public keys received from a Server for future SSH client authentication.
+	   Doing so would deny the Server the opportunity to deny authentication for other reasons than key validity or to revoke a key.
+	   The Server has no method to revoke a key, except by not offering the key in future authentication sessions.
          </t>
        </section>
      </section>
@@ -707,6 +716,7 @@ s.
        <?rfc include="reference.RFC.4250.xml"?>
        <?rfc include="reference.RFC.4716.xml"?>
        <?rfc include="reference.RFC.5246.xml"?>
+       <?rfc include="reference.RFC.7525.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
        <reference anchor="SSHALGS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-19">
