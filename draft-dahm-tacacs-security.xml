@@ -140,7 +140,7 @@
        <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of Peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
        and specifies that the authentication capabilities of TLS are used to allow the Peers to authenticate each other.</li>
        </ol>
-       <section title="Well-Known TCP/IP Port">
+       <section title="Well-Known TCP/IP Port" anchor="TLSPport">
          <t>
            All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
@@ -148,9 +148,14 @@
            Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
          </t>
        </section>
-       <section title="TLS Protocol Version" anchor="TLSProtoVers">
+       <section title="TLS Connection" anchor="TLSConn">
          <t>
-            <xref target="RFC8446">TLS 1.3</xref> support is required, which is the current IETF-endorsed TLS version.
+            A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
+            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
+         </t>
+         <t>
+	    Implementations MUST support <xref target="RFC8446">TLS 1.3</xref> and MUST support the TLS 1.3 mandatory cipher suite
+
 XXX rfc8773 is required to have server/client certificates with PSK
                 TACACS+ implementations supporting TLS MUST implement at least <xref target="RFC8446">TLS version 1.3</xref> until it is deprecated.
                 However, implementations SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.3 and prior versions.
@@ -164,7 +169,7 @@ XXX rfc8773 is required to have server/client certificates with PSK
        <section title="Cipher Requirements">
          <t>
 XXX The IANA registry now has "Recommended" algorithms.  reference this for ciphers that should be supported.
-                As with <xref target="TLSProtoVers">TLS Protocol Versions</xref>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.
+                As with <xref target="TLSConn">TLS Protocol Versions</xref>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.
                 However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.
          </t>
          <t>
@@ -653,6 +658,13 @@ s.
 	     Unfortunately, no single and timely TLS recommendations document exists.
 	     Therefore, implementers and operators SHOULD make use of the various RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this document.
 	     Useful examples are the TLS specifications themselves (<xref target="RFC8446">TLS 1.3</xref>) and TLS Recommendations <xref target="RFC7525"/>.
+           </t>
+         </section>
+         <section title="Unreachable TLS CA">
+           <t>
+	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
+	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and authentication of the Peer to fail.
+	     Certificate caching is one method to 
            </t>
          </section>
        </section>
