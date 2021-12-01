@@ -453,7 +453,7 @@ s.
 
      <section anchor="SSH" title="SSH">
        <t>
-         Most network equipment now support <xref target="RFC4251">SSH</xref> for Command Line Interface (CLI) and <xref target="RFC6242">Netconf</xref>.
+         Most network equipment now support <xref target="RFC4251">SSH</xref> for Command Line Interface (CLI) and <xref target="RFC6242">NETCONF</xref>.
          Operators SHOULD use SSH public keys for authentication.
          Some devices support public keys in native configuration, but there is desire to centrally manage keys and SSH subsystem authorization.
        </t>
@@ -663,8 +663,8 @@ s.
          <section title="Unreachable TLS CA">
            <t>
 	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
-	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and authentication of the Peer to fail.
-	     Certificate caching is one method to 
+	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus authentication of the Peer to fail.
+	     Certificate caching is one method to address this, but is out of scope for this document.
            </t>
          </section>
        </section>

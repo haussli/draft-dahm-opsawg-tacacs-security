@@ -637,7 +637,7 @@ Internet-Draft              TACACS+ Security               December 2021
 5.  SSH
 
    Most network equipment now support SSH [RFC4251] for Command Line
-   Interface (CLI) and Netconf [RFC6242].  Operators SHOULD use SSH
+   Interface (CLI) and NETCONF [RFC6242].  Operators SHOULD use SSH
    public keys for authentication.  Some devices support public keys in
    native configuration, but there is desire to centrally manage keys
    and SSH subsystem authorization.
@@ -978,8 +978,9 @@ Internet-Draft              TACACS+ Security               December 2021
    Operators SHOULD be cognizant of the potential of Server and/or
    Client isolation from their Peer's Certificate Authority (CA) by
    network failures.  Isolation from a public key certificate's CA will
-   cause the verification of the certificate to fail and authentication
-   of the Peer to fail.  Certificate caching is one method to
+   cause the verification of the certificate to fail and thus
+   authentication of the Peer to fail.  Certificate caching is one
+   method to address this, but is out of scope for this document.
 
 8.2.  Well-Known TCP/IP Port
 
@@ -1001,7 +1002,6 @@ Internet-Draft              TACACS+ Security               December 2021
    However, co-existence of inferior authentication and encryption,
    whether an Unsecure Connection or deprecated parts that compose TLS,
    also presents opportunity for down-grade attacks.  Causing failure of
-   connections to the TLS-enabled service or the negotiation of shared
 
 
 
@@ -1010,6 +1010,7 @@ Dahm, et al.               Expires 4 June 2022                 [Page 18]
 Internet-Draft              TACACS+ Security               December 2021
 
 
+   connections to the TLS-enabled service or the negotiation of shared
    algorithm support are two such down-grade attacks.  The simplest way
    to address the exposure from Unsecure Connection methods is to refuse
    Unsecure Connections at the server entirely, perhaps using separate
@@ -1056,8 +1057,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 11.  Normative References
 
-   [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
 
 
 
@@ -1065,6 +1065,9 @@ Dahm, et al.               Expires 4 June 2022                 [Page 19]
 
 Internet-Draft              TACACS+ Security               December 2021
 
+
+   [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
               Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, May 2017.
@@ -1111,9 +1114,6 @@ Internet-Draft              TACACS+ Security               December 2021
               DOI 10.17487/RFC8907, September 2020,
               <https://www.rfc-editor.org/info/rfc8907>.
 
-   [SSHALGS]  IANA, "Public Key Algorithm Names",
-              <https://www.iana.org/assignments/ssh-parameters/ssh-
-              parameters.xhtml#ssh-parameters-19>.
 
 
 
@@ -1121,6 +1121,10 @@ Dahm, et al.               Expires 4 June 2022                 [Page 20]
 
 Internet-Draft              TACACS+ Security               December 2021
 
+
+   [SSHALGS]  IANA, "Public Key Algorithm Names",
+              <https://www.iana.org/assignments/ssh-parameters/ssh-
+              parameters.xhtml#ssh-parameters-19>.
 
    [SSHSUBSYS]
               IANA, "SSH Protocol Subsystem Names",
@@ -1165,10 +1169,6 @@ Authors' Addresses
    Email: thorsten.dahm@gmail.com
 
 
-   Douglas Gash
-   Cisco Systems, Inc.
-
-   Email: dcmgash@cisco.com
 
 
 
@@ -1178,15 +1178,15 @@ Dahm, et al.               Expires 4 June 2022                 [Page 21]
 Internet-Draft              TACACS+ Security               December 2021
 
 
+   Douglas Gash
+   Cisco Systems, Inc.
+
+   Email: dcmgash@cisco.com
+
+
    Andrej Ota
 
    Email: andrej@ota.si
-
-
-
-
-
-
 
 
 
