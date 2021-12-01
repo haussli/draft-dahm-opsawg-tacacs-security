@@ -150,66 +150,18 @@
        </section>
        <section title="TLS Connection" anchor="TLSConn">
          <t>
-            A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
-            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
+           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
+           Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
          </t>
          <t>
-	    Implementations MUST support <xref target="RFC8446">TLS 1.3</xref> and MUST support the TLS 1.3 mandatory cipher suite
-
-XXX rfc8773 is required to have server/client certificates with PSK
-                TACACS+ implementations supporting TLS MUST implement at least <xref target="RFC8446">TLS version 1.3</xref> until it is deprecated.
-                However, implementations SHOULD also implement newer TLS versions as they emerge and MUST abandon TLS versions as they are deprecated, including TLS 1.3 and prior versions.
-         </t>
-         <t>
-                Clearly deprecation is more difficult for Servers, because support for and deployment of new TLS versions to Clients will occur with great randomness or perhaps not at all due to End of Support (EoS).
-                Therefore, it is of great value to, and implementations MAY, support deprecated versions to allow for gradual adoption and software at its End of Life (EoL).
-                A Server that supports deprecated versions SHOULD NOT enable this support except by operator configuration.
+	   Implementations MUST support <xref target="RFC8446">TLS 1.3</xref>.
          </t>
        </section>
        <section title="Cipher Requirements">
          <t>
-XXX The IANA registry now has "Recommended" algorithms.  reference this for ciphers that should be supported.
-                As with <xref target="TLSConn">TLS Protocol Versions</xref>, TACACS+ implementations MUST adopt and deprecate new cipher suites as they emerge or fade and MAY support deprecated cipher suites.
-                However, cipher suites is a far more complex subject because those chosen directly affect the effectiveness of the confidentiality, integrity, and authentication of TLS, the processing required, and the types of authentication available.
+	   Implementations MUST support the TLS 1.3 mandatory cipher suites (See RFC8446 Section 9.1).
+	   This document makes no cipher suite recommendations, but recommendations can be found in the TLS Cipher Suites section of the <xref target="TLSCSREC"/>.
          </t>
-         <t>
-                TACACS+ Servers supporting TLS MUST utilize the TLS encryption options described in the following sections.
-
-XXX but should be allowed to evolve as TLS does.
-
-         </t>
-                <section title="Mandatory Cipher Suites">
-                <t>
-                <xref target="RFC5246">TLS 1.2</xref> allows specifying application profiles prescribing which cipher suites to implement for interoperability purposes.
-                To maintain simplicity of current TACACS+ configuration using pre-shared secrets, the server implementation MUST implement:
-                </t>
-                <ol>
-                <li>TLS-DHE-PSK-WITH-AES-128-GCM-SHA256</li>
-                <li>TLS_DHE_PSK_WITH_AES_128_CBC_SHA</li>
-                <li>TLS_DHE_PSK_WITH_AES_256_CBC_SHA</li>
-                </ol>
-                <t>
-                A Client MUST implement at least one of the cipher suites which are implemented on the Server, and MAY implement all of them.
-                </t>
-                <t>
-                Both Clients and Servers MAY implement other cipher suites, but their interoperability is not guaranteed and their implementation is outside of scope of this document.
-                XXX again; should allow a way to evolve.  how???
-XXX russ housley says:
-        Section 3.3.1: Do you want to provide any guidance for TLS 1.3?  I would say something like:
-
-        if TLS 1.2 is used, then one of the following ciphersuites MUST be used
-        ...
-
-        if TLS 1.3 is used, then one of the following ciphersuites MUST be used
-        ...
-
-        This is not ideal for the evolution part, but you might say:
-
-        if a version beyond TLS 1.3 is used, then one of the ciphersuites that i
-s marked as "Recommended" MUST be used ...
-XXX
-                </t>
-                </section>
        </section>
        <section title="Authentication">
             <t>
@@ -755,6 +707,12 @@ s.
        <?rfc include="reference.RFC.6242.xml"?>
        <?rfc include="reference.RFC.6335.xml"?>
        <?rfc include="reference.RFC.7605.xml"?>
+       <reference anchor="TLSCSREC" target="https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4">
+         <front>
+           <title>Transport Layer Security (TLS) Parameters</title>
+           <author fullname="IANA"></author>
+         </front>
+       </reference>
      </references>
 
    </back>
