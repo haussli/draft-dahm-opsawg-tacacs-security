@@ -154,12 +154,24 @@
            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
          </t>
          <t>
-	   Implementations MUST support <xref target="RFC8446">TLS 1.3</xref>.
+	   Implementations MUST support <xref target="RFC8446">TLS 1.3</xref> and MAY permit TLS 1.3 session resumption.
+	   If resumption is supported, the resumption ticket_lifetime SHOULD be configurable.
          </t>
-       </section>
+         <t>
+	   XXX once connected transmit tacacs data
+         </t>
+         <t>
+	   XXX once authenticated transmit tacacs data
+         </t>
+         <t>
+	   XXX terminate 
+         </t>
        <section title="Cipher Requirements">
          <t>
 	   Implementations MUST support the TLS 1.3 mandatory cipher suites (See RFC8446 Section 9.1).
+	   The cipher suites offered or accepted SHOULD be configurable.
+         </t>
+         <t>
 	   This document makes no cipher suite recommendations, but recommendations can be found in the TLS Cipher Suites section of the <xref target="TLSCSREC"/>.
          </t>
        </section>
@@ -173,36 +185,20 @@ we only consider out of band PSK.  KDF hash algorithm needs to be specified?  PS
 RPKs - https://tools.ietf.org/html/rfc7250
 
             </t>
-                <section title="PSK Identity Requirements">
-                <t>
-         
-See rfc 8446 s2.2 regarding PSK  secret choice
-
-Because determining a correct PSK value on the server side is a computationally intensive operation requiring multiple round trips, a mechanism for hitless key change must be defined.
-During TLS handshake, a client MUST use PSK identity as defined in <xref target="RFC4279"/> to signal to the server which PSK value to use.
-If server does not recognize PSK identity it MUST respond with decrypt_error alert and MUST NOT respond with unknown_psk_identity.
-</t>
-<t>
-Process to change pre-shared keys on server and client is then:
-</t>
-<ol>
-<li>Add new key with new PSK identity on the server.</li>
-<li>Add new key with new PSK identity on the client.</li>
-<li>Remove old key with old PSK identity from the client.</li>
-<li>Remove old key with old PSK identity from the server.</li>
-</ol>
-<t>
-XXX reference "key life" in rfc8645 ???
-</t>
-<t>
-Note: PSK identity is transmitted in clear text and must not contain information which could aid an attacker who can eavesdrop on the connection.
-                </t>
-                </section>
                 <section title="TLS Certificate Identity Requirements">
                 <t>
 XXX
                 </t>
                 </section>
+       </section>
+       </section>
+       <section title="TACACS+ Data">
+            <t>
+            </t>
+       </section>
+       <section title="TLS Close">
+            <t>
+            </t>
        </section>
      </section>
 
