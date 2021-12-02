@@ -85,9 +85,7 @@ Table of Contents
      3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   5
      3.2.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   5
        3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
-       3.2.2.  Authentication  . . . . . . . . . . . . . . . . . . .   5
-     3.3.  TACACS+ Data  . . . . . . . . . . . . . . . . . . . . . .   6
-     3.4.  TLS Close . . . . . . . . . . . . . . . . . . . . . . . .   6
+       3.2.2.  Authentication  . . . . . . . . . . . . . . . . . . .   6
    4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   6
      4.1.  The Extended Authentication START Packet Body . . . . . .   6
      4.2.  The Extension Authentication REPLY Packet Body  . . . . .   8
@@ -106,6 +104,8 @@ Table of Contents
        8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
        8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
        8.1.5.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  17
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
 
 
 
@@ -114,8 +114,6 @@ Dahm, et al.               Expires 5 June 2022                  [Page 2]
 Internet-Draft              TACACS+ Security               December 2021
 
 
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
-     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  18
@@ -161,6 +159,8 @@ Internet-Draft              TACACS+ Security               December 2021
 
    An Attribute-Value Pair or AVP is another name a TACACS+ argument as
    defined in [RFC8907] Sections 6.1 and 8.
+
+
 
 
 
@@ -231,12 +231,13 @@ Internet-Draft              TACACS+ Security               December 2021
    All data exchanged by TACACS+ Peers MUST be encrypted, including the
    authentication of the Peers.  Therefore, TLS Hello MUST be initiated
    by the client immediately upon the establishment of the TCP/IP
-   connection.  It is not desirable to use a negotiation process such as
-   a "STARTTLS" command, a feature that some protocols, which once
-   existed without TLS, use to maintain backward compatibility.
-   Instead, following [RFC7605], a different well-known system TCP/IP
-   port is assigned by IANA, port [TBD] (Section 9), for the TLS
    connection.
+
+   It is not desirable to use a negotiation process such as a "STARTTLS"
+   command, a feature that some protocols, which once existed without
+   TLS, use to maintain backward compatibility.  Instead, following
+   [RFC7605], a different well-known system TCP/IP port is assigned by
+   IANA, port [TBD] (Section 9), for the TLS connection.
 
 3.2.  TLS Connection
 
@@ -248,13 +249,18 @@ Internet-Draft              TACACS+ Security               December 2021
 
    Implementations MUST support TLS 1.3 [RFC8446] and MAY permit TLS 1.3
    session resumption.  If resumption is supported, the resumption
-   ticket_lifetime SHOULD be configurable.
+   ticket_lifetime SHOULD be configurable, including a zero seconds
+   lifetime.
 
-   XXX once connected transmit tacacs data
+   Once the TLS connection is established, the exchange of TACACS+ data
+   proceeds as normal, except that it is transmitted over TLS as TLS
+   application data and without TACACS+ obfuscation.
 
-   XXX once authenticated transmit tacacs data
-
-   XXX terminate
+   The connection persists until the Server or Client close it.  It
+   might be close due to an error or at the conclusion of the TACACS+
+   Session.  Or, if Single Connection Mode has been negotiated, it might
+   remain open after a successful Session, until an error or a timeout
+   occur.
 
 3.2.1.  Cipher Requirements
 
@@ -266,13 +272,7 @@ Internet-Draft              TACACS+ Security               December 2021
    recommendations can be found in the TLS Cipher Suites section of the
    [TLSCSREC].
 
-3.2.2.  Authentication
 
-   XXX TLS authentication can occur via asymmetric cryptography or
-   Edwards-Curve Digital Signature Algorithm, or various forms of
-   symmetric pre-shared-key (PSK). we only consider out of band PSK.
-   KDF hash algorithm needs to be specified?  PSK can only be assoc with
-   one HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
 
 
 
@@ -282,15 +282,17 @@ Dahm, et al.               Expires 5 June 2022                  [Page 5]
 Internet-Draft              TACACS+ Security               December 2021
 
 
+3.2.2.  Authentication
+
+   XXX TLS authentication can occur via asymmetric cryptography or
+   Edwards-Curve Digital Signature Algorithm, or various forms of
+   symmetric pre-shared-key (PSK). we only consider out of band PSK.
+   KDF hash algorithm needs to be specified?  PSK can only be assoc with
+   one HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
+
 3.2.2.1.  TLS Certificate Identity Requirements
 
    XXX
-
-3.3.  TACACS+ Data
-
-
-3.4.  TLS Close
-
 
 4.  TACACS+ Extended Authentication Packet Types
 
@@ -321,8 +323,6 @@ Internet-Draft              TACACS+ Security               December 2021
    minor version in the Packet Header is: 0x2
 
 4.1.  The Extended Authentication START Packet Body
-
-
 
 
 
