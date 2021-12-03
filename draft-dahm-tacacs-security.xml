@@ -164,8 +164,9 @@
          </t>
          <t>
 	   The connection persists until the Server or Client close it.
-	   It might be close due to an error or at the conclusion of the TACACS+ Session.
+	   It might be closed due to an error or at the conclusion of the TACACS+ Session.
 	   Or, if Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occur.
+	   Why it closed has no bearing on TLS resumption, Unless closed by a TLS error, in which case the ticket may be invalidated.
          </t>
        <section title="Cipher Requirements">
          <t>
@@ -176,21 +177,23 @@
 	   This document makes no cipher suite recommendations, but recommendations can be found in the TLS Cipher Suites section of the <xref target="TLSCSREC"/>.
          </t>
        </section>
-       <section title="Authentication">
-            <t>
-XXX
-TLS authentication can occur via asymmetric cryptography or
- Edwards-Curve Digital Signature Algorithm,
-or various forms of symmetric pre-shared-key (PSK).
-we only consider out of band PSK.  KDF hash algorithm needs to be specified?  PSK can only be assoc with one HKDF in tls1.3
-RPKs - https://tools.ietf.org/html/rfc7250
-
-            </t>
-                <section title="TLS Certificate Identity Requirements">
-                <t>
-XXX
-                </t>
-                </section>
+       <section title="TLS Authentication">
+         <t>
+	  As part of the TLS handshake, implementations MUST support certificate-based bi-directional TLS authentication and <xref target="RFC5280">Certificate Path verification</xref>.
+	  Unless disabled by configuration, a Peer MUST disconnect a Peer that provides an empty (or no) TLS Certificate message.
+         </t>
+         <t>
+         </t>
+         <section title="TLS Certificate Identity Requirements">
+           <t>
+	     Peers MUST support checking the certificate identity of their Peer for policy purposes, either by matching the certificate fingerprint or by matching certificate attributes Subject Alternative Name or Subject Name.
+	     By configuration, allowing or denying the connection based on the result.
+           </t>
+           <t>
+	     To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those if its Peers.
+	     The fingerprint format MUST conform to the format adopted by syslog in <xref target="RFC5425" section="4.2.2." sectionFormat="comma"/>
+           </t>
+         </section>
        </section>
        </section>
      </section>
@@ -604,8 +607,8 @@ s.
          <section title="Unreachable TLS CA">
            <t>
 	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
-	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus authentication of the Peer to fail.
-	     Certificate caching is one method to address this, but is out of scope for this document.
+	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus TLS authentication of the Peer to fail.
+	     Certificate caching and <xref target="RFC7250">Raw Public Keys</xref> are methods to address this, but both are out of scope for this document.
            </t>
          </section>
        </section>
@@ -671,6 +674,8 @@ s.
        <?rfc include="reference.RFC.4250.xml"?>
        <?rfc include="reference.RFC.4716.xml"?>
        <?rfc include="reference.RFC.5246.xml"?>
+       <?rfc include="reference.RFC.5280.xml"?>
+       <?rfc include="reference.RFC.5425.xml"?>
        <?rfc include="reference.RFC.7525.xml"?>
        <?rfc include="reference.RFC.8446.xml"?>
        <?rfc include="reference.RFC.8773.xml"?>
@@ -689,11 +694,13 @@ s.
        </reference>
      </references>
      <references title="Informative References">
+       <xi:include href="http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-tls-external-psk-guidance.xml"/>
        <?rfc include="reference.RFC.3365.xml"?>
        <?rfc include="reference.RFC.4020.xml"?>
        <?rfc include="reference.RFC.4251.xml"?>
        <?rfc include="reference.RFC.6242.xml"?>
        <?rfc include="reference.RFC.6335.xml"?>
+       <?rfc include="reference.RFC.7250.xml"?>
        <?rfc include="reference.RFC.7605.xml"?>
        <reference anchor="TLSCSREC" target="https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4">
          <front>
@@ -701,7 +708,6 @@ s.
            <author fullname="IANA"></author>
          </front>
        </reference>
-       <xi:include href="http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-tls-external-psk-guidance.xml"/>
      </references>
 
    </back>

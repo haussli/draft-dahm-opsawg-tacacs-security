@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 5 June 2022                                              A. Ota
-                                                         2 December 2021
+Expires: 6 June 2022                                              A. Ota
+                                                         3 December 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 June 2022.
+   This Internet-Draft will expire on 6 June 2022.
 
 
 
 
 
-Dahm, et al.               Expires 5 June 2022                  [Page 1]
+Dahm, et al.               Expires 6 June 2022                  [Page 1]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -85,10 +85,10 @@ Table of Contents
      3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   5
      3.2.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   5
        3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
-       3.2.2.  Authentication  . . . . . . . . . . . . . . . . . . .   6
+       3.2.2.  TLS Authentication  . . . . . . . . . . . . . . . . .   6
    4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   6
-     4.1.  The Extended Authentication START Packet Body . . . . . .   6
-     4.2.  The Extension Authentication REPLY Packet Body  . . . . .   8
+     4.1.  The Extended Authentication START Packet Body . . . . . .   7
+     4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
      4.3.  The Extended Authentication CONTINUE Packet Body  . . . .   9
    5.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  New Enumerated TACACS+ Protocol Values and well-known
@@ -109,14 +109,14 @@ Table of Contents
 
 
 
-Dahm, et al.               Expires 5 June 2022                  [Page 2]
+Dahm, et al.               Expires 6 June 2022                  [Page 2]
 
 Internet-Draft              TACACS+ Security               December 2021
 
 
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
-   11. Normative References  . . . . . . . . . . . . . . . . . . . .  18
+   11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
    12. Informative References  . . . . . . . . . . . . . . . . . . .  20
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
@@ -165,7 +165,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                  [Page 3]
+Dahm, et al.               Expires 6 June 2022                  [Page 3]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -221,7 +221,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                  [Page 4]
+Dahm, et al.               Expires 6 June 2022                  [Page 4]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -257,10 +257,11 @@ Internet-Draft              TACACS+ Security               December 2021
    application data and without TACACS+ obfuscation.
 
    The connection persists until the Server or Client close it.  It
-   might be close due to an error or at the conclusion of the TACACS+
+   might be closed due to an error or at the conclusion of the TACACS+
    Session.  Or, if Single Connection Mode has been negotiated, it might
    remain open after a successful Session, until an error or a timeout
-   occur.
+   occur.  Why it closed has no bearing on TLS resumption, Unless closed
+   by a TLS error, in which case the ticket may be invalidated.
 
 3.2.1.  Cipher Requirements
 
@@ -276,23 +277,32 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-
-Dahm, et al.               Expires 5 June 2022                  [Page 5]
+Dahm, et al.               Expires 6 June 2022                  [Page 5]
 
 Internet-Draft              TACACS+ Security               December 2021
 
 
-3.2.2.  Authentication
+3.2.2.  TLS Authentication
 
-   XXX TLS authentication can occur via asymmetric cryptography or
-   Edwards-Curve Digital Signature Algorithm, or various forms of
-   symmetric pre-shared-key (PSK). we only consider out of band PSK.
-   KDF hash algorithm needs to be specified?  PSK can only be assoc with
-   one HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
+   As part of the TLS handshake, implementations MUST support
+   certificate-based bi-directional TLS authentication and Certificate
+   Path verification [RFC5280].  Unless disabled by configuration, a
+   Peer MUST disconnect a Peer that provides an empty (or no) TLS
+   Certificate message.
+
 
 3.2.2.1.  TLS Certificate Identity Requirements
 
-   XXX
+   Peers MUST support checking the certificate identity of their Peer
+   for policy purposes, either by matching the certificate fingerprint
+   or by matching certificate attributes Subject Alternative Name or
+   Subject Name.  By configuration, allowing or denying the connection
+   based on the result.
+
+   To facilitate this verification, implementations MUST provide means
+   to export a fingerprint of their key(s) and import those if its
+   Peers.  The fingerprint format MUST conform to the format adopted by
+   syslog in [RFC5425], Section 4.2.2.
 
 4.  TACACS+ Extended Authentication Packet Types
 
@@ -319,24 +329,19 @@ Internet-Draft              TACACS+ Security               December 2021
    Authorization and Accounting Phase by incorporating extensible
    argument s.
 
+
+
+
+
+Dahm, et al.               Expires 6 June 2022                  [Page 6]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    The server should expect Extended Authentication Packet Bodies if the
    minor version in the Packet Header is: 0x2
 
 4.1.  The Extended Authentication START Packet Body
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                  [Page 6]
-
-Internet-Draft              TACACS+ Security               December 2021
-
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -376,6 +381,19 @@ Internet-Draft              TACACS+ Security               December 2021
    fields are used exactly as defined in the Authentication START Packet
    Body in [RFC8907].
 
+
+
+
+
+
+
+
+
+Dahm, et al.               Expires 6 June 2022                  [Page 7]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    The following fields contain the arguments that may be used to extend
    the authentication process.  These are common to the Extended
    Authentication START, Extended Authentication REPLY, and Extended
@@ -386,13 +404,6 @@ Internet-Draft              TACACS+ Security               December 2021
    The new fields are as follows:
 
    arg_cnt
-
-
-
-Dahm, et al.               Expires 5 June 2022                  [Page 7]
-
-Internet-Draft              TACACS+ Security               December 2021
-
 
    This represents the number of arguments in the packet.
 
@@ -428,27 +439,21 @@ Internet-Draft              TACACS+ Security               December 2021
    specified as octet numeric values separated by dots ('.').  IPv6
    address text representation is defined in [RFC5952].
 
+
+
+
+
+
+
+Dahm, et al.               Expires 6 June 2022                  [Page 8]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
 4.2.  The Extension Authentication REPLY Packet Body
 
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                  [Page 8]
-
-Internet-Draft              TACACS+ Security               December 2021
-
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -496,12 +501,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                  [Page 9]
+Dahm, et al.               Expires 6 June 2022                  [Page 9]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -557,7 +557,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 10]
+Dahm, et al.               Expires 6 June 2022                 [Page 10]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -613,7 +613,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 11]
+Dahm, et al.               Expires 6 June 2022                 [Page 11]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -669,7 +669,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 12]
+Dahm, et al.               Expires 6 June 2022                 [Page 12]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -725,7 +725,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 13]
+Dahm, et al.               Expires 6 June 2022                 [Page 13]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -781,7 +781,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 14]
+Dahm, et al.               Expires 6 June 2022                 [Page 14]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -837,7 +837,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 15]
+Dahm, et al.               Expires 6 June 2022                 [Page 15]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -893,7 +893,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 16]
+Dahm, et al.               Expires 6 June 2022                 [Page 16]
 
 Internet-Draft              TACACS+ Security               December 2021
 
@@ -922,9 +922,10 @@ Internet-Draft              TACACS+ Security               December 2021
    Operators SHOULD be cognizant of the potential of Server and/or
    Client isolation from their Peer's Certificate Authority (CA) by
    network failures.  Isolation from a public key certificate's CA will
-   cause the verification of the certificate to fail and thus
-   authentication of the Peer to fail.  Certificate caching is one
-   method to address this, but is out of scope for this document.
+   cause the verification of the certificate to fail and thus TLS
+   authentication of the Peer to fail.  Certificate caching and Raw
+   Public Keys [RFC7250] are methods to address this, but both are out
+   of scope for this document.
 
 8.2.  Well-Known TCP/IP Port
 
@@ -943,17 +944,19 @@ Internet-Draft              TACACS+ Security               December 2021
    *  and helps prevent the accidental exposure of sensitive information
       due to misconfiguration.
 
-   However, co-existence of inferior authentication and encryption,
-   whether an Unsecure Connection or deprecated parts that compose TLS,
-   also presents opportunity for down-grade attacks.  Causing failure of
 
 
 
-Dahm, et al.               Expires 5 June 2022                 [Page 17]
+
+
+Dahm, et al.               Expires 6 June 2022                 [Page 17]
 
 Internet-Draft              TACACS+ Security               December 2021
 
 
+   However, co-existence of inferior authentication and encryption,
+   whether an Unsecure Connection or deprecated parts that compose TLS,
+   also presents opportunity for down-grade attacks.  Causing failure of
    connections to the TLS-enabled service or the negotiation of shared
    algorithm support are two such down-grade attacks.  The simplest way
    to address the exposure from Unsecure Connection methods is to refuse
@@ -999,16 +1002,15 @@ Internet-Draft              TACACS+ Security               December 2021
    Stephen Farrell, Alan DeKok, and Tom Petch for their support,
    insightful review, and/or comments.
 
-11.  Normative References
 
 
 
-
-
-Dahm, et al.               Expires 5 June 2022                 [Page 18]
+Dahm, et al.               Expires 6 June 2022                 [Page 18]
 
 Internet-Draft              TACACS+ Security               December 2021
 
+
+11.  Normative References
 
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -1032,6 +1034,17 @@ Internet-Draft              TACACS+ Security               December 2021
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
 
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/info/rfc5280>.
+
+   [RFC5425]  Miao, F., Ed., Ma, Y., Ed., and J. Salowey, Ed.,
+              "Transport Layer Security (TLS) Transport Mapping for
+              Syslog", RFC 5425, DOI 10.17487/RFC5425, March 2009,
+              <https://www.rfc-editor.org/info/rfc5425>.
+
    [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
@@ -1041,6 +1054,17 @@ Internet-Draft              TACACS+ Security               December 2021
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
+
+
+
+
+
+
+
+Dahm, et al.               Expires 6 June 2022                 [Page 19]
+
+Internet-Draft              TACACS+ Security               December 2021
+
 
    [RFC8773]  Housley, R., "TLS 1.3 Extension for Certificate-Based
               Authentication with an External Pre-Shared Key", RFC 8773,
@@ -1056,15 +1080,6 @@ Internet-Draft              TACACS+ Security               December 2021
    [SSHALGS]  IANA, "Public Key Algorithm Names",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
               parameters.xhtml#ssh-parameters-19>.
-
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                 [Page 19]
-
-Internet-Draft              TACACS+ Security               December 2021
-
 
    [SSHSUBSYS]
               IANA, "SSH Protocol Subsystem Names",
@@ -1099,12 +1114,26 @@ Internet-Draft              TACACS+ Security               December 2021
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
 
+
+
+
+Dahm, et al.               Expires 6 June 2022                 [Page 20]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
               Procedures for the Management of the Service Name and
               Transport Protocol Port Number Registry", BCP 165,
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
+
+   [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
+              Weiler, S., and T. Kivinen, "Using Raw Public Keys in
+              Transport Layer Security (TLS) and Datagram Transport
+              Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
+              June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
    [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
               Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
@@ -1113,14 +1142,6 @@ Internet-Draft              TACACS+ Security               December 2021
    [TLSCSREC] IANA, "Transport Layer Security (TLS) Parameters",
               <https://www.iana.org/assignments/tls-parameters/tls-
               parameters.xhtml#tls-parameters-4>.
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                 [Page 20]
-
-Internet-Draft              TACACS+ Security               December 2021
-
 
 Authors' Addresses
 
@@ -1152,25 +1173,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 5 June 2022                 [Page 21]
+Dahm, et al.               Expires 6 June 2022                 [Page 21]
