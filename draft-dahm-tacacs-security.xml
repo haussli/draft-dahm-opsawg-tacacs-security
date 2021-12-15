@@ -190,7 +190,7 @@
 	     By configuration, allowing or denying the connection based on the result.
            </t>
            <t>
-	     To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those if its Peers.
+	     To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those of its Peers.
 	     The fingerprint format MUST conform to the format adopted by syslog in <xref target="RFC5425" section="4.2.2." sectionFormat="comma"/>
            </t>
          </section>
