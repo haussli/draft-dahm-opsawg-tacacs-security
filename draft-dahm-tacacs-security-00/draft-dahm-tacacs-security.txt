@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 28 May 2022                                              A. Ota
-                                                        24 November 2021
+Expires: 18 June 2022                                             A. Ota
+                                                        15 December 2021
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 May 2022.
+   This Internet-Draft will expire on 18 June 2022.
 
 
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 1]
+Dahm, et al.              Expires 18 June 2022                  [Page 1]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
 Copyright Notice
@@ -83,39 +83,39 @@ Table of Contents
      2.5.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   4
    3.  TLS for TACACS+ . . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .   5
-     3.2.  TLS Protocol Version  . . . . . . . . . . . . . . . . . .   5
-     3.3.  Cipher Requirements . . . . . . . . . . . . . . . . . . .   5
-       3.3.1.  Mandatory Cipher Suites . . . . . . . . . . . . . . .   6
-     3.4.  Authentication  . . . . . . . . . . . . . . . . . . . . .   6
-       3.4.1.  PSK Identity Requirements . . . . . . . . . . . . . .   6
-       3.4.2.  TLS Certificate Identity Requirements . . . . . . . .   7
-   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
+     3.2.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   5
+       3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
+       3.2.2.  TLS Authentication  . . . . . . . . . . . . . . . . .   6
+   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   6
      4.1.  The Extended Authentication START Packet Body . . . . . .   7
      4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
-     4.3.  The Extended Authentication CONTINUE Packet Body  . . . .  10
-   5.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     4.3.  The Extended Authentication CONTINUE Packet Body  . . . .   9
+   5.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  New Enumerated TACACS+ Protocol Values and well-known
-           AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  13
-     5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  15
-   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  16
-   7.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  16
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-     8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.1.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.2.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  17
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
+           AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  12
+     5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  14
+   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  15
+   7.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  15
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
+     8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
+       8.1.1.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  16
+       8.1.2.  TLS 0-RTT . . . . . . . . . . . . . . . . . . . . . .  16
+       8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.5.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  17
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
      8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 2]
+Dahm, et al.              Expires 18 June 2022                  [Page 2]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
    12. Informative References  . . . . . . . . . . . . . . . . . . .  20
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
@@ -165,9 +165,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 3]
+Dahm, et al.              Expires 18 June 2022                  [Page 3]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
 2.2.  Empty Value
@@ -198,7 +198,8 @@ Internet-Draft              TACACS+ Security               November 2021
    the Server.  The well-known TCP/IP port 49 on the Server is used for
    unencrypted and encrypted connections as defined in the TACACS+
    Protocol [RFC8907].  A connection may be used for only a single
-   Session or the multiplexing of multiple Sessions.
+   Session or the multiplexing of multiple Sessions in TACACS+ Single
+   Connection Mode..
 
    TLS is introduced into TACACS+ to fulfill the following requirements:
 
@@ -210,20 +211,19 @@ Internet-Draft              TACACS+ Security               November 2021
        a secured network.
 
    2.  Peer authentication: The use of shared keys to add and remove the
-       MD5 obfuscation was intended to provide a form of peer
+       MD5 obfuscation was intended to provide a form of Peer
        authentication for the TACACS+ protocol.  This document
        deprecates the MD5 obfuscation, and specifies that the
-       authentication capabilities of TLS are used to allow the peers to
+       authentication capabilities of TLS are used to allow the Peers to
        authenticate each other.
 
 
 
 
 
-
-Dahm, et al.               Expires 28 May 2022                  [Page 4]
+Dahm, et al.              Expires 18 June 2022                  [Page 4]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
 3.1.  Well-Known TCP/IP Port
@@ -231,130 +231,78 @@ Internet-Draft              TACACS+ Security               November 2021
    All data exchanged by TACACS+ Peers MUST be encrypted, including the
    authentication of the Peers.  Therefore, TLS Hello MUST be initiated
    by the client immediately upon the establishment of the TCP/IP
-   connection.  It is not desirable to use a negotiation process such as
-   a "STARTTLS" command, a feature that some protocols, which once
-   existed without TLS, use to maintain backward compatibility.
-   Instead, following [RFC7605], a different well-known system TCP/IP
-   port is assigned by IANA, port [TBD] (Section 9), for the TLS
    connection.
 
-3.2.  TLS Protocol Version
+   It is not desirable to use a negotiation process such as a "STARTTLS"
+   command, a feature that some protocols, which once existed without
+   TLS, use to maintain backward compatibility.  Instead, following
+   [RFC7605], a different well-known system TCP/IP port is assigned by
+   IANA, port [TBD] (Section 9), for the TLS connection.
 
-   XXX rfc8773 is required to have server/client certificates with PSK
-   TACACS+ implementations supporting TLS MUST implement at least TLS
-   version 1.3 [RFC8446] until it is deprecated.  However,
-   implementations SHOULD also implement newer TLS versions as they
-   emerge and MUST abandon TLS versions as they are deprecated,
-   including TLS 1.3 and prior versions.
+3.2.  TLS Connection
 
-   Clearly deprecation is more difficult for Servers, because support
-   for and deployment of new TLS versions to Clients will occur with
-   great randomness or perhaps not at all due to End of Support (EoS).
-   Therefore, it is of great value to, and implementations MAY, support
-   deprecated versions to allow for gradual adoption and software at its
-   End of Life (EoL).  A Server that supports deprecated versions SHOULD
-   NOT enable this support except by operator configuration.
+   A TACACS+ Client initiates a TLS connection by making a TCP
+   connection to a configured Server on the tacacss well-known port
+   (Section 3.1).  Once the TCP connection is established, the Client
+   MUST immediately begin the TLS negotiation before sending any TACACS+
+   protocol data.
 
-3.3.  Cipher Requirements
+   Implementations MUST support TLS 1.3 [RFC8446] and MAY permit TLS 1.3
+   session resumption.  If resumption is supported, the resumption
+   ticket_lifetime SHOULD be configurable, including a zero seconds
+   lifetime.
 
-   XXX The IANA registry now has "Recommended" algorithms.  reference
-   this for ciphers that should be supported.  As with TLS Protocol
-   Versions (Section 3.2), TACACS+ implementations MUST adopt and
-   deprecate new cipher suites as they emerge or fade and MAY support
-   deprecated cipher suites.  However, cipher suites is a far more
-   complex subject because those chosen directly affect the
-   effectiveness of the confidentiality, integrity, and authentication
-   of TLS, the processing required, and the types of authentication
-   available.
+   Once the TLS connection is established, the exchange of TACACS+ data
+   proceeds as normal, except that it is transmitted over TLS as TLS
+   application data and without TACACS+ obfuscation.
 
-   TACACS+ Servers supporting TLS MUST utilize the TLS encryption
-   options described in the following sections.  XXX but should be
-   allowed to evolve as TLS does.
+   The connection persists until the Server or Client close it.  It
+   might be closed due to an error or at the conclusion of the TACACS+
+   Session.  Or, if Single Connection Mode has been negotiated, it might
+   remain open after a successful Session, until an error or a timeout
+   occur.  Why it closed has no bearing on TLS resumption, Unless closed
+   by a TLS error, in which case the ticket may be invalidated.
 
+3.2.1.  Cipher Requirements
 
+   Implementations MUST support the TLS 1.3 mandatory cipher suites (See
+   RFC8446 Section 9.1).  The cipher suites offered or accepted SHOULD
+   be configurable.
 
-
-
+   This document makes no cipher suite recommendations, but
+   recommendations can be found in the TLS Cipher Suites section of the
+   [TLSCSREC].
 
 
-Dahm, et al.               Expires 28 May 2022                  [Page 5]
+
+
+
+Dahm, et al.              Expires 18 June 2022                  [Page 5]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
-3.3.1.  Mandatory Cipher Suites
+3.2.2.  TLS Authentication
 
-   TLS 1.2 [RFC5246] allows specifying application profiles prescribing
-   which cipher suites to implement for interoperability purposes.  To
-   maintain simplicity of current TACACS+ configuration using pre-shared
-   secrets, the server implementation MUST implement:
-
-   1.  TLS-DHE-PSK-WITH-AES-128-GCM-SHA256
-
-   2.  TLS_DHE_PSK_WITH_AES_128_CBC_SHA
-
-   3.  TLS_DHE_PSK_WITH_AES_256_CBC_SHA
-
-   A Client MUST implement at least one of the cipher suites which are
-   implemented on the Server, and MAY implement all of them.
-
-   Both Clients and Servers MAY implement other cipher suites, but their
-   interoperability is not guaranteed and their implementation is
-   outside of scope of this document.  XXX again; should allow a way to
-   evolve.  how??? XXX russ housley says: Section 3.3.1: Do you want to
-   provide any guidance for TLS 1.3?  I would say something like: if TLS
-   1.2 is used, then one of the following ciphersuites MUST be used ...
-   if TLS 1.3 is used, then one of the following ciphersuites MUST be
-   used ...  This is not ideal for the evolution part, but you might
-   say: if a version beyond TLS 1.3 is used, then one of the
-   ciphersuites that i s marked as "Recommended" MUST be used ... XXX
-
-3.4.  Authentication
-
-   XXX TLS authentication can occur via asymmetric cryptography or
-   Edwards-Curve Digital Signature Algorithm, or various forms of
-   symmetric pre-shared-key (PSK). we only consider out of band PSK.
-   KDF hash algorithm needs to be specified?  PSK can only be assoc with
-   one HKDF in tls1.3 RPKs - https://tools.ietf.org/html/rfc7250
-
-3.4.1.  PSK Identity Requirements
-
-   See rfc 8446 s2.2 regarding PSK secret choice Because determining a
-   correct PSK value on the server side is a computationally intensive
-   operation requiring multiple round trips, a mechanism for hitless key
-   change must be defined.  During TLS handshake, a client MUST use PSK
-   identity as defined in [RFC4279] to signal to the server which PSK
-   value to use.  If server does not recognize PSK identity it MUST
-   respond with decrypt_error alert and MUST NOT respond with
-   unknown_psk_identity.
-
-   Process to change pre-shared keys on server and client is then:
+   As part of the TLS handshake, implementations MUST support
+   certificate-based bi-directional TLS authentication and Certificate
+   Path verification [RFC5280].  Unless disabled by configuration, a
+   Peer MUST disconnect a Peer that provides an empty (or no) TLS
+   Certificate message.
 
 
+3.2.2.1.  TLS Certificate Identity Requirements
 
+   Peers MUST support checking the certificate identity of their Peer
+   for policy purposes, either by matching the certificate fingerprint
+   or by matching certificate attributes Subject Alternative Name or
+   Subject Name.  By configuration, allowing or denying the connection
+   based on the result.
 
-Dahm, et al.               Expires 28 May 2022                  [Page 6]
-
-Internet-Draft              TACACS+ Security               November 2021
-
-
-   1.  Add new key with new PSK identity on the server.
-
-   2.  Add new key with new PSK identity on the client.
-
-   3.  Remove old key with old PSK identity from the client.
-
-   4.  Remove old key with old PSK identity from the server.
-
-   XXX reference "key life" in rfc8645 ???
-
-   Note: PSK identity is transmitted in clear text and must not contain
-   information which could aid an attacker who can eavesdrop on the
-   connection.
-
-3.4.2.  TLS Certificate Identity Requirements
-
-   XXX
+   To facilitate this verification, implementations MUST provide means
+   to export a fingerprint of their key(s) and import those of its
+   Peers.  The fingerprint format MUST conform to the format adopted by
+   syslog in [RFC5425], Section 4.2.2.
 
 4.  TACACS+ Extended Authentication Packet Types
 
@@ -381,18 +329,19 @@ Internet-Draft              TACACS+ Security               November 2021
    Authorization and Accounting Phase by incorporating extensible
    argument s.
 
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                  [Page 6]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    The server should expect Extended Authentication Packet Bodies if the
    minor version in the Packet Header is: 0x2
 
 4.1.  The Extended Authentication START Packet Body
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                  [Page 7]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -432,6 +381,19 @@ Internet-Draft              TACACS+ Security               November 2021
    fields are used exactly as defined in the Authentication START Packet
    Body in [RFC8907].
 
+
+
+
+
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                  [Page 7]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    The following fields contain the arguments that may be used to extend
    the authentication process.  These are common to the Extended
    Authentication START, Extended Authentication REPLY, and Extended
@@ -442,13 +404,6 @@ Internet-Draft              TACACS+ Security               November 2021
    The new fields are as follows:
 
    arg_cnt
-
-
-
-Dahm, et al.               Expires 28 May 2022                  [Page 8]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
    This represents the number of arguments in the packet.
 
@@ -484,27 +439,21 @@ Internet-Draft              TACACS+ Security               November 2021
    specified as octet numeric values separated by dots ('.').  IPv6
    address text representation is defined in [RFC5952].
 
+
+
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                  [Page 8]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
 4.2.  The Extension Authentication REPLY Packet Body
 
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                  [Page 9]
-
-Internet-Draft              TACACS+ Security               November 2021
-
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -552,14 +501,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                 [Page 10]
+Dahm, et al.              Expires 18 June 2022                  [Page 9]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -613,9 +557,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 11]
+Dahm, et al.              Expires 18 June 2022                 [Page 10]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
@@ -635,7 +579,7 @@ Internet-Draft              TACACS+ Security               November 2021
 5.  SSH
 
    Most network equipment now support SSH [RFC4251] for Command Line
-   Interface (CLI) and Netconf [RFC6242].  Operators SHOULD use SSH
+   Interface (CLI) and NETCONF [RFC6242].  Operators SHOULD use SSH
    public keys for authentication.  Some devices support public keys in
    native configuration, but there is desire to centrally manage keys
    and SSH subsystem authorization.
@@ -669,9 +613,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 12]
+Dahm, et al.              Expires 18 June 2022                 [Page 11]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
@@ -725,9 +669,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 13]
+Dahm, et al.              Expires 18 June 2022                 [Page 12]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
        wants.  The set of permissible values for this AVP are the SSH
@@ -781,9 +725,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 14]
+Dahm, et al.              Expires 18 June 2022                 [Page 13]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
        REPLY packet, the server SHOULD set the REPLY packet flag
@@ -837,9 +781,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 15]
+Dahm, et al.              Expires 18 June 2022                 [Page 14]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
    The set of permissible values for this AVP are the SSH Subsystem
@@ -893,9 +837,9 @@ Internet-Draft              TACACS+ Security               November 2021
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 16]
+Dahm, et al.              Expires 18 June 2022                 [Page 15]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
 
    point It should be noted that the use of MD4 is purely to allow
@@ -910,49 +854,78 @@ Internet-Draft              TACACS+ Security               November 2021
 8.1.  TLS
 
    This document improves the confidentiality, integrity, and
-   authentication of the connection and network traffic between the
-   TACACS+ Peers by adding TLS support.  This does not in itself protect
-   the server nor clients; the operator and equipment vendors have a
-   role.  That role is to diligently follow current best practices for
+   authentication of the connection and network traffic between TACACS+
+   Peers by adding TLS support.  This does not in itself protect the
+   server nor clients; the operator and equipment vendors have a role.
+   That role is to diligently follow current best practices for
    maintaining the integrity of network devices and selection of TLS key
    and encryption algorithms.
 
-8.1.1.  TLS Options
+8.1.1.  TLS Use
 
-   It is not and never will be reasonable to expect RFCs be updated in
-   perpetuity as each new TLS version and/or algorithm emerges nor at a
-   rate to keep pace.  It would be highly desirable for the TLS working
-   group to publish a single document, that evolves with TLS and its
-   algorithms, which RFCs using TLS, such as this one, could reference
-   without the need to update those RFCs, thus allowing them to evolve
-   by inheritance.  As no such document exists, implementers and
-   operators SHOULD make informed use of RFCs to determine which TLS
-   versions and algorithms should be supported, deprecated, or
-   abandoned, in the absence of updates to this RFC.
-
-8.1.2.  TLS Use
-
-   TLS encryption SHOULD be used in deployments when both the clients
-   and servers support it.  Servers that support TLS encryption MAY be
+   TLS encryption SHOULD be used in deployments when both the Clients
+   and Servers support it.  Servers that support TLS encryption MAY be
    configured to allow Unsecure Connections when TLS encryption is not
-   supported by the client, but this is NOT RECOMMENDED because of the
+   supported by the Client, but this is NOT RECOMMENDED because of the
    threat of downgrade attacks, as described in Section 8.2.  Unsecure
    Connections would be better served by separate Servers from the TLS
    Servers.
 
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
    and encryption, including TLS using the NULL algorithm, except for
-   within test and debug environments.
+   within test and debug environments.  Also see [RFC3365]
+
+8.1.2.  TLS 0-RTT
+
+   TLS 1.3 resumption and PSK techniques make it possible to send Early
+   Data, aka. 0-RTT data, data that is sent before the TLS handshake
+   completes.  Replay of this data is possible.  Given the sensitivity
+   of TACACS+ data, a Client MUST NOT send data until the full TLS
+   handshake completes; that is, Clients MUST NOT send 0-RTT data and
+   Servers MAY abruptly disconnect Clients that do.
 
 
 
 
 
 
-Dahm, et al.               Expires 28 May 2022                 [Page 17]
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                 [Page 16]
 
-Internet-Draft              TACACS+ Security               November 2021
+Internet-Draft              TACACS+ Security               December 2021
 
+
+8.1.3.  TLS PSK
+
+   Implementations MAY support TLS authentication with Pre-Shared Keys
+   (PSKs), also known as external PSKs in TLS 1.3, which are not
+   resumption PSKs.  PSKs SHOULD NOT be shared among Clients or Servers
+   to limit exposure of a compromised key and to ease key rotation.
+   Also see [RFC8773] and [I-D.ietf-tls-external-psk-guidance].
+
+   PSKs are otherwise considered out-of-scope for this document.
+
+8.1.4.  TLS Options
+
+   Unfortunately, no single and timely TLS recommendations document
+   exists.  Therefore, implementers and operators SHOULD make use of the
+   various RFCs to determine which TLS versions and algorithms should be
+   supported, deprecated, or abandoned, in the absence of updates to
+   this document.  Useful examples are the TLS specifications themselves
+   (TLS 1.3 [RFC8446]) and TLS Recommendations [RFC7525].
+
+8.1.5.  Unreachable TLS CA
+
+   Operators SHOULD be cognizant of the potential of Server and/or
+   Client isolation from their Peer's Certificate Authority (CA) by
+   network failures.  Isolation from a public key certificate's CA will
+   cause the verification of the certificate to fail and thus TLS
+   authentication of the Peer to fail.  Certificate caching and Raw
+   Public Keys [RFC7250] are methods to address this, but both are out
+   of scope for this document.
 
 8.2.  Well-Known TCP/IP Port
 
@@ -971,6 +944,16 @@ Internet-Draft              TACACS+ Security               November 2021
    *  and helps prevent the accidental exposure of sensitive information
       due to misconfiguration.
 
+
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                 [Page 17]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    However, co-existence of inferior authentication and encryption,
    whether an Unsecure Connection or deprecated parts that compose TLS,
    also presents opportunity for down-grade attacks.  Causing failure of
@@ -979,36 +962,26 @@ Internet-Draft              TACACS+ Security               November 2021
    to address the exposure from Unsecure Connection methods is to refuse
    Unsecure Connections at the server entirely, perhaps using separate
    servers for Unsecure Connections and TLS.  Another approach is mutual
-   configuration that requires TLS.  Clients and servers SHOULD support
+   configuration that requires TLS.  Clients and Servers SHOULD support
    configuration that requires Peers, globally and individually, use
    TLS.  Furthermore, Peers SHOULD be configurable to limit offered or
    recognized TLS versions and algorithms to those recommended by
    standards bodies and implementers.
 
-   Servers and clients could also maintain a cache of Peers that have
+   Servers and Clients could also maintain a cache of Peers that have
    engaged in TACACS+ TLS connections and demand TLS from that point
    forward.  However, this has potential to be a Denial of Service (DoS)
-   vector, whereby an attacker causes a sever to believe that a client
+   vector, whereby an attacker causes a server to believe that a client
    that does not support TLS has successfully connected with TLS.
 
 8.3.  SSH Public Key Caching
 
-   A client implementation MUST NOT cache SSH public keys received from
-   a TACACS+ server for future SSH client authentication.  Doing so
-   would deny the TACACS+ server the opportunity to deny authentication
-   for other reasons than key validity or to revoke a key.  The TACACS+
-   server has no method to revoke a key, except by not offering the key
-   in future authentication sessions.
-
-
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                 [Page 18]
-
-Internet-Draft              TACACS+ Security               November 2021
-
+   A Client MUST NOT cache SSH public keys received from a Server for
+   future SSH client authentication.  Doing so would deny the Server the
+   opportunity to deny authentication for other reasons than key
+   validity or to revoke a key.  The Server has no method to revoke a
+   key, except by not offering the key in future authentication
+   sessions.
 
 9.  IANA Considerations
 
@@ -1029,6 +1002,14 @@ Internet-Draft              TACACS+ Security               November 2021
    Stephen Farrell, Alan DeKok, and Tom Petch for their support,
    insightful review, and/or comments.
 
+
+
+
+Dahm, et al.              Expires 18 June 2022                 [Page 18]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
 11.  Normative References
 
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
@@ -1044,11 +1025,6 @@ Internet-Draft              TACACS+ Security               November 2021
               DOI 10.17487/RFC4250, January 2006,
               <https://www.rfc-editor.org/info/rfc4250>.
 
-   [RFC4279]  Eronen, P., Ed. and H. Tschofenig, Ed., "Pre-Shared Key
-              Ciphersuites for Transport Layer Security (TLS)",
-              RFC 4279, DOI 10.17487/RFC4279, December 2005,
-              <https://www.rfc-editor.org/info/rfc4279>.
-
    [RFC4716]  Galbraith, J. and R. Thayer, "The Secure Shell (SSH)
               Public Key File Format", RFC 4716, DOI 10.17487/RFC4716,
               November 2006, <https://www.rfc-editor.org/info/rfc4716>.
@@ -1058,17 +1034,42 @@ Internet-Draft              TACACS+ Security               November 2021
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
 
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/info/rfc5280>.
 
+   [RFC5425]  Miao, F., Ed., Ma, Y., Ed., and J. Salowey, Ed.,
+              "Transport Layer Security (TLS) Transport Mapping for
+              Syslog", RFC 5425, DOI 10.17487/RFC5425, March 2009,
+              <https://www.rfc-editor.org/info/rfc5425>.
 
-
-Dahm, et al.               Expires 28 May 2022                 [Page 19]
-
-Internet-Draft              TACACS+ Security               November 2021
-
+   [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
+              "Recommendations for Secure Use of Transport Layer
+              Security (TLS) and Datagram Transport Layer Security
+              (DTLS)", BCP 195, RFC 7525, DOI 10.17487/RFC7525, May
+              2015, <https://www.rfc-editor.org/info/rfc7525>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
+
+
+
+
+
+
+
+Dahm, et al.              Expires 18 June 2022                 [Page 19]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
+   [RFC8773]  Housley, R., "TLS 1.3 Extension for Certificate-Based
+              Authentication with an External Pre-Shared Key", RFC 8773,
+              DOI 10.17487/RFC8773, March 2020,
+              <https://www.rfc-editor.org/info/rfc8773>.
 
    [RFC8907]  Dahm, T., Ota, A., Medway Gash, D.C., Carrel, D., and L.
               Grant, "The Terminal Access Controller Access-Control
@@ -1086,6 +1087,14 @@ Internet-Draft              TACACS+ Security               November 2021
               parameters.xhtml#ssh-parameters-15>.
 
 12.  Informative References
+
+   [I-D.ietf-tls-external-psk-guidance]
+              Housley, R., Hoyland, J., Sethi, M., and C. A. Wood,
+              "Guidance for External PSK Usage in TLS", Work in
+              Progress, Internet-Draft, draft-ietf-tls-external-psk-
+              guidance-03, 13 October 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
+              external-psk-guidance-03>.
 
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
@@ -1105,6 +1114,14 @@ Internet-Draft              TACACS+ Security               November 2021
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
 
+
+
+
+Dahm, et al.              Expires 18 June 2022                 [Page 20]
+
+Internet-Draft              TACACS+ Security               December 2021
+
+
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
               Procedures for the Management of the Service Name and
@@ -1112,19 +1129,19 @@ Internet-Draft              TACACS+ Security               November 2021
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
 
-
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                 [Page 20]
-
-Internet-Draft              TACACS+ Security               November 2021
-
+   [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
+              Weiler, S., and T. Kivinen, "Using Raw Public Keys in
+              Transport Layer Security (TLS) and Datagram Transport
+              Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
+              June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
    [RFC7605]  Touch, J., "Recommendations on Using Assigned Transport
               Port Numbers", BCP 165, RFC 7605, DOI 10.17487/RFC7605,
               August 2015, <https://www.rfc-editor.org/info/rfc7605>.
+
+   [TLSCSREC] IANA, "Transport Layer Security (TLS) Parameters",
+              <https://www.iana.org/assignments/tls-parameters/tls-
+              parameters.xhtml#tls-parameters-4>.
 
 Authors' Addresses
 
@@ -1156,21 +1173,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.               Expires 28 May 2022                 [Page 21]
+Dahm, et al.              Expires 18 June 2022                 [Page 21]
