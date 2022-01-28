@@ -157,7 +157,7 @@ Internet-Draft              TACACS+ Security               December 2021
 
 2.1.  AVP
 
-   An Attribute-Value Pair or AVP is another name a TACACS+ argument as
+   An Attribute-Value Pair or AVP is another name for a TACACS+ argument as
    defined in [RFC8907] Sections 6.1 and 8.
 
 
