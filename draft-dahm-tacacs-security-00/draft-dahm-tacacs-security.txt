@@ -872,8 +872,8 @@ Internet-Draft              TACACS+ Security               December 2021
    Servers.
 
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
-   and encryption, including TLS using the NULL algorithm, except for
-   within test and debug environments.  Also see [RFC3365]
+   and encryption, including TLS using the NULL algorithm, except
+   within test and debug environments.  Also see [RFC3365].
 
 8.1.2.  TLS 0-RTT
 
