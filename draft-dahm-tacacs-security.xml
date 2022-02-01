@@ -152,7 +152,7 @@
        </section>
        <section title="TLS Connection" anchor="TLSConn">
          <t>
-           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the TACACS+ well-known port (<xref target="TLSPport"/>).
+           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
          </t>
          <t>
