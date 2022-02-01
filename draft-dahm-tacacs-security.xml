@@ -146,13 +146,13 @@
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
          </t>
          <t>
-           It is not desirable to use a negotiation process such as a "STARTTLS" command, a feature that some protocols, which once existed without TLS, use to maintain backward compatibility.
-           Instead, following <xref target="RFC7605"/>, a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
+           This document favors the predictable use of TLS security for a deployment. The option to provide backwards compatibility, with negotiation using STARTTLS command to secure an otherwise unsecured connection is not supported. 
+           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
          </t>
        </section>
        <section title="TLS Connection" anchor="TLSConn">
          <t>
-           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
+           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the TACACS+ well-known port (<xref target="TLSPport"/>).
            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
          </t>
          <t>
