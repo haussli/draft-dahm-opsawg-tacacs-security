@@ -163,9 +163,9 @@
 	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation.
          </t>
          <t>
-	   The connection persists until the Server or Client close it.
+	   The connection persists until the Server or Client closes it.
 	   It might be closed due to an error or at the conclusion of the TACACS+ Session.
-	   Or, if Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occur.
+	   Or, if Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occurs.
 	   Why it closed has no bearing on TLS resumption, Unless closed by a TLS error, in which case the ticket may be invalidated.
          </t>
        <section title="Cipher Requirements">
