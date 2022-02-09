@@ -199,7 +199,7 @@ Internet-Draft              TACACS+ Security               February 2022
    unencrypted and encrypted connections as defined in the TACACS+
    Protocol [RFC8907].  A connection may be used for only a single
    Session or the multiplexing of multiple Sessions in TACACS+ Single
-   Connection Mode..
+   Connection Mode.
 
    TLS is introduced into TACACS+ to fulfill the following requirements:
 
