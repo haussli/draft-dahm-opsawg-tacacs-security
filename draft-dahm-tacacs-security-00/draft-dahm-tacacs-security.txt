@@ -900,11 +900,11 @@ Internet-Draft              TACACS+ Security               February 2022
 
    1.  0-RTT concerns outlined in Section 8.1.2.
 
-   2.  Certificates revocations are not necessarily immediate and
+   2.  Certificate revocations are not necessarily immediate and
        resumption potentially worsens the delay up to the maximum
        resumption ticket lifetime unless ticket caches are flushed, so
-       operators SHOULD have the ability to disable resumption or limit
-       ticket lifetime.
+       operators SHOULD have the ability to limit ticket lifetime,
+       including disabling resumption (set lifetime to zero).
 
    3.  In the presence of any-cast or load-balanced TACACS+ servers, the
        tickets MUST be shared among all potential servers for resumption
