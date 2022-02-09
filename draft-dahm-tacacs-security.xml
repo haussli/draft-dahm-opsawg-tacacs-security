@@ -603,10 +603,10 @@ s.
            </t>
            <ol type="1">	 
              <li>	 
-	       0-RTT concerns outlined in <xref target="TLS0RTT"/>,
+	       0-RTT concerns outlined in <xref target="TLS0RTT"/>.
              </li> 
              <li>	 
-               Certificates revocations are not necessarily immediate and resumption potentially worsens the delay up to the maximum resumption ticket lifetime unless ticket caches are flushed, so operators might wish to and SHOULD have the ability to disable resumption, and
+               Certificates revocations are not necessarily immediate and resumption potentially worsens the delay up to the maximum resumption ticket lifetime unless ticket caches are flushed, so operators SHOULD have the ability to disable resumption or limit ticket lifetime.
              </li> 
              <li>	 
                In the presence of any-cast or load-balanced TACACS+ servers, the tickets MUST be shared among all potential servers for resumption to work, which is significantly complicated.
