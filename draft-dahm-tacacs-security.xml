@@ -157,7 +157,7 @@
          </t>
          <t>
            This document favors the predictable use of TLS security for a deployment, see (<xref target="wellknown"/>). 
-           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref> with the service name <xref target="ICTBD">[TBDN]</xref>, for TLS connections.
+           TACACS+ TLS will therefore follow <xref target="RFC7605"/>, where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref> with the service name <xref target="ICTBD">[TBDN]</xref>, for TLS connections.
          </t>
        </section>
        <section title="TLS Connection" anchor="TLSConn">
