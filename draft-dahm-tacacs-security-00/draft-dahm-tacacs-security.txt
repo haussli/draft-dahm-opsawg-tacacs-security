@@ -1160,10 +1160,10 @@ Internet-Draft              TACACS+ Security               February 2022
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
               January 2006, <https://www.rfc-editor.org/info/rfc4251>.
 
-   [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
-              Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
-              <https://www.rfc-editor.org/info/rfc6242>.
-
+   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
+              Address Text Representation", RFC 5952,
+              DOI 10.17487/RFC5952, August 2010,
+              <https://www.rfc-editor.org/info/rfc5952>.
 
 
 
@@ -1171,6 +1171,10 @@ Dahm, et al.             Expires 19 August 2022                [Page 20]
 
 Internet-Draft              TACACS+ Security               February 2022
 
+
+   [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
+              Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
+              <https://www.rfc-editor.org/info/rfc6242>.
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -1219,10 +1223,6 @@ Internet-Draft              TACACS+ Security               February 2022
    Andrej Ota
 
    Email: andrej@ota.si
-
-
-
-
 
 
 

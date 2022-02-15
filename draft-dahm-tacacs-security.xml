@@ -300,7 +300,7 @@ s.
            This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
            This argument is optional.
            IPv4 addresses are specified as octet numeric values separated by dots ('.').
-           IPv6 address text representation is defined in [RFC5952].
+           IPv6 address text representation is defined in <xref target="RFC5952"/>.
          </t>
        </section>
 
@@ -723,6 +723,7 @@ s.
        <?rfc include="reference.RFC.3365.xml"?>
        <?rfc include="reference.RFC.4020.xml"?>
        <?rfc include="reference.RFC.4251.xml"?>
+       <?rfc include="reference.RFC.5952.xml"?>
        <?rfc include="reference.RFC.6242.xml"?>
        <?rfc include="reference.RFC.6335.xml"?>
        <?rfc include="reference.RFC.7250.xml"?>
