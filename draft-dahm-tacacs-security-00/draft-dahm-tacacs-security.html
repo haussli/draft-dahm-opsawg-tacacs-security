@@ -1508,7 +1508,7 @@ li > p:last-of-type {
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">
            This document favors the predictable use of TLS security for a deployment. The option to provide backwards compatibility, with negotiation using STARTTLS command to secure an otherwise unsecured connection is not supported. 
-           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <span><a href="#ICTBD" class="xref">[TBD]</a> (<a href="#ICTBD" class="xref">Section 9</a>)</span>, for the TLS connection.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <span><a href="#ICTBD" class="xref">[TBD]</a> (<a href="#ICTBD" class="xref">Section 9</a>)</span> with the service name <span><a href="#ICTBD" class="xref">[TBDN]</a> (<a href="#ICTBD" class="xref">Section 9</a>)</span>, for TLS connections.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="TLSConn">
@@ -2078,12 +2078,11 @@ s.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-9-1">
-         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <span>[<a href="#RFC4020" class="xref">RFC4020</a>]</span> and <span>[<a href="#RFC6335" class="xref">RFC6335</a>]</span>, of a new well-known system TCP/IP port number for
- "tacacss", described as "TACACS+ over TLS".
-         The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
+         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <span>[<a href="#RFC4020" class="xref">RFC4020</a>]</span> and <span>[<a href="#RFC6335" class="xref">RFC6335</a>]</span>, of a new well-known system TCP/IP port number for the service name "tacacss", described as "TACACS+ over TLS".
+         The service name "tacacss" follows the common practice of appending an "s" to the name given of the non-TLS well-known port.
          This allocation is justified in <a href="#wellknown" class="xref">Section 8.2</a>.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <p id="section-9-2">
-         RFC EDITOR: this port number should replace "[TBD]" within this document.<a href="#section-9-2" class="pilcrow">¶</a></p>
+         RFC EDITOR: this port number should replace "[TBD]" and the service name should replace "[TBDN]" within this document.<a href="#section-9-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-10">

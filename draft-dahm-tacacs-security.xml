@@ -157,7 +157,7 @@
          </t>
          <t>
            This document favors the predictable use of TLS security for a deployment, see (<xref target="wellknown"/>). 
-           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
+           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref> with the service name <xref target="ICTBD">[TBDN]</xref>, for TLS connections.
          </t>
        </section>
        <section title="TLS Connection" anchor="TLSConn">
@@ -672,13 +672,12 @@ s.
 
      <section title="IANA Considerations" anchor="ICTBD">
        <t>
-         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/> and <xref target="RFC6335"/>, of a new well-known system TCP/IP port number for
- "tacacss", described as "TACACS+ over TLS".
-         The name "tacacss" follows the common practice of appending an "s" to the name given to the non-TLS well-known port.
+         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/> and <xref target="RFC6335"/>, of a new well-known system TCP/IP port number for the service name "tacacss", described as "TACACS+ over TLS".
+         The service name "tacacss" follows the common practice of appending an "s" to the name given of the non-TLS well-known port.
          This allocation is justified in <xref target="wellknown"/>.
        </t>
        <t>
-         RFC EDITOR: this port number should replace "[TBD]" within this document.
+         RFC EDITOR: this port number should replace "[TBD]" and the service name should replace "[TBDN]" within this document.
        </t>
      </section>
 
