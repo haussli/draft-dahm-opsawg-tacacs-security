@@ -101,11 +101,11 @@ Table of Contents
      8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
        8.1.1.  TLS Use . . . . . . . . . . . . . . . . . . . . . . .  16
        8.1.2.  TLS 0-RTT . . . . . . . . . . . . . . . . . . . . . .  16
-       8.1.3.  TLS Resumption Ticket Lifetime  . . . . . . . . . . .  16
-       8.1.4.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.5.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
-       8.1.6.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  17
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
+       8.1.3.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
+       8.1.5.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  17
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
+     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
 
 
 
@@ -114,9 +114,8 @@ Dahm, et al.             Expires 19 August 2022                 [Page 2]
 Internet-Draft              TACACS+ Security               February 2022
 
 
-     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  18
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
    12. Informative References  . . . . . . . . . . . . . . . . . . .  20
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
@@ -253,7 +252,7 @@ Internet-Draft              TACACS+ Security               February 2022
    Implementations MUST support TLS 1.3 [RFC8446] and MAY permit TLS 1.3
    session resumption.  If resumption is supported, the resumption
    ticket_lifetime SHOULD be configurable, including a zero seconds
-   lifetime; see Section 8.1.3.
+   lifetime.
 
    Once the TLS connection is established, the exchange of TACACS+ data
    proceeds as normal, except that it is transmitted over TLS as TLS
@@ -264,7 +263,7 @@ Internet-Draft              TACACS+ Security               February 2022
    Session.  Or, if Single Connection Mode has been negotiated, it might
    remain open after a successful Session, until an error or a timeout
    occurs.  Why it closed has no bearing on TLS resumption, Unless
-   closed by a TLS error, in which case the ticket might be invalidated.
+   closed by a TLS error, in which case the ticket may be invalidated.
 
 3.2.1.  Cipher Requirements
 
@@ -874,7 +873,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
    It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication
    and encryption, including TLS using the NULL algorithm, except for
-   within test and debug environments.  Also see [RFC3365]
+   within test and debug environments.  Also see [RFC3365].
 
 8.1.2.  TLS 0-RTT
 
@@ -885,11 +884,6 @@ Internet-Draft              TACACS+ Security               February 2022
    handshake completes; that is, Clients MUST NOT send 0-RTT data and
    Servers MAY abruptly disconnect Clients that do.
 
-8.1.3.  TLS Resumption Ticket Lifetime
-
-   TLS 1.3 resumption is likely to become a common (and default) feature
-   that operators MUST be able to control for the following security and
-   operational reasons:
 
 
 
@@ -904,26 +898,7 @@ Dahm, et al.             Expires 19 August 2022                [Page 16]
 Internet-Draft              TACACS+ Security               February 2022
 
 
-   1.  0-RTT concerns outlined in Section 8.1.2.
-
-   2.  Certificate revocations are not necessarily immediate and
-       resumption potentially worsens the delay up to the maximum
-       resumption ticket lifetime unless ticket caches are flushed, so
-       operators SHOULD have the ability to limit ticket lifetime,
-       including disabling resumption (set lifetime to zero).
-
-   3.  In the presence of any-cast or load-balanced TACACS+ servers, the
-       tickets MUST be shared among all potential servers for resumption
-       to work, which is significantly complicated.  Though there is an
-       alternative of allowing the resumption negotiation to fail and
-       restart the negotiation when it encounters a server that does not
-       have the ticket, that worsens TLS start-up performance.
-
-   Therefore, resumption ticket lifetime SHOULD be configurable,
-   including zero seconds, which effectively disables resumption.  Valid
-   lifetimes are further constrained in [RFC8446].
-
-8.1.4.  TLS PSK
+8.1.3.  TLS PSK
 
    Implementations MAY support TLS authentication with Pre-Shared Keys
    (PSKs), also known as external PSKs in TLS 1.3, which are not
@@ -933,16 +908,17 @@ Internet-Draft              TACACS+ Security               February 2022
 
    PSKs are otherwise considered out-of-scope for this document.
 
-8.1.5.  TLS Options
+8.1.4.  TLS Options
 
    Unfortunately, no single and timely TLS recommendations document
-   exists today.  Therefore, implementers and operators SHOULD make use
-   of the various RFCs to determine which TLS versions and algorithms
-   should be supported, deprecated, or abandoned, in the absence of
-   updates to this document.  Useful examples are the TLS specifications
-   themselves (TLS 1.3 [RFC8446]) and TLS Recommendations [RFC7525].
+   exists.  Therefore, implementers and operators SHOULD make use of the
+   various RFCs to determine which TLS versions and algorithms should be
+   supported, deprecated, or abandoned, in the absence of updates to
+   this document.  Useful examples are the TLS specifications themselves
+   (TLS 1.3 [RFC8446]), which prescribes mandatory support in Section 9,
+   and TLS Recommendations [RFC7525].
 
-8.1.6.  Unreachable TLS CA
+8.1.5.  Unreachable TLS CA
 
    Operators SHOULD be cognizant of the potential of Server and/or
    Client isolation from their Peer's Certificate Authority (CA) by
@@ -951,14 +927,6 @@ Internet-Draft              TACACS+ Security               February 2022
    authentication of the Peer to fail.  Certificate caching and Raw
    Public Keys [RFC7250] are methods to address this, but both are out
    of scope for this document.
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 17]
-
-Internet-Draft              TACACS+ Security               February 2022
-
 
 8.2.  Well-Known TCP/IP Port
 
@@ -976,7 +944,6 @@ Internet-Draft              TACACS+ Security               February 2022
 
    *  and helps prevent the accidental exposure of sensitive information
       due to misconfiguration.
-
 
 
 
@@ -1015,16 +982,6 @@ Internet-Draft              TACACS+ Security               February 2022
    validity or to revoke a key.  The Server has no method to revoke a
    key, except by not offering the key in future authentication
    sessions.
-
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 18]
-
-Internet-Draft              TACACS+ Security               February 2022
-
 
 9.  IANA Considerations
 
@@ -1082,13 +1039,6 @@ Internet-Draft              TACACS+ Security               February 2022
               Infrastructure Certificate and Certificate Revocation List
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 19]
-
-Internet-Draft              TACACS+ Security               February 2022
-
 
    [RFC5425]  Miao, F., Ed., Ma, Y., Ed., and J. Salowey, Ed.,
               "Transport Layer Security (TLS) Transport Mapping for
@@ -1202,16 +1152,6 @@ Authors' Addresses
    Thorsten Dahm
 
    Email: thorsten.dahm@gmail.com
-
-
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 21]
-
-Internet-Draft              TACACS+ Security               February 2022
 
 
    Douglas Gash
