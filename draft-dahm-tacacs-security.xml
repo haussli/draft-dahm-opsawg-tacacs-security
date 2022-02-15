@@ -684,7 +684,8 @@ s.
 
      <section title="Acknowledgments">
        <t>
-         The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, and Tom Petch for their support, insightful review, and/or comments.
+         The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their support, insightful review, and/or comments.
+         <xref target="RFC5425"/> was also used as a basis for the approach to TLS.
        </t>
      </section>
 

@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 17 August 2022                                           A. Ota
-                                                        13 February 2022
+Expires: 19 August 2022                                           A. Ota
+                                                        15 February 2022
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 August 2022.
+   This Internet-Draft will expire on 19 August 2022.
 
 
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 1]
+Dahm, et al.             Expires 19 August 2022                 [Page 1]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 2]
+Dahm, et al.             Expires 19 August 2022                 [Page 2]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -165,7 +165,8 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 3]
+
+Dahm, et al.             Expires 19 August 2022                 [Page 3]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -221,7 +222,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 4]
+Dahm, et al.             Expires 19 August 2022                 [Page 4]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -277,7 +278,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 5]
+Dahm, et al.             Expires 19 August 2022                 [Page 5]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -333,7 +334,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 6]
+Dahm, et al.             Expires 19 August 2022                 [Page 6]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -389,7 +390,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 7]
+Dahm, et al.             Expires 19 August 2022                 [Page 7]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -445,7 +446,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 8]
+Dahm, et al.             Expires 19 August 2022                 [Page 8]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -501,7 +502,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 9]
+Dahm, et al.             Expires 19 August 2022                 [Page 9]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -557,7 +558,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 10]
+Dahm, et al.             Expires 19 August 2022                [Page 10]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -613,7 +614,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 11]
+Dahm, et al.             Expires 19 August 2022                [Page 11]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -669,7 +670,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 12]
+Dahm, et al.             Expires 19 August 2022                [Page 12]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -725,7 +726,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 13]
+Dahm, et al.             Expires 19 August 2022                [Page 13]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -781,7 +782,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 14]
+Dahm, et al.             Expires 19 August 2022                [Page 14]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -837,7 +838,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 15]
+Dahm, et al.             Expires 19 August 2022                [Page 15]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -893,7 +894,12 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 16]
+
+
+
+
+
+Dahm, et al.             Expires 19 August 2022                [Page 16]
 
 Internet-Draft              TACACS+ Security               February 2022
 
@@ -971,6 +977,16 @@ Internet-Draft              TACACS+ Security               February 2022
    *  and helps prevent the accidental exposure of sensitive information
       due to misconfiguration.
 
+
+
+
+
+
+Dahm, et al.             Expires 19 August 2022                [Page 17]
+
+Internet-Draft              TACACS+ Security               February 2022
+
+
    However, co-existence of inferior authentication and encryption,
    whether an Unsecure Connection or deprecated parts that compose TLS,
    also presents opportunity for down-grade attacks.  Causing failure of
@@ -1026,8 +1042,16 @@ Internet-Draft              TACACS+ Security               February 2022
 10.  Acknowledgments
 
    The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
-   Stephen Farrell, Alan DeKok, and Tom Petch for their support,
-   insightful review, and/or comments.
+   Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their
+   support, insightful review, and/or comments.  [RFC5425] was also used
+   as a basis for the approach to TLS.
+
+
+
+Dahm, et al.             Expires 19 August 2022                [Page 18]
+
+Internet-Draft              TACACS+ Security               February 2022
+
 
 11.  Normative References
 
@@ -1081,6 +1105,17 @@ Internet-Draft              TACACS+ Security               February 2022
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
+
+
+
+
+
+
+Dahm, et al.             Expires 19 August 2022                [Page 19]
+
+Internet-Draft              TACACS+ Security               February 2022
+
+
    [RFC8773]  Housley, R., "TLS 1.3 Extension for Certificate-Based
               Authentication with an External Pre-Shared Key", RFC 8773,
               DOI 10.17487/RFC8773, March 2020,
@@ -1111,17 +1146,6 @@ Internet-Draft              TACACS+ Security               February 2022
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
               external-psk-guidance-06>.
 
-
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 20]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
               RFC 3365, DOI 10.17487/RFC3365, August 2002,
@@ -1139,6 +1163,14 @@ Internet-Draft              TACACS+ Security               February 2022
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
+
+
+
+
+Dahm, et al.             Expires 19 August 2022                [Page 20]
+
+Internet-Draft              TACACS+ Security               February 2022
+
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -1201,32 +1233,4 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 22]
+Dahm, et al.             Expires 19 August 2022                [Page 21]
