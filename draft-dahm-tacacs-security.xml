@@ -539,7 +539,7 @@ s.
 
      <section title="Deprecation of TACACS+ PSK and Encryption" anchor="DeprecationofTACACSPSKandEncryption">
        <t>
-         The original draft of TACACS+ described an encryption mechanism built in to the protocol. This is insufficient for modern purposes, and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
+         The original draft of TACACS+ described an encryption mechanism built into the protocol. This is insufficient for modern purposes, and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
        </t>
        <t>   
          The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated. This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.
