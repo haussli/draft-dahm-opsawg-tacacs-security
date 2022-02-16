@@ -174,13 +174,13 @@
          <t>
 	   The connection persists until the Server or Client closes it.
 	   It might be closed due to an error or at the conclusion of the TACACS+ Session.
-	   Or, if Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occurs.
-	   Why it closed has no bearing on TLS resumption, Unless closed by a TLS error, in which case the ticket may be invalidated.
+	   If Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occurs.
+	   Why it closed has no bearing on TLS resumption, unless closed by a TLS error, in which case the ticket might be invalidated.
          </t>
        <section title="Cipher Requirements">
          <t>
 	   Implementations MUST support the TLS 1.3 mandatory cipher suites (See RFC8446 Section 9.1).
-	   The cipher suites offered or accepted SHOULD be configurable.
+	   The cipher suites offered or accepted SHOULD be configurable so that operators can adapt.
          </t>
          <t>
 	   This document makes no cipher suite recommendations, but recommendations can be found in the TLS Cipher Suites section of the <xref target="TLSCSREC"/>.
@@ -188,15 +188,40 @@
        </section>
        <section title="TLS Authentication">
          <t>
-	  As part of the TLS handshake, implementations MUST support certificate-based bi-directional TLS authentication and <xref target="RFC5280">Certificate Path verification</xref>.
-	  Unless disabled by configuration, a Peer MUST disconnect a Peer that provides an empty (or no) TLS Certificate message.
+	  Implementations MUST support certificate-based bi-directional TLS authentication and certificate revocation for identity verification and policy purposes.
+          Two methods MUST be implemented:
+         </t>
+         <ol>
+         <li>
+            Certificate Path verification as described in <xref target="CertPV"/>.
+         </li>
+         <li>
+            Certificate fingerprint verification as described in <xref target="CertFPV"/>.
+         </li>
+         </ol>
+         <t>
+           If either method succeeds, the authentication is successful and the connection is permitted.
+           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on a field of the certificate, DNS resolution, time of day, or phase of the earth's moon.
          </t>
          <t>
+	   Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.
          </t>
-         <section title="TLS Certificate Identity Requirements">
+         <section title="TLS Certificate Path Verification" anchor="CertPV">
+         <t>
+           Implementations MUST support certificate Path verification as described in <xref target="RFC5280"/>.
+         </t>
+         </section>
+         <section title="TLS Certificate Fingerprint Verification" anchor="CertFPV">
            <t>
-	     Peers MUST support checking the certificate identity of their Peer for policy purposes, either by matching the certificate fingerprint or by matching certificate attributes Subject Alternative Name or Subject Name.
-	     By configuration, allowing or denying the connection based on the result.
+	     Implementations MUST support certificate fingerprint verification for Peer authentication.
+           </t>
+           <t>
+             The fingerprint is calculated on the certificate received from the remote Peer and compared to the one previously exported by that Peer and made available to the local Peer.
+             There is no need to verify the Certificate Path; that was done when the operator accepted the fingerprint exported by the Peer.
+             If the fingerprints match, the Peer's identity is verified.
+           </t>
+           <t>
+             The certificate MUST still be well-formed and be within the Validity period.
            </t>
            <t>
 	     To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those of its Peers.
@@ -607,11 +632,12 @@ s.
 	     Useful examples are the TLS specifications themselves (<xref target="RFC8446">TLS 1.3</xref>), which prescribes mandatory support in Section 9, and TLS Recommendations <xref target="RFC7525"/>.
            </t>
          </section>
-         <section title="Unreachable TLS CA">
+         <section title="Unreachable TLS CA" anchor="CAcache">
            <t>
 	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
 	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus TLS authentication of the Peer to fail.
 	     Certificate caching and <xref target="RFC7250">Raw Public Keys</xref> are methods to address this, but both are out of scope for this document.
+             Certificate fingerprints are another option, see <xref target="CertFPV"/>
            </t>
          </section>
        </section>
@@ -662,7 +688,7 @@ s.
      <section title="Acknowledgments">
        <t>
          The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their support, insightful review, and/or comments.
-         <xref target="RFC5425"/> was also used as a basis for the approach to TLS.
+         <xref target="RFC5425"/> was also used as a basis for the approach to TLS and borrowed its fingerprint format.
        </t>
      </section>
 
