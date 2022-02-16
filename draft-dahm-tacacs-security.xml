@@ -201,7 +201,7 @@
          </ol>
          <t>
            If either method succeeds, the authentication is successful and the connection is permitted.
-           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on a field of the certificate, DNS resolution, time of day, or phase of the earth's moon.
+           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.
          </t>
          <t>
 	   Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.
