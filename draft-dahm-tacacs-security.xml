@@ -170,7 +170,7 @@
 	   If resumption is supported, the resumption ticket_lifetime SHOULD be configurable, including a zero seconds lifetime; see <xref target="TLSRTL"/>.
          </t>
          <t>
-	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation (see see <xref target="DeprecationofTACACSPSKandEncryption"/>)
+	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation (see <xref target="DeprecationofTACACSEncryption"/>)
          </t>
          <t>
 	   The connection persists until the Server or Client closes it.
@@ -537,7 +537,7 @@ s.
        </section>
      </section>
 
-     <section title="Deprecation of TACACS+ PSK and Encryption" anchor="DeprecationofTACACSPSKandEncryption">
+     <section title="Deprecation of TACACS+ Encryption" anchor="DeprecationofTACACSEncryption">
        <t>
          The original draft of TACACS+ described an encryption mechanism built into the protocol. This is insufficient for modern purposes, and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
        </t>
