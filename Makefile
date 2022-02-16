@@ -2,7 +2,6 @@ BASENAME= draft-dahm-tacacs-security
 VERSION=00
 
 EXT=.xml
-SOURCEIN=${BASENAME}.in
 XMLNAME=${BASENAME}${EXT}
 DRAFTNAME=${BASENAME}-${VERSION}
 
@@ -15,12 +14,6 @@ ${DRAFTNAME}:
 	if test ! -e ${DRAFTNAME}; then					\
 		mkdir -p ${DRAFTNAME} || exit 1;			\
 	fi;								\
-
-${XMLNAME}: ${SOURCEIN} Makefile
-	rm -f $@;							\
-	sed								\
-		-e 's,@DRAFTNAME\@,$(DRAFTNAME),g'			\
-		${SOURCEIN} > $@
 
 ${DRAFTNAME}/${BASENAME}.txt: ${DRAFTNAME} ${XMLNAME} Makefile
 	xml2rfc --v3 ${XMLNAME} -b ${DRAFTNAME} --text
