@@ -156,7 +156,7 @@
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
          </t>
          <t>
-           This document favors the predictable use of TLS security for a deployment. The option to provide backwards compatibility, with negotiation using STARTTLS command to secure an otherwise unsecured connection is not supported. 
+           This document favors the predictable use of TLS security for a deployment, see (<xref target="wellknown"/>). 
            TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref>, for the TLS connection.
          </t>
        </section>
@@ -170,7 +170,7 @@
 	   If resumption is supported, the resumption ticket_lifetime SHOULD be configurable, including a zero seconds lifetime; see <xref target="TLSRTL"/>.
          </t>
          <t>
-	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation.
+	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation (see <xref target="DeprecationofTACACSEncryption"/>)
          </t>
          <t>
 	   The connection persists until the Server or Client closes it.
@@ -537,24 +537,18 @@ s.
        </section>
      </section>
 
-     <section title="Deprecation of TACACS+ PSK and Encryption">
+     <section title="Deprecation of TACACS+ Encryption" anchor="DeprecationofTACACSEncryption">
        <t>
-         The <xref target="RFC8907">TACACS+ Protocol</xref> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
-         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
+         The original draft of TACACS+ described an encryption mechanism built into the protocol. This is insufficient for modern purposes, and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
+       </t>
+       <t>   
+         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated. This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.
        </t>
        <t>
-         Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
-         Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
-         A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.
+         The TACACS+ server or client receiving TACACS+ Packets MUST process the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set. The actual value of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be ignored.
        </t>
        <t>
-         A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/
-       </t>
-       <t>
-         A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.
-       </t>
-       <t>
-         A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <xref target="RFC8907">TACACS+ Protocol</xref>.
+         Peers SHOULD set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
        </t>
      </section>
 
