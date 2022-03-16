@@ -6,8 +6,8 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 17 August 2022                                           A. Ota
-                                                        13 February 2022
+Expires: 17 September 2022                                        A. Ota
+                                                           16 March 2022
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 August 2022.
+   This Internet-Draft will expire on 17 September 2022.
 
 
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 1]
+Dahm, et al.            Expires 17 September 2022               [Page 1]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
 Copyright Notice
@@ -95,7 +95,7 @@ Table of Contents
            AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  12
      5.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  14
-   6.  Deprecation of TACACS+ PSK and Encryption . . . . . . . . . .  15
+   6.  Deprecation of TACACS+ Encryption . . . . . . . . . . . . . .  15
    7.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  15
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
      8.1.  TLS . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
@@ -105,17 +105,17 @@ Table of Contents
        8.1.4.  TLS PSK . . . . . . . . . . . . . . . . . . . . . . .  17
        8.1.5.  TLS Options . . . . . . . . . . . . . . . . . . . . .  17
        8.1.6.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  17
-     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
+     8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  17
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 2]
+Dahm, et al.            Expires 17 September 2022               [Page 2]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
      8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  18
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
    12. Informative References  . . . . . . . . . . . . . . . . . . .  20
@@ -165,9 +165,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 3]
+Dahm, et al.            Expires 17 September 2022               [Page 3]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
 2.2.  Empty Value
@@ -221,9 +221,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 4]
+Dahm, et al.            Expires 17 September 2022               [Page 4]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
 3.1.  Well-Known TCP/IP Port
@@ -234,9 +234,7 @@ Internet-Draft              TACACS+ Security               February 2022
    connection.
 
    This document favors the predictable use of TLS security for a
-   deployment.  The option to provide backwards compatibility, with
-   negotiation using STARTTLS command to secure an otherwise unsecured
-   connection is not supported.  TACACS+ TLS will therefore follow
+   deployment, see (Section 8.2).  TACACS+ TLS will therefore follow
    [RFC7605], where a different well-known system TCP/IP port is
    assigned by IANA, port [TBD] (Section 9), for the TLS connection.
 
@@ -255,7 +253,7 @@ Internet-Draft              TACACS+ Security               February 2022
 
    Once the TLS connection is established, the exchange of TACACS+ data
    proceeds as normal, except that it is transmitted over TLS as TLS
-   application data and without TACACS+ obfuscation.
+   application data and without TACACS+ obfuscation (see Section 6)
 
    The connection persists until the Server or Client closes it.  It
    might be closed due to an error or at the conclusion of the TACACS+
@@ -277,9 +275,11 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 5]
+
+
+Dahm, et al.            Expires 17 September 2022               [Page 5]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
 3.2.2.  TLS Authentication
@@ -333,9 +333,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 6]
+Dahm, et al.            Expires 17 September 2022               [Page 6]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    The server should expect Extended Authentication Packet Bodies if the
@@ -389,9 +389,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 7]
+Dahm, et al.            Expires 17 September 2022               [Page 7]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    The following fields contain the arguments that may be used to extend
@@ -445,9 +445,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 8]
+Dahm, et al.            Expires 17 September 2022               [Page 8]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
 4.2.  The Extension Authentication REPLY Packet Body
@@ -501,9 +501,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                 [Page 9]
+Dahm, et al.            Expires 17 September 2022               [Page 9]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -557,9 +557,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 10]
+Dahm, et al.            Expires 17 September 2022              [Page 10]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
@@ -613,9 +613,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 11]
+Dahm, et al.            Expires 17 September 2022              [Page 11]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
@@ -669,9 +669,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 12]
+Dahm, et al.            Expires 17 September 2022              [Page 12]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
        wants.  The set of permissible values for this AVP are the SSH
@@ -725,9 +725,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 13]
+Dahm, et al.            Expires 17 September 2022              [Page 13]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
        REPLY packet, the server SHOULD set the REPLY packet flag
@@ -781,9 +781,9 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 14]
+Dahm, et al.            Expires 17 September 2022              [Page 14]
 
-Internet-Draft              TACACS+ Security               February 2022
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    The set of permissible values for this AVP are the SSH Subsystem
@@ -800,32 +800,26 @@ Internet-Draft              TACACS+ Security               February 2022
 
    These new authen_methods and AVPs apply equally to accounting.
 
-6.  Deprecation of TACACS+ PSK and Encryption
+6.  Deprecation of TACACS+ Encryption
 
-   The TACACS+ Protocol [RFC8907] specified a form of encryption and
-   Peer authentication using a pre-shared key that is wholly inadequate
-   by modern standards and is diminutively referred to as data
-   obfuscation.  The introduction of TLS PSK and certificate Peer
-   authentication and TLS encryption to TACACS+ obsolesces these former
-   mechanisms and so are hereby deprecated.
+   The original draft of TACACS+ described an encryption mechanism built
+   into the protocol.  This is insufficient for modern purposes and the
+   document TACACS+ Protocol [RFC8907] reclassified the mechanism as one
+   capable only of obfuscation.
 
-   Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+
-   header, the least significant bit (LSB) of the flags field, is also
-   deprecated.  Peers compliant with this document should set the
-   TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS
-   Connections, indicating that the data obfuscation is not used.  A
-   Peer that receives a Packet without the flag set on a TLS Connection,
-   should immediately log the error and terminate the TCP/IP connection.
+   The introduction of TLS PSK and certificate Peer authentication and
+   TLS encryption to TACACS+ obsolesces these former mechanisms and so
+   are hereby deprecated.  This section describes how the TACACS+ client
+   and servers MUST operate with regards to the obfuscation mechanism.
 
-   A Client that is compliant with this document MUST NOT utilize these
-   deprecated authentication or encryption methods on TLS Connections/
+   The TACACS+ server or client receiving TACACS+ Packets MUST process
+   the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set.  The actual value
+   of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be
+   ignored.
 
-   A TACACS+ Server or Client implementation SHOULD, and is strongly
-   encouraged to, offer a configuration mechanism to disable non-TLS
-   connections entirely.
-
-   A future document SHOULD be written to deprecate the well-known TCP/
-   IP port 49, allocated by the TACACS+ Protocol [RFC8907].
+   Peers SHOULD set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet
+   Header of packets on TLS Connections, indicating that the data
+   obfuscation is not used.
 
 7.  Protocol Deprecations
 
@@ -834,20 +828,19 @@ Internet-Draft              TACACS+ Security               February 2022
    MS-CHAPv1: has been replaced by MS-CHAPv2 in most deployments, the
    intent of this deprecation is to complete the transition.  MD4 is
    still required to support MS-CHAPv2 so cannot be deprecated at this
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 15]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    point It should be noted that the use of MD4 is purely to allow
    compatible MS-CHAPv2 operation and not for security; the TLS
    transport is intended to provide that function.
 
    TAC_PLUS_AUTHEN_SENDAUTH: the sendauth mechanism can not be
    supported, as it permits the leak of sensitive information.
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 15]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
 8.  Security Considerations
 
@@ -890,14 +883,6 @@ Internet-Draft              TACACS+ Security               February 2022
    that operators MUST be able to control for the following security and
    operational reasons:
 
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 16]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    1.  0-RTT concerns outlined in Section 8.1.2.
 
    2.  Certificate revocations are not necessarily immediate and
@@ -905,6 +890,13 @@ Internet-Draft              TACACS+ Security               February 2022
        resumption ticket lifetime unless ticket caches are flushed, so
        operators SHOULD have the ability to limit ticket lifetime,
        including disabling resumption (set lifetime to zero).
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 16]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
    3.  In the presence of any-cast or load-balanced TACACS+ servers, the
        tickets MUST be shared among all potential servers for resumption
@@ -946,14 +938,6 @@ Internet-Draft              TACACS+ Security               February 2022
    Public Keys [RFC7250] are methods to address this, but both are out
    of scope for this document.
 
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 17]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
 8.2.  Well-Known TCP/IP Port
 
    A new port is considered appropriate and superior to a "STARTTLS"
@@ -961,6 +945,14 @@ Internet-Draft              TACACS+ Security               February 2022
 
    *  ease of blocking the unencrypted or inferiorly encrypted
       connections by the TCP/IP port number,
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 17]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
    *  passive Intrusion Detection Systems (IDSs) monitoring the
       unencrypted version to be unaffected by the introduction of TLS,
@@ -1000,16 +992,6 @@ Internet-Draft              TACACS+ Security               February 2022
    key, except by not offering the key in future authentication
    sessions.
 
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 18]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
 9.  IANA Considerations
 
    The authors request that, when this draft is accepted by the working
@@ -1019,6 +1001,14 @@ Internet-Draft              TACACS+ Security               February 2022
    The name "tacacss" follows the common practice of appending an "s" to
    the name given to the non-TLS well-known port.  This allocation is
    justified in Section 8.2.
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 18]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
    RFC EDITOR: this port number should replace "[TBD]" within this
    document.
@@ -1059,17 +1049,22 @@ Internet-Draft              TACACS+ Security               February 2022
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
 
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 19]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    [RFC5425]  Miao, F., Ed., Ma, Y., Ed., and J. Salowey, Ed.,
               "Transport Layer Security (TLS) Transport Mapping for
               Syslog", RFC 5425, DOI 10.17487/RFC5425, March 2009,
               <https://www.rfc-editor.org/info/rfc5425>.
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 19]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
    [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
               "Recommendations for Secure Use of Transport Layer
@@ -1111,21 +1106,21 @@ Internet-Draft              TACACS+ Security               February 2022
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
               external-psk-guidance-06>.
 
-
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 20]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    [RFC3365]  Schiller, J., "Strong Security Requirements for Internet
               Engineering Task Force Standard Protocols", BCP 61,
               RFC 3365, DOI 10.17487/RFC3365, August 2002,
               <https://www.rfc-editor.org/info/rfc3365>.
+
+
+
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 20]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
 
    [RFC4020]  Kompella, K. and A. Zinin, "Early IANA Allocation of
               Standards Track Code Points", RFC 4020,
@@ -1168,20 +1163,19 @@ Authors' Addresses
    Email: thorsten.dahm@gmail.com
 
 
-
-
-
-
-
-Dahm, et al.             Expires 17 August 2022                [Page 21]
-
-Internet-Draft              TACACS+ Security               February 2022
-
-
    Douglas Gash
    Cisco Systems, Inc.
 
    Email: dcmgash@cisco.com
+
+
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 21]
+
+Internet-Draft              TACACS+ Security                  March 2022
 
 
    Andrej Ota
@@ -1229,4 +1223,10 @@ Internet-Draft              TACACS+ Security               February 2022
 
 
 
-Dahm, et al.             Expires 17 August 2022                [Page 22]
+
+
+
+
+
+
+Dahm, et al.            Expires 17 September 2022              [Page 22]

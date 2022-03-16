@@ -1190,11 +1190,11 @@ li > p:last-of-type {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">TACACS+ Security</td>
-<td class="right">February 2022</td>
+<td class="right">March 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dahm, et al.</td>
-<td class="center">Expires 17 August 2022</td>
+<td class="center">Expires 17 September 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1208,12 +1208,12 @@ li > p:last-of-type {
 <a href="https://www.rfc-editor.org/rfc/rfcRFC8097" class="eref">RFC8097</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-02-13" class="published">13 February 2022</time>
+<time datetime="2022-03-16" class="published">16 March 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-08-17">17 August 2022</time></dd>
+<dd class="expires"><time datetime="2022-09-17">17 September 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1262,7 +1262,7 @@ li > p:last-of-type {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 August 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 September 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1362,7 +1362,7 @@ li > p:last-of-type {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-deprecation-of-tacacs-psk-a" class="xref">Deprecation of TACACS+ PSK and Encryption</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-deprecation-of-tacacs-encry" class="xref">Deprecation of TACACS+ Encryption</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-protocol-deprecations" class="xref">Protocol Deprecations</a></p>
@@ -1507,8 +1507,8 @@ li > p:last-of-type {
            All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">
-           This document favors the predictable use of TLS security for a deployment. The option to provide backwards compatibility, with negotiation using STARTTLS command to secure an otherwise unsecured connection is not supported. 
-           TACACS+ TLS will therefore follow [RFC7605], where a different well-known system TCP/IP port is assigned by IANA, port <span><a href="#ICTBD" class="xref">[TBD]</a> (<a href="#ICTBD" class="xref">Section 9</a>)</span>, for the TLS connection.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+           This document favors the predictable use of TLS security for a deployment, see (<a href="#wellknown" class="xref">Section 8.2</a>). 
+           TACACS+ TLS will therefore follow <span>[<a href="#RFC7605" class="xref">RFC7605</a>]</span>, where a different well-known system TCP/IP port is assigned by IANA, port <span><a href="#ICTBD" class="xref">[TBD]</a> (<a href="#ICTBD" class="xref">Section 9</a>)</span>, for the TLS connection.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="TLSConn">
@@ -1523,7 +1523,7 @@ li > p:last-of-type {
     Implementations MUST support <span><a href="#RFC8446" class="xref">TLS 1.3</a> [<a href="#RFC8446" class="xref">RFC8446</a>]</span> and MAY permit TLS 1.3 session resumption.
     If resumption is supported, the resumption ticket_lifetime SHOULD be configurable, including a zero seconds lifetime; see <a href="#TLSRTL" class="xref">Section 8.1.3</a>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">
-    Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+    Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation (see <a href="#DeprecationofTACACSEncryption" class="xref">Section 6</a>)<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">
     The connection persists until the Server or Client closes it.
     It might be closed due to an error or at the conclusion of the TACACS+ Session.
@@ -1909,24 +1909,24 @@ s.<a href="#section-4-4" class="pilcrow">¶</a></p>
 </section>
 </section>
 </div>
+<div id="DeprecationofTACACSEncryption">
 <section id="section-6">
-      <h2 id="name-deprecation-of-tacacs-psk-a">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-deprecation-of-tacacs-psk-a" class="section-name selfRef">Deprecation of TACACS+ PSK and Encryption</a>
+      <h2 id="name-deprecation-of-tacacs-encry">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-deprecation-of-tacacs-encry" class="section-name selfRef">Deprecation of TACACS+ Encryption</a>
       </h2>
 <p id="section-6-1">
-         The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> specified a form of encryption and Peer authentication using a pre-shared key that is wholly inadequate by modern standards and is diminutively referred to as data obfuscation.
-         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">
-         Along with them, the TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header, the least significant bit (LSB) of the flags field, is also deprecated.
-         Peers compliant with this document should set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
-         A Peer that receives a Packet without the flag set on a TLS Connection, should immediately log the error and terminate the TCP/IP connection.<a href="#section-6-2" class="pilcrow">¶</a></p>
+         The original draft of TACACS+ described an encryption mechanism built into the protocol.
+         This is insufficient for modern purposes and the document <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> reclassified the mechanism as one capable only of obfuscation.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">   
+         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
+         This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">
-         A Client that is compliant with this document MUST NOT utilize these deprecated authentication or encryption methods on TLS Connections/<a href="#section-6-3" class="pilcrow">¶</a></p>
+         The TACACS+ server or client receiving TACACS+ Packets MUST process the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set.
+         The actual value of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be ignored.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">
-         A TACACS+ Server or Client implementation SHOULD, and is strongly encouraged to, offer a configuration mechanism to disable non-TLS connections entirely.<a href="#section-6-4" class="pilcrow">¶</a></p>
-<p id="section-6-5">
-         A future document SHOULD be written to deprecate the well-known TCP/IP port 49, allocated by the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-6-5" class="pilcrow">¶</a></p>
+         Peers SHOULD set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.<a href="#section-6-4" class="pilcrow">¶</a></p>
 </section>
+</div>
 <div id="ProtocolDeprecation">
 <section id="section-7">
       <h2 id="name-protocol-deprecations">
