@@ -563,13 +563,16 @@ s.
 
      <section title="Deprecation of TACACS+ Encryption" anchor="DeprecationofTACACSEncryption">
        <t>
-         The original draft of TACACS+ described an encryption mechanism built into the protocol. This is insufficient for modern purposes, and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
+         The original draft of TACACS+ described an encryption mechanism built into the protocol.
+         This is insufficient for modern purposes and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
        </t>
        <t>   
-         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated. This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.
+         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
+         This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.
        </t>
        <t>
-         The TACACS+ server or client receiving TACACS+ Packets MUST process the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set. The actual value of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be ignored.
+         The TACACS+ server or client receiving TACACS+ Packets MUST process the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set.
+         The actual value of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be ignored.
        </t>
        <t>
          Peers SHOULD set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
