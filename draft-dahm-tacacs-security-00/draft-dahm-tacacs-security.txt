@@ -284,14 +284,13 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 3.2.2.  TLS Authentication
 
-   Implementations MUST support certificate-based bi-directional TLS
-   authentication and certificate revocation for identity verification
-   and policy purposes.  Two methods MUST be implemented:
-
-   1.  Certificate Path verification as described in Section 3.2.2.1.
-
-   2.  Certificate fingerprint verification as described in
-       Section 3.2.2.2.
+   Implementations MUST support certificate-based TLS authentication and
+   certificate revocation bi-directionally for identity verification and
+   policy purposes.  Two methods are used with TACACS+, certificate path
+   verification as described in Section 3.2.2.1 and certificate
+   fingerprint verification as described in Section 3.2.2.2.
+   Certificate path verification MUST be implemented, certificate
+   fingerprint verification SHOULD be implemented.
 
    If either method succeeds, the authentication is successful and the
    connection is permitted.  Policy MAY impose further constraints upon
@@ -308,8 +307,8 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 3.2.2.2.  TLS Certificate Fingerprint Verification
 
-   Implementations MUST support certificate fingerprint verification for
-   Peer authentication.
+   Implementations SHOULD support certificate fingerprint verification
+   for Peer authentication.
 
    The fingerprint is calculated on the certificate received from the
    remote Peer and compared to the one previously exported by that Peer
@@ -325,6 +324,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    to export a fingerprint of their key(s) and import those of its
    Peers.  The fingerprint format MUST conform to the format adopted by
    syslog in [RFC5425], Section 4.2.2.
+
 
 
 

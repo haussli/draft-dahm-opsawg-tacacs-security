@@ -1541,21 +1541,14 @@ li > p:last-of-type {
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-tls-authentication" class="section-name selfRef">TLS Authentication</a>
           </h4>
 <p id="section-3.2.2-1">
-   Implementations MUST support certificate-based bi-directional TLS authentication and certificate revocation for identity verification and policy purposes.
-          Two methods MUST be implemented:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2.2-2">
-         <li id="section-3.2.2-2.1">
-            Certificate Path verification as described in <a href="#CertPV" class="xref">Section 3.2.2.1</a>.<a href="#section-3.2.2-2.1" class="pilcrow">¶</a>
-</li>
-            <li id="section-3.2.2-2.2">
-            Certificate fingerprint verification as described in <a href="#CertFPV" class="xref">Section 3.2.2.2</a>.<a href="#section-3.2.2-2.2" class="pilcrow">¶</a>
-</li>
-          </ol>
-<p id="section-3.2.2-3">
+   Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for identity verification and policy purposes.
+          Two methods are used with TACACS+, certificate path verification as described in <a href="#CertPV" class="xref">Section 3.2.2.1</a> and certificate fingerprint verification as described in <a href="#CertFPV" class="xref">Section 3.2.2.2</a>.
+          Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-2">
            If either method succeeds, the authentication is successful and the connection is permitted.
-           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-4">
-    Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
+           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.<a href="#section-3.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-3">
+    Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
 <div id="CertPV">
 <section id="section-3.2.2.1">
             <h5 id="name-tls-certificate-path-verifi">
@@ -1571,7 +1564,7 @@ li > p:last-of-type {
 <a href="#section-3.2.2.2" class="section-number selfRef">3.2.2.2. </a><a href="#name-tls-certificate-fingerprint" class="section-name selfRef">TLS Certificate Fingerprint Verification</a>
             </h5>
 <p id="section-3.2.2.2-1">
-      Implementations MUST support certificate fingerprint verification for Peer authentication.<a href="#section-3.2.2.2-1" class="pilcrow">¶</a></p>
+      Implementations SHOULD support certificate fingerprint verification for Peer authentication.<a href="#section-3.2.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.2.2-2">
              The fingerprint is calculated on the certificate received from the remote Peer and compared to the one previously exported by that Peer and made available to the local Peer.
              There is no need to verify the Certificate Path; that was done when the operator accepted the fingerprint exported by the Peer.

@@ -188,17 +188,10 @@
        </section>
        <section title="TLS Authentication">
          <t>
-	  Implementations MUST support certificate-based bi-directional TLS authentication and certificate revocation for identity verification and policy purposes.
-          Two methods MUST be implemented:
+	  Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for identity verification and policy purposes.
+          Two methods are used with TACACS+, certificate path verification as described in <xref target="CertPV"/> and certificate fingerprint verification as described in <xref target="CertFPV"/>.
+          Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.
          </t>
-         <ol>
-         <li>
-            Certificate Path verification as described in <xref target="CertPV"/>.
-         </li>
-         <li>
-            Certificate fingerprint verification as described in <xref target="CertFPV"/>.
-         </li>
-         </ol>
          <t>
            If either method succeeds, the authentication is successful and the connection is permitted.
            Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.
@@ -213,7 +206,7 @@
          </section>
          <section title="TLS Certificate Fingerprint Verification" anchor="CertFPV">
            <t>
-	     Implementations MUST support certificate fingerprint verification for Peer authentication.
+	     Implementations SHOULD support certificate fingerprint verification for Peer authentication.
            </t>
            <t>
              The fingerprint is calculated on the certificate received from the remote Peer and compared to the one previously exported by that Peer and made available to the local Peer.
