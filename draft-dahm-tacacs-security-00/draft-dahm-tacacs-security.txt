@@ -254,7 +254,7 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    Once the TLS connection is established, the exchange of TACACS+ data
    proceeds as normal, except that it is transmitted over TLS as TLS
-   application data and without TACACS+ obfuscation (see Section 6)
+   application data and without TACACS+ obfuscation (see Section 6).
 
    The connection persists until the Server or Client closes it.  It
    might be closed due to an error or at the conclusion of the TACACS+
