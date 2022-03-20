@@ -86,6 +86,7 @@ Table of Contents
      3.2.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   5
        3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
        3.2.2.  TLS Authentication  . . . . . . . . . . . . . . . . .   6
+     3.3.  TLS Identification  . . . . . . . . . . . . . . . . . . .   7
    4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
      4.1.  The Extended Authentication START Packet Body . . . . . .   7
      4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
@@ -105,7 +106,6 @@ Table of Contents
        8.1.4.  TLS Options . . . . . . . . . . . . . . . . . . . . .  18
        8.1.5.  Unreachable TLS CA  . . . . . . . . . . . . . . . . .  18
      8.2.  Well-Known TCP/IP Port  . . . . . . . . . . . . . . . . .  18
-     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  19
 
 
 
@@ -114,6 +114,7 @@ Dahm, et al.            Expires 21 September 2022               [Page 2]
 Internet-Draft              TACACS+ Security                  March 2022
 
 
+     8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  19
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
    10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  19
    11. Normative References  . . . . . . . . . . . . . . . . . . . .  19
@@ -158,7 +159,6 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    An Attribute-Value Pair or AVP is another name a TACACS+ argument as
    defined in [RFC8907] Sections 6.1 and 8.
-
 
 
 
@@ -285,10 +285,10 @@ Internet-Draft              TACACS+ Security                  March 2022
 3.2.2.  TLS Authentication
 
    Implementations MUST support certificate-based TLS authentication and
-   certificate revocation bi-directionally for identity verification and
-   policy purposes.  Two methods are used with TACACS+, certificate path
-   verification as described in Section 3.2.2.1 and certificate
-   fingerprint verification as described in Section 3.2.2.2.
+   certificate revocation bi-directionally for authentication, identity
+   verification and policy purposes.  Two methods are used with TACACS+,
+   certificate path verification as described in Section 3.2.2.1 and
+   certificate fingerprint verification as described in Section 3.2.2.2.
    Certificate path verification MUST be implemented, certificate
    fingerprint verification SHOULD be implemented.
 
@@ -338,6 +338,23 @@ Dahm, et al.            Expires 21 September 2022               [Page 6]
 Internet-Draft              TACACS+ Security                  March 2022
 
 
+3.3.  TLS Identification
+
+   In addition to authentication of TLS certificates, implementations
+   MUST support policy consideration of Peer-identifying certificate
+   fields and policy used to verify that the Peer is a valid source for
+   the received certificate and that it is permitted access to TACACS+.
+   Implementations MUST support the validation methods as described in
+   [RFC5425], Section 5.2. and comparison of an optionally operator-
+   defined Subject field, such as a data center name.  Implicity, TLS
+   certificates MUST include identifying fields, such as Subject and
+   SubjAltName.  These fields of the certificate can compared against a
+   locally configured value mapped to the client.
+
+   Using an operator-defined Subject value, allows a client to be
+   reconfigured without issuing a new client certificate.  Only the
+   local server mapping needs to be updated.
+
 4.  TACACS+ Extended Authentication Packet Types
 
    Versions 1 and 2 of the TACACS+ Protocol, as defined in [RFC8907],
@@ -367,23 +384,6 @@ Internet-Draft              TACACS+ Security                  March 2022
    minor version in the Packet Header is: 0x2
 
 4.1.  The Extended Authentication START Packet Body
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

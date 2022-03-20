@@ -188,7 +188,7 @@
        </section>
        <section title="TLS Authentication">
          <t>
-	  Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for identity verification and policy purposes.
+	  Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for authentication, identity verification and policy purposes.
           Two methods are used with TACACS+, certificate path verification as described in <xref target="CertPV"/> and certificate fingerprint verification as described in <xref target="CertFPV"/>.
           Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.
          </t>
@@ -222,6 +222,19 @@
            </t>
          </section>
        </section>
+       </section>
+       <section title="TLS Identification">
+         <t>
+           In addition to authentication of TLS certificates, implementations MUST support policy consideration of Peer-identifying certificate fields and policy used to verify that the Peer is a valid source for the received certificate and that it is permitted access to TACACS+.
+           Implementations MUST support the validation methods as described in <xref target="RFC5425" section="5.2." sectionFormat="comma"/> and
+comparison of an optionally operator-defined Subject field, such as a data center name.
+           Implicity, TLS certificates MUST include identifying fields, such as Subject and SubjAltName.
+           These fields of the certificate can compared against a locally configured value mapped to the client.
+         </t>
+         <t>
+           Using an operator-defined Subject value, allows a client to be reconfigured without issuing a new client certificate.
+           Only the local server mapping needs to be updated.
+         </t>
        </section>
      </section>
 

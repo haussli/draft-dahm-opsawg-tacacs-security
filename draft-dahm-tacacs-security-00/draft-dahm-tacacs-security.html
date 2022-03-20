@@ -1331,6 +1331,9 @@ li > p:last-of-type {
 </li>
                 </ul>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-tls-identification" class="xref">TLS Identification</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
@@ -1541,7 +1544,7 @@ li > p:last-of-type {
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-tls-authentication" class="section-name selfRef">TLS Authentication</a>
           </h4>
 <p id="section-3.2.2-1">
-   Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for identity verification and policy purposes.
+   Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for authentication, identity verification and policy purposes.
           Two methods are used with TACACS+, certificate path verification as described in <a href="#CertPV" class="xref">Section 3.2.2.1</a> and certificate fingerprint verification as described in <a href="#CertFPV" class="xref">Section 3.2.2.2</a>.
           Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-2">
@@ -1579,6 +1582,20 @@ li > p:last-of-type {
 </section>
 </section>
 </div>
+<section id="section-3.3">
+        <h3 id="name-tls-identification">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-tls-identification" class="section-name selfRef">TLS Identification</a>
+        </h3>
+<p id="section-3.3-1">
+           In addition to authentication of TLS certificates, implementations MUST support policy consideration of Peer-identifying certificate fields and policy used to verify that the Peer is a valid source for the received certificate and that it is permitted access to TACACS+.
+           Implementations MUST support the validation methods as described in <span>[<a href="#RFC5425" class="xref">RFC5425</a>], <a href="https://rfc-editor.org/rfc/rfc5425#section-5.2." class="relref">Section 5.2.</a></span> and
+comparison of an optionally operator-defined Subject field, such as a data center name.
+           Implicity, TLS certificates MUST include identifying fields, such as Subject and SubjAltName.
+           These fields of the certificate can compared against a locally configured value mapped to the client.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">
+           Using an operator-defined Subject value, allows a client to be reconfigured without issuing a new client certificate.
+           Only the local server mapping needs to be updated.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+</section>
 </section>
 <div id="ExtendedAuthenticationPacketType">
 <section id="section-4">
