@@ -227,6 +227,7 @@
          <t>
            In addition to authentication of TLS certificates, implementations MUST support policy consideration of Peer-identifying certificate fields and policy used to verify that the Peer is a valid source for the received certificate and that it is permitted access to TACACS+.
            Implementations MUST support either:
+	 </t>
 	 <t>Network location based validation methods as described in <xref target="RFC5425" section="5.2." sectionFormat="comma"/>
 	 </t>
          <t>or</t>
