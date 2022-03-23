@@ -231,7 +231,7 @@
 	 </t>
          <t>or</t>
          <t>
- 	   Device Identity based validation methods where the peer’s identity is used in the certificate subjectName. This is applicable in dep;lyments where the device securely supports an identity which is shared with its peer.
+ 	   Device Identity based validation methods where the peer’s identity is used in the certificate subjectName. This is applicable in deployments where the device securely supports an identity which is shared with its peer.
            This approach allows a peer's network location to be reconfigured without issuing a new client certificate.
            Only the local server mapping needs to be updated.
          </t>
