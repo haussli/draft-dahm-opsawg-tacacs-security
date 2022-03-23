@@ -226,13 +226,13 @@
        <section title="TLS Identification">
          <t>
            In addition to authentication of TLS certificates, implementations MUST support policy consideration of Peer-identifying certificate fields and policy used to verify that the Peer is a valid source for the received certificate and that it is permitted access to TACACS+.
-           Implementations MUST support the validation methods as described in <xref target="RFC5425" section="5.2." sectionFormat="comma"/> and
-comparison of an optionally operator-defined Subject field, such as a data center name.
-           Implicity, TLS certificates MUST include identifying fields, such as Subject and SubjAltName.
-           These fields of the certificate can compared against a locally configured value mapped to the client.
-         </t>
+           Implementations MUST support either:
+	 <t>Network location based validation methods as described in <xref target="RFC5425" section="5.2." sectionFormat="comma"/>
+	 </t>
+         <t>or</t>
          <t>
-           Using an operator-defined Subject value, allows a client to be reconfigured without issuing a new client certificate.
+ 	   Device Identity based validation methods where the peer’s identity is used in the certificate subjectName. This is applicable in dep;lyments where the device securely supports an identity which is shared with its peer.
+           This approach allows a peer's network location to be reconfigured without issuing a new client certificate.
            Only the local server mapping needs to be updated.
          </t>
        </section>
