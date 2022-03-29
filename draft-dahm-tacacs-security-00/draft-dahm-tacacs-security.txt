@@ -86,9 +86,9 @@ Table of Contents
      3.2.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   5
        3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
        3.2.2.  TLS Authentication  . . . . . . . . . . . . . . . . .   6
-     3.3.  TLS Identification  . . . . . . . . . . . . . . . . . . .   7
-   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
-     4.1.  The Extended Authentication START Packet Body . . . . . .   8
+     3.3.  TLS Identification  . . . . . . . . . . . . . . . . . . .   6
+   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   6
+     4.1.  The Extended Authentication START Packet Body . . . . . .   7
      4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
      4.3.  The Extended Authentication CONTINUE Packet Body  . . . .  10
    5.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  12
@@ -286,16 +286,13 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    Implementations MUST support certificate-based TLS authentication and
    certificate revocation bi-directionally for authentication, identity
-   verification and policy purposes.  Two methods are used with TACACS+,
-   certificate path verification as described in Section 3.2.2.1 and
-   certificate fingerprint verification as described in Section 3.2.2.2.
-   Certificate path verification MUST be implemented, certificate
-   fingerprint verification SHOULD be implemented.
+   verification and policy purposes.  Certificate path verification as
+   described in Section 3.2.2.1 MUST be supported.
 
-   If either method succeeds, the authentication is successful and the
-   connection is permitted.  Policy MAY impose further constraints upon
-   the Peer, allowing or denying the connection based on certificate
-   fields or any other parameters exposed by the implementation.
+   If this succeeds, the authentication is successful and the connection
+   is permitted.  Policy MAY impose further constraints upon the Peer,
+   allowing or denying the connection based on certificate fields or any
+   other parameters exposed by the implementation.
 
    Unless disabled by configuration, a Peer MUST disconnect a Peer that
    offers an invalid TLS Certificate.
@@ -304,39 +301,6 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    Implementations MUST support certificate Path verification as
    described in [RFC5280].
-
-3.2.2.2.  TLS Certificate Fingerprint Verification
-
-   Implementations SHOULD support certificate fingerprint verification
-   for Peer authentication.
-
-   The fingerprint is calculated on the certificate received from the
-   remote Peer and compared to the one previously exported by that Peer
-   and made available to the local Peer.  There is no need to verify the
-   Certificate Path; that was done when the operator accepted the
-   fingerprint exported by the Peer.  If the fingerprints match, the
-   Peer's identity is verified.
-
-   The certificate MUST still be well-formed and be within the Validity
-   period.
-
-   To facilitate this verification, implementations MUST provide means
-   to export a fingerprint of their key(s) and import those of its
-   Peers.  The fingerprint format MUST conform to the format adopted by
-   syslog in [RFC5425], Section 4.2.2.
-
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 30 September 2022               [Page 6]
-
-Internet-Draft              TACACS+ Security                  March 2022
-
 
 3.3.  TLS Identification
 
@@ -366,6 +330,14 @@ Internet-Draft              TACACS+ Security                  March 2022
    not accommodate any further arguments which may be used to give
    context to the request.
 
+
+
+
+Dahm, et al.            Expires 30 September 2022               [Page 6]
+
+Internet-Draft              TACACS+ Security                  March 2022
+
+
    One use-case where this shortcoming inhibits correct operation is for
    the TACACS+ proxy.  Because the originating client is not encoded in
    the regular Authentication START Packet, TACACS+ Servers generally
@@ -386,6 +358,34 @@ Internet-Draft              TACACS+ Security                  March 2022
    The server should expect Extended Authentication Packet Bodies if the
    minor version in the Packet Header is: 0x2
 
+4.1.  The Extended Authentication START Packet Body
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -393,8 +393,6 @@ Dahm, et al.            Expires 30 September 2022               [Page 7]
 
 Internet-Draft              TACACS+ Security                  March 2022
 
-
-4.1.  The Extended Authentication START Packet Body
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -443,14 +441,14 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    The new fields are as follows:
 
+   arg_cnt
+
 
 
 Dahm, et al.            Expires 30 September 2022               [Page 8]
 
 Internet-Draft              TACACS+ Security                  March 2022
 
-
-   arg_cnt
 
    This represents the number of arguments in the packet.
 
@@ -490,6 +488,8 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
+
+
 
 
 
@@ -973,7 +973,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    authentication of the Peer to fail.  Certificate caching and Raw
    Public Keys [RFC7250] are methods to address this, but both are out
    of scope for this document.  Certificate fingerprints are another
-   option, see Section 3.2.2.2
+   option.
 
 8.2.  Well-Known TCP/IP Port
 
@@ -1047,8 +1047,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
    Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their
    support, insightful review, and/or comments.  [RFC5425] was also used
-   as a basis for the approach to TLS and borrowed its fingerprint
-   format.
+   as a basis for the approach to TLS.
 
 11.  Normative References
 
@@ -1058,6 +1057,7 @@ Internet-Draft              TACACS+ Security                  March 2022
               Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, May 2017.
 
+              <https://www.rfc-editor.org/bcp/bcp14.txt>
 
 
 
@@ -1065,8 +1065,6 @@ Dahm, et al.            Expires 30 September 2022              [Page 19]
 
 Internet-Draft              TACACS+ Security                  March 2022
 
-
-              <https://www.rfc-editor.org/bcp/bcp14.txt>
 
    [RFC4250]  Lehtinen, S. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Protocol Assigned Numbers", RFC 4250,
@@ -1112,6 +1110,8 @@ Internet-Draft              TACACS+ Security                  March 2022
    [SSHALGS]  IANA, "Public Key Algorithm Names",
               <https://www.iana.org/assignments/ssh-parameters/ssh-
               parameters.xhtml#ssh-parameters-19>.
+
+
 
 
 

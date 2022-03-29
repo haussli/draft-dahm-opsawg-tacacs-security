@@ -189,11 +189,10 @@
        <section title="TLS Authentication">
          <t>
 	  Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for authentication, identity verification and policy purposes.
-          Two methods are used with TACACS+, certificate path verification as described in <xref target="CertPV"/> and certificate fingerprint verification as described in <xref target="CertFPV"/>.
-          Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.
+          Certificate path verification as described in <xref target="CertPV"/> MUST be supported.
          </t>
          <t>
-           If either method succeeds, the authentication is successful and the connection is permitted.
+           If this succeeds, the authentication is successful and the connection is permitted.
            Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.
          </t>
          <t>
@@ -203,23 +202,6 @@
          <t>
            Implementations MUST support certificate Path verification as described in <xref target="RFC5280"/>.
          </t>
-         </section>
-         <section title="TLS Certificate Fingerprint Verification" anchor="CertFPV">
-           <t>
-	     Implementations SHOULD support certificate fingerprint verification for Peer authentication.
-           </t>
-           <t>
-             The fingerprint is calculated on the certificate received from the remote Peer and compared to the one previously exported by that Peer and made available to the local Peer.
-             There is no need to verify the Certificate Path; that was done when the operator accepted the fingerprint exported by the Peer.
-             If the fingerprints match, the Peer's identity is verified.
-           </t>
-           <t>
-             The certificate MUST still be well-formed and be within the Validity period.
-           </t>
-           <t>
-	     To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those of its Peers.
-	     The fingerprint format MUST conform to the format adopted by syslog in <xref target="RFC5425" section="4.2.2." sectionFormat="comma"/>
-           </t>
          </section>
        </section>
        </section>
@@ -647,7 +629,7 @@ s.
 	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
 	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus TLS authentication of the Peer to fail.
 	     Certificate caching and <xref target="RFC7250">Raw Public Keys</xref> are methods to address this, but both are out of scope for this document.
-             Certificate fingerprints are another option, see <xref target="CertFPV"/>
+             Certificate fingerprints are another option.
            </t>
          </section>
        </section>
@@ -698,7 +680,7 @@ s.
      <section title="Acknowledgments">
        <t>
          The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their support, insightful review, and/or comments.
-         <xref target="RFC5425"/> was also used as a basis for the approach to TLS and borrowed its fingerprint format.
+         <xref target="RFC5425"/> was also used as a basis for the approach to TLS.
        </t>
      </section>
 

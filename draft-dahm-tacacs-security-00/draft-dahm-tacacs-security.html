@@ -1545,10 +1545,9 @@ li > p:last-of-type {
           </h4>
 <p id="section-3.2.2-1">
    Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for authentication, identity verification and policy purposes.
-          Two methods are used with TACACS+, certificate path verification as described in <a href="#CertPV" class="xref">Section 3.2.2.1</a> and certificate fingerprint verification as described in <a href="#CertFPV" class="xref">Section 3.2.2.2</a>.
-          Certificate path verification MUST be implemented, certificate fingerprint verification SHOULD be implemented.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+          Certificate path verification as described in <a href="#CertPV" class="xref">Section 3.2.2.1</a> MUST be supported.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-2">
-           If either method succeeds, the authentication is successful and the connection is permitted.
+           If this succeeds, the authentication is successful and the connection is permitted.
            Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.<a href="#section-3.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-3">
     Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
@@ -1559,24 +1558,6 @@ li > p:last-of-type {
             </h5>
 <p id="section-3.2.2.1-1">
            Implementations MUST support certificate Path verification as described in <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>.<a href="#section-3.2.2.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="CertFPV">
-<section id="section-3.2.2.2">
-            <h5 id="name-tls-certificate-fingerprint">
-<a href="#section-3.2.2.2" class="section-number selfRef">3.2.2.2. </a><a href="#name-tls-certificate-fingerprint" class="section-name selfRef">TLS Certificate Fingerprint Verification</a>
-            </h5>
-<p id="section-3.2.2.2-1">
-      Implementations SHOULD support certificate fingerprint verification for Peer authentication.<a href="#section-3.2.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.2.2-2">
-             The fingerprint is calculated on the certificate received from the remote Peer and compared to the one previously exported by that Peer and made available to the local Peer.
-             There is no need to verify the Certificate Path; that was done when the operator accepted the fingerprint exported by the Peer.
-             If the fingerprints match, the Peer's identity is verified.<a href="#section-3.2.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.2.2-3">
-             The certificate MUST still be well-formed and be within the Validity period.<a href="#section-3.2.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.2.2-4">
-      To facilitate this verification, implementations MUST provide means to export a fingerprint of their key(s) and import those of its Peers.
-      The fingerprint format MUST conform to the format adopted by syslog in <span>[<a href="#RFC5425" class="xref">RFC5425</a>], <a href="https://rfc-editor.org/rfc/rfc5425#section-4.2.2." class="relref">Section 4.2.2.</a></span><a href="#section-3.2.2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2039,7 +2020,7 @@ s.<a href="#section-4-4" class="pilcrow">¶</a></p>
       Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
       Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus TLS authentication of the Peer to fail.
       Certificate caching and <span><a href="#RFC7250" class="xref">Raw Public Keys</a> [<a href="#RFC7250" class="xref">RFC7250</a>]</span> are methods to address this, but both are out of scope for this document.
-             Certificate fingerprints are another option, see <a href="#CertFPV" class="xref">Section 3.2.2.2</a><a href="#section-8.1.5-1" class="pilcrow">¶</a></p>
+             Certificate fingerprints are another option.<a href="#section-8.1.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2103,7 +2084,7 @@ s.<a href="#section-4-4" class="pilcrow">¶</a></p>
       </h2>
 <p id="section-10-1">
          The author(s) would like to thank Russ Housley, Steven M. Bellovin, Stephen Farrell, Alan DeKok, Warren Kumari, and Tom Petch for their support, insightful review, and/or comments.
-         <span>[<a href="#RFC5425" class="xref">RFC5425</a>]</span> was also used as a basis for the approach to TLS and borrowed its fingerprint format.<a href="#section-10-1" class="pilcrow">¶</a></p>
+         <span>[<a href="#RFC5425" class="xref">RFC5425</a>]</span> was also used as a basis for the approach to TLS.<a href="#section-10-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-11">
       <h2 id="name-normative-references">
