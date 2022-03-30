@@ -4,7 +4,7 @@
 
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
-Updates: RFC8097 (if approved)                                   D. Gash
+Updates: RFC8907 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
 Expires: 30 September 2022                                        A. Ota
                                                            29 March 2022
@@ -206,7 +206,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    1.  Confidentiality and Integrity: The MD5 obfuscation specified in
        the original protocol definition is not fit for purpose,
        requiring that TACACS+ be deployed over a secured network.
-       Securing TACACS+ protocol with TLS is intended to provide
+       Securing the TACACS+ protocol with TLS is intended to provide
        confidentiality and integrity without requiring the provision of
        a secured network.
 
@@ -254,7 +254,7 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    Once the TLS connection is established, the exchange of TACACS+ data
    proceeds as normal, except that it is transmitted over TLS as TLS
-   application data and without TACACS+ obfuscation (see Section 6)
+   application data and without TACACS+ obfuscation (see Section 6).
 
    The connection persists until the Server or Client closes it.  It
    might be closed due to an error or at the conclusion of the TACACS+
@@ -462,7 +462,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    are in a single string and are separated by either a "=" (0X3D) or a
    "*" (0X2A).  The equals sign indicates a mandatory argument.  The
    asterisk indicates an optional one.  For the rules regarding optional
-   and mandatory arguments, refer to [RFC8907]
+   and mandatory arguments, refer to [RFC8907].
 
    Multiple arguments with the same name are permitted within a packet,
    a common example is cmd-arg.  The handling of repeated arguments is
@@ -697,7 +697,7 @@ Internet-Draft              TACACS+ Security                  March 2022
       authentication.
 
    AVP ssh_subsystem (String)
-      Attribute to carry SSH subsystem name for authorization
+      Attribute to carry SSH subsystem name for authorization.
 
 5.2.  SSH Public Key Support
 
