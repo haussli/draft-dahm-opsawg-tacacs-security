@@ -10,7 +10,7 @@
   <!ENTITY wj     "&#8288;">
 ]>
 <rfc docName="draft-dahm-tacacs-security-00"
-     category="info"
+     category="std"
      ipr="trust200902"
      submissionType='IETF'
      consensus="true"
