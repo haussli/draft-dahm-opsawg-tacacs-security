@@ -4,7 +4,7 @@
 
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
-Updates: RFC8097 (if approved)                                   D. Gash
+Updates: RFC8907 (if approved)                                   D. Gash
 Intended status: Standards Track                     Cisco Systems, Inc.
 Expires: 2 October 2022                                           A. Ota
                                                                         
