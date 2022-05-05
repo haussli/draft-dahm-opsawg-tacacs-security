@@ -4,10 +4,10 @@
 
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
-Updates: RFC8907 (if approved)                                   D. Gash
+Updates: RFC8097 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 30 September 2022                                        A. Ota
-                                                           29 March 2022
+Expires: 6 November 2022                                          A. Ota
+                                                              5 May 2022
 
 
                TACACS+ Security, TLS, and SSH Public Keys
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 September 2022.
+   This Internet-Draft will expire on 6 November 2022.
 
 
 
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 1]
+Dahm, et al.             Expires 6 November 2022                [Page 1]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
 Copyright Notice
@@ -87,7 +87,7 @@ Table of Contents
        3.2.1.  Cipher Requirements . . . . . . . . . . . . . . . . .   5
        3.2.2.  TLS Authentication  . . . . . . . . . . . . . . . . .   6
      3.3.  TLS Identification  . . . . . . . . . . . . . . . . . . .   6
-   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   6
+   4.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   7
      4.1.  The Extended Authentication START Packet Body . . . . . .   7
      4.2.  The Extension Authentication REPLY Packet Body  . . . . .   9
      4.3.  The Extended Authentication CONTINUE Packet Body  . . . .  10
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 2]
+Dahm, et al.             Expires 6 November 2022                [Page 2]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
      8.3.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  19
@@ -165,9 +165,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 3]
+Dahm, et al.             Expires 6 November 2022                [Page 3]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
 2.2.  Empty Value
@@ -206,7 +206,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    1.  Confidentiality and Integrity: The MD5 obfuscation specified in
        the original protocol definition is not fit for purpose,
        requiring that TACACS+ be deployed over a secured network.
-       Securing the TACACS+ protocol with TLS is intended to provide
+       Securing TACACS+ protocol with TLS is intended to provide
        confidentiality and integrity without requiring the provision of
        a secured network.
 
@@ -221,9 +221,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 4]
+Dahm, et al.             Expires 6 November 2022                [Page 4]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
 3.1.  Well-Known TCP/IP Port
@@ -238,6 +238,9 @@ Internet-Draft              TACACS+ Security                  March 2022
    [RFC7605], where a different well-known system TCP/IP port is
    assigned by IANA, port [TBD] (Section 9) with the service name [TBDN]
    (Section 9), for TLS connections.
+
+   TACACS+ TLS could use any other TCP port by operator configuration,
+   though Section 8.2 should still be considered.
 
 3.2.  TLS Connection
 
@@ -254,7 +257,7 @@ Internet-Draft              TACACS+ Security                  March 2022
 
    Once the TLS connection is established, the exchange of TACACS+ data
    proceeds as normal, except that it is transmitted over TLS as TLS
-   application data and without TACACS+ obfuscation (see Section 6).
+   application data and without TACACS+ obfuscation (see Section 6)
 
    The connection persists until the Server or Client closes it.  It
    might be closed due to an error or at the conclusion of the TACACS+
@@ -269,18 +272,19 @@ Internet-Draft              TACACS+ Security                  March 2022
    RFC8446 Section 9.1).  The cipher suites offered or accepted SHOULD
    be configurable so that operators can adapt.
 
+
+
+
+
+
+Dahm, et al.             Expires 6 November 2022                [Page 5]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
    This document makes no cipher suite recommendations, but
    recommendations can be found in the TLS Cipher Suites section of the
    [TLSCSREC].
-
-
-
-
-
-Dahm, et al.            Expires 30 September 2022               [Page 5]
-
-Internet-Draft              TACACS+ Security                  March 2022
-
 
 3.2.2.  TLS Authentication
 
@@ -322,6 +326,18 @@ Internet-Draft              TACACS+ Security                  March 2022
    to be reconfigured without issuing a new client certificate.  Only
    the local server mapping needs to be updated.
 
+
+
+
+
+
+
+
+Dahm, et al.             Expires 6 November 2022                [Page 6]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
 4.  TACACS+ Extended Authentication Packet Types
 
    Versions 1 and 2 of the TACACS+ Protocol, as defined in [RFC8907],
@@ -329,14 +345,6 @@ Internet-Draft              TACACS+ Security                  March 2022
    CONTINUE which support the credential validation use case but does
    not accommodate any further arguments which may be used to give
    context to the request.
-
-
-
-
-Dahm, et al.            Expires 30 September 2022               [Page 6]
-
-Internet-Draft              TACACS+ Security                  March 2022
-
 
    One use-case where this shortcoming inhibits correct operation is for
    the TACACS+ proxy.  Because the originating client is not encoded in
@@ -381,17 +389,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 30 September 2022               [Page 7]
+Dahm, et al.             Expires 6 November 2022                [Page 7]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -445,9 +445,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 8]
+Dahm, et al.             Expires 6 November 2022                [Page 8]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    This represents the number of arguments in the packet.
@@ -462,7 +462,7 @@ Internet-Draft              TACACS+ Security                  March 2022
    are in a single string and are separated by either a "=" (0X3D) or a
    "*" (0X2A).  The equals sign indicates a mandatory argument.  The
    asterisk indicates an optional one.  For the rules regarding optional
-   and mandatory arguments, refer to [RFC8907].
+   and mandatory arguments, refer to [RFC8907]
 
    Multiple arguments with the same name are permitted within a packet,
    a common example is cmd-arg.  The handling of repeated arguments is
@@ -501,9 +501,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022               [Page 9]
+Dahm, et al.             Expires 6 November 2022                [Page 9]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -557,9 +557,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 10]
+Dahm, et al.             Expires 6 November 2022               [Page 10]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -613,9 +613,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 11]
+Dahm, et al.             Expires 6 November 2022               [Page 11]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
@@ -669,9 +669,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 12]
+Dahm, et al.             Expires 6 November 2022               [Page 12]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
@@ -697,7 +697,7 @@ Internet-Draft              TACACS+ Security                  March 2022
       authentication.
 
    AVP ssh_subsystem (String)
-      Attribute to carry SSH subsystem name for authorization.
+      Attribute to carry SSH subsystem name for authorization
 
 5.2.  SSH Public Key Support
 
@@ -725,9 +725,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 13]
+Dahm, et al.             Expires 6 November 2022               [Page 13]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
        wants.  The set of permissible values for this AVP are the SSH
@@ -781,9 +781,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 14]
+Dahm, et al.             Expires 6 November 2022               [Page 14]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
        REPLY packet, the server SHOULD set the REPLY packet flag
@@ -837,9 +837,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 15]
+Dahm, et al.             Expires 6 November 2022               [Page 15]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    The set of permissible values for this AVP are the SSH Subsystem
@@ -893,9 +893,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 16]
+Dahm, et al.             Expires 6 November 2022               [Page 16]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
 8.  Security Considerations
@@ -949,9 +949,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 17]
+Dahm, et al.             Expires 6 November 2022               [Page 17]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
 8.1.4.  TLS Options
@@ -1005,9 +1005,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 18]
+Dahm, et al.             Expires 6 November 2022               [Page 18]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    TLS.  Furthermore, Peers SHOULD be configurable to limit offered or
@@ -1061,9 +1061,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 19]
+Dahm, et al.             Expires 6 November 2022               [Page 19]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    [RFC4250]  Lehtinen, S. and C. Lonvick, Ed., "The Secure Shell (SSH)
@@ -1117,9 +1117,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 20]
+Dahm, et al.             Expires 6 November 2022               [Page 20]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    [SSHSUBSYS]
@@ -1173,9 +1173,9 @@ Internet-Draft              TACACS+ Security                  March 2022
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 21]
+Dahm, et al.             Expires 6 November 2022               [Page 21]
 
-Internet-Draft              TACACS+ Security                  March 2022
+Internet-Draft              TACACS+ Security                    May 2022
 
 
    [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
@@ -1229,4 +1229,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires 30 September 2022              [Page 22]
+Dahm, et al.             Expires 6 November 2022               [Page 22]

@@ -149,7 +149,7 @@
        <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of Peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
        and specifies that the authentication capabilities of TLS are used to allow the Peers to authenticate each other.</li>
        </ol>
-       <section title="Well-Known TCP/IP Port" anchor="TLSPport">
+       <section title="Well-Known TCP/IP Port" anchor="TLSPort">
          <t>
            All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
            Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
@@ -158,10 +158,13 @@
            This document favors the predictable use of TLS security for a deployment, see (<xref target="wellknown"/>). 
            TACACS+ TLS will therefore follow <xref target="RFC7605"/>, where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref> with the service name <xref target="ICTBD">[TBDN]</xref>, for TLS connections.
          </t>
+         <t>
+           TACACS+ TLS could use any other TCP port by operator configuration, though <xref target="wellknown"/> should still be considered.
+         </t>
        </section>
        <section title="TLS Connection" anchor="TLSConn">
          <t>
-           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPport"/>).
+           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPort"/>).
            Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
          </t>
          <t>
