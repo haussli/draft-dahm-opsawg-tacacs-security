@@ -9,7 +9,7 @@
   <!ENTITY nbhy   "&#8209;">
   <!ENTITY wj     "&#8288;">
 ]>
-<rfc docName="draft-dahm-tacacs-security-00"
+<rfc docName="draft-dahm-tacacs-security-01"
      category="info"
      ipr="trust200902"
      submissionType='IETF'
@@ -23,7 +23,7 @@
 
    <front>
      <title abbrev="TACACS+ Security">
-            TACACS+ Security, TLS, and SSH Public Keys
+            TACACS+ Security and SSH Public Keys
      </title>
      <author fullname="Thorsten Dahm" initials="T." surname="Dahm">
        <address>
@@ -71,7 +71,7 @@
      <abstract>
      <t>
        The <xref target="RFC8907">TACACS+ Protocol</xref> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
-       This document, a companion to the <xref target="RFC8907">TACACS+ protocol</xref>, adds new packet formats to improve security and function, Transport Layer Security (currently defined by <xref target="RFC8446">TLS 1.3</xref>) support, and support for <xref target="RFC4716">SSH</xref> public keys and deprecates former inferior security mechanisms.
+       This document, a companion to the <xref target="RFC8907">TACACS+ protocol</xref>, adds new packet formats to improve security and function and support for <xref target="RFC4716">SSH</xref> public keys.
      </t>
      </abstract>
      <note title="Requirements Language">
@@ -88,17 +88,11 @@
          The protocol provides authentication, authorization and accounting services for TACACS+ clients.
        </t>
        <t>
-	 While the content of the protocol is highly sensitive, TACACS+ lacks modern and/or effective confidentiality, integrity, and authentication of the connection and network traffic between the server and client.
-	 The existing mechanisms of TACACS+ are extremely weak and the Security Considerations section of the <xref target="RFC8907">TACACS+ Protocol</xref> adequately describes this.
-       </t>
-       <t>
-	 To address these deficiencies, this document updates the <xref target="RFC8907">TACACS+ Protocol</xref> to use <xref target="RFC8446">TLS 1.3</xref> authentication and encryption, and deprecates the use of its former mechanisms.
-       </t>
-       <t>
+XXX needs improvement; and mention of the deprecations
 	 To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
        </t>
        <t>
-	 To accomplish these goals and improve security and functionality when a network proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+	 To accomplish that goal and improve security and functionality when a network proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
        </t>
      </section>
 
@@ -106,6 +100,7 @@
        <t>
          The Technical Definitions section of the <xref target="RFC8907">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
          The following terms are also used in this document.
+XXX are all of these definitions used?
        </t>
        <section title="AVP">
          <t>
@@ -131,95 +126,6 @@
        <section title="TLS Connection">
          <t>
            A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
-         </t>
-       </section>
-     </section>
-
-     <section title="TLS for TACACS+">
-       <t>
-         TACACS+ connections are TCP/IP connections initiated by the Client to the Server.
-         The well-known TCP/IP port 49 on the Server is used for unencrypted and encrypted connections as defined in the <xref target="RFC8907">TACACS+ Protocol</xref>.
-         A connection may be used for only a single Session or the multiplexing of multiple Sessions in TACACS+ Single Connection Mode.
-       </t>
-       <t>TLS is introduced into TACACS+ to fulfill the following requirements:
-       </t>
-       <ol>
-       <li>Confidentiality and Integrity: The MD5 obfuscation specified in the original protocol definition is not fit for purpose, requiring that TACACS+ be 
-       deployed over a secured network. Securing TACACS+ protocol with TLS is intended to provide confidentiality and integrity without requiring the provision of a secured network.</li>
-       <li>Peer authentication: The use of shared keys to add and remove the MD5 obfuscation was intended to provide a form of Peer authentication for the TACACS+ protocol. This document deprecates the MD5 obfuscation,
-       and specifies that the authentication capabilities of TLS are used to allow the Peers to authenticate each other.</li>
-       </ol>
-       <section title="Well-Known TCP/IP Port" anchor="TLSPort">
-         <t>
-           All data exchanged by TACACS+ Peers MUST be encrypted, including the authentication of the Peers.
-           Therefore, TLS Hello MUST be initiated by the client immediately upon the establishment of the TCP/IP connection.
-         </t>
-         <t>
-           This document favors the predictable use of TLS security for a deployment, see (<xref target="wellknown"/>). 
-           TACACS+ TLS will therefore follow <xref target="RFC7605"/>, where a different well-known system TCP/IP port is assigned by IANA, port <xref target="ICTBD">[TBD]</xref> with the service name <xref target="ICTBD">[TBDN]</xref>, for TLS connections.
-         </t>
-         <t>
-           TACACS+ TLS could use any other TCP port by operator configuration, though <xref target="wellknown"/> should still be considered.
-         </t>
-       </section>
-       <section title="TLS Connection" anchor="TLSConn">
-         <t>
-           A TACACS+ Client initiates a TLS connection by making a TCP connection to a configured Server on the tacacss well-known port (<xref target="TLSPort"/>).
-           Once the TCP connection is established, the Client MUST immediately begin the TLS negotiation before sending any TACACS+ protocol data.
-         </t>
-         <t>
-	   Implementations MUST support <xref target="RFC8446">TLS 1.3</xref> and MAY permit TLS 1.3 session resumption.
-	   If resumption is supported, the resumption ticket_lifetime SHOULD be configurable, including a zero seconds lifetime.
-         </t>
-         <t>
-	   Once the TLS connection is established, the exchange of TACACS+ data proceeds as normal, except that it is transmitted over TLS as TLS application data and without TACACS+ obfuscation (see <xref target="DeprecationofTACACSEncryption"/>)
-         </t>
-         <t>
-	   The connection persists until the Server or Client closes it.
-	   It might be closed due to an error or at the conclusion of the TACACS+ Session.
-	   If Single Connection Mode has been negotiated, it might remain open after a successful Session, until an error or a timeout occurs.
-	   Why it closed has no bearing on TLS resumption, unless closed by a TLS error, in which case the ticket might be invalidated.
-         </t>
-       <section title="Cipher Requirements">
-         <t>
-	   Implementations MUST support the TLS 1.3 mandatory cipher suites (See RFC8446 Section 9.1).
-	   The cipher suites offered or accepted SHOULD be configurable so that operators can adapt.
-         </t>
-         <t>
-	   This document makes no cipher suite recommendations, but recommendations can be found in the TLS Cipher Suites section of the <xref target="TLSCSREC"/>.
-         </t>
-       </section>
-       <section title="TLS Authentication">
-         <t>
-	  Implementations MUST support certificate-based TLS authentication and certificate revocation bi-directionally for authentication, identity verification and policy purposes.
-          Certificate path verification as described in <xref target="CertPV"/> MUST be supported.
-         </t>
-         <t>
-           If this succeeds, the authentication is successful and the connection is permitted.
-           Policy MAY impose further constraints upon the Peer, allowing or denying the connection based on certificate fields or any other parameters exposed by the implementation.
-         </t>
-         <t>
-	   Unless disabled by configuration, a Peer MUST disconnect a Peer that offers an invalid TLS Certificate.
-         </t>
-         <section title="TLS Certificate Path Verification" anchor="CertPV">
-         <t>
-           Implementations MUST support certificate Path verification as described in <xref target="RFC5280"/>.
-         </t>
-         </section>
-       </section>
-       </section>
-       <section title="TLS Identification">
-         <t>
-           In addition to authentication of TLS certificates, implementations MUST support policy consideration of Peer-identifying certificate fields and policy used to verify that the Peer is a valid source for the received certificate and that it is permitted access to TACACS+.
-           Implementations MUST support either:
-	 </t>
-	 <t>Network location based validation methods as described in <xref target="RFC5425" section="5.2." sectionFormat="comma"/>
-	 </t>
-         <t>or</t>
-         <t>
- 	   Device Identity based validation methods where the peer’s identity is used in the certificate subjectName. This is applicable in deployments where the device securely supports an identity which is shared with its peer.
-           This approach allows a peer's network location to be reconfigured without issuing a new client certificate.
-           Only the local server mapping needs to be updated.
          </t>
        </section>
      </section>
@@ -553,24 +459,6 @@ s.
        </section>
      </section>
 
-     <section title="Deprecation of TACACS+ Encryption" anchor="DeprecationofTACACSEncryption">
-       <t>
-         The original draft of TACACS+ described an encryption mechanism built into the protocol.
-         This is insufficient for modern purposes and the document <xref target="RFC8907">TACACS+ Protocol</xref> reclassified the mechanism as one capable only of obfuscation.
-       </t>
-       <t>   
-         The introduction of TLS PSK and certificate Peer authentication and TLS encryption to TACACS+ obsolesces these former mechanisms and so are hereby deprecated.
-         This section describes how the TACACS+ client and servers MUST operate with regards to the obfuscation mechanism.
-       </t>
-       <t>
-         The TACACS+ server or client receiving TACACS+ Packets MUST process the packet as if TAC_PLUS_UNENCRYPTED_FLAG was set.
-         The actual value of TAC_PLUS_UNENCRYPTED_FLAG flag in the TACACS+ header MUST be ignored.
-       </t>
-       <t>
-         Peers SHOULD set the TAC_PLUS_UNENCRYPTED_FLAG flag in the Packet Header of packets on TLS Connections, indicating that the data obfuscation is not used.
-       </t>
-     </section>
-
      <section title="Protocol Deprecations" anchor="ProtocolDeprecation">
        <t>
            This section deprecates features from the TACACS+ Protocol.
@@ -586,80 +474,6 @@ s.
      </section>
 
      <section title="Security Considerations">
-       <section title="TLS">
-         <t>
-           This document improves the confidentiality, integrity, and authentication of the connection and network traffic between TACACS+ Peers by adding TLS support.
-           This does not in itself protect the server nor clients; the operator and equipment vendors have a role.
-           That role is to diligently follow current best practices for maintaining the integrity of network devices and selection of TLS key and encryption algorithms.
-         </t>
-         <section title="TLS Use">
-           <t>
-             TLS encryption SHOULD be used in deployments when both the Clients and Servers support it.
-             Servers that support TLS encryption MAY be configured to allow Unsecure Connections when TLS encryption is not supported by the Client, but this is NOT RECOMMENDED because of the threat of downgrade attacks, as described in <xref target="wellknown"/>.
-             Unsecure Connections would be better served by separate Servers from the TLS Servers.
-           </t>
-           <t>
-             It is NOT RECOMMENDED to deploy TACACS+ without TLS authentication and encryption, including TLS using the NULL algorithm, except for within test and debug environments.
-             Also see <xref target="RFC3365"/>.
-           </t>
-         </section>
-         <section title="TLS 0-RTT">
-           <t>
-	     TLS 1.3 resumption and PSK techniques make it possible to send Early Data, aka. 0-RTT data, data that is sent before the TLS handshake completes.
-	     Replay of this data is possible.
-	     Given the sensitivity of TACACS+ data, a Client MUST NOT send data until the full TLS handshake completes; that is, Clients MUST NOT send 0-RTT data and Servers MAY abruptly disconnect Clients that do.
-           </t>
-         </section>
-         <section title="TLS PSK">
-           <t>
-	     Implementations MAY support TLS authentication with Pre-Shared Keys (PSKs), also known as external PSKs in TLS 1.3, which are not resumption PSKs.
-	     PSKs SHOULD NOT be shared among Clients or Servers to limit exposure of a compromised key and to ease key rotation.
-	     Also see <xref target="RFC8773"/> and <xref target="I-D.ietf-tls-external-psk-guidance"/>.
-           </t>
-           <t>
-	     PSKs are otherwise considered out-of-scope for this document.
-           </t>
-         </section>
-         <section title="TLS Options">
-           <t>
-	     Unfortunately, no single and timely TLS recommendations document exists.
-	     Therefore, implementers and operators SHOULD make use of the various RFCs to determine which TLS versions and algorithms should be supported, deprecated, or abandoned, in the absence of updates to this document.
-	     Useful examples are the TLS specifications themselves (<xref target="RFC8446">TLS 1.3</xref>), which prescribes mandatory support in Section 9, and TLS Recommendations <xref target="RFC7525"/>.
-           </t>
-         </section>
-         <section title="Unreachable TLS CA" anchor="CAcache">
-           <t>
-	     Operators SHOULD be cognizant of the potential of Server and/or Client isolation from their Peer's Certificate Authority (CA) by network failures.
-	     Isolation from a public key certificate's CA will cause the verification of the certificate to fail and thus TLS authentication of the Peer to fail.
-	     Certificate caching and <xref target="RFC7250">Raw Public Keys</xref> are methods to address this, but both are out of scope for this document.
-             Certificate fingerprints are another option.
-           </t>
-         </section>
-       </section>
-
-       <section title="Well-Known TCP/IP Port" anchor="wellknown">
-         <t>
-           A new port is considered appropriate and superior to a "STARTTLS" command or other negotiation method because it allows:
-         </t>
-         <ul>
-           <li>ease of blocking the unencrypted or inferiorly encrypted connections by the TCP/IP port number,</li>
-           <li>passive Intrusion Detection Systems (IDSs) monitoring the unencrypted version to be unaffected by the introduction of TLS,</li>
-           <li>avoidance of Man in the Middle (MitM) attacks that can interfere with STARTTLS,</li>
-           <li>and helps prevent the accidental exposure of sensitive information due to misconfiguration.</li>
-         </ul>
-         <t>
-           However, co-existence of inferior authentication and encryption, whether an Unsecure Connection or deprecated parts that compose TLS, also presents opportunity for down-grade attacks.
-           Causing failure of connections to the TLS-enabled service or the negotiation of shared algorithm support are two such down-grade attacks.
-           The simplest way to address the exposure from Unsecure Connection methods is to refuse Unsecure Connections at the server entirely, perhaps using separate servers for Unsecure Connections and TLS.
-           Another approach is mutual configuration that requires TLS.
-           Clients and Servers SHOULD support configuration that requires Peers, globally and individually, use TLS.
-           Furthermore, Peers SHOULD be configurable to limit offered or recognized TLS versions and algorithms to those recommended by standards bodies and implementers.
-         </t>
-         <t>
-           Servers and Clients could also maintain a cache of Peers that have engaged in TACACS+ TLS connections and demand TLS from that point forward.
-           However, this has potential to be a Denial of Service (DoS) vector, whereby an attacker causes a server to believe that a client that does not support TLS has successfully connected with TLS.
-         </t>
-       </section>
        <section title="SSH Public Key Caching" anchor="pubkeycache">
          <t>
 	   A Client MUST NOT cache SSH public keys received from a Server for future SSH client authentication.
@@ -667,17 +481,6 @@ s.
 	   The Server has no method to revoke a key, except by not offering the key in future authentication sessions.
          </t>
        </section>
-     </section>
-
-     <section title="IANA Considerations" anchor="ICTBD">
-       <t>
-         The authors request that, when this draft is accepted by the working group, the OPSAWG Chairs submit a request to IANA for an early allocation, per <xref target="RFC4020"/> and <xref target="RFC6335"/>, of a new well-known system TCP/IP port number for the service name "tacacss", described as "TACACS+ over TLS".
-         The service name "tacacss" follows the common practice of appending an "s" to the name given of the non-TLS well-known port.
-         This allocation is justified in <xref target="wellknown"/>.
-       </t>
-       <t>
-         RFC EDITOR: this port number should replace "[TBD]" and the service name should replace "[TBDN]" within this document.
-       </t>
      </section>
 
      <section title="Acknowledgments">
@@ -697,11 +500,7 @@ s.
        </referencegroup>
        <?rfc include="reference.RFC.4250.xml"?>
        <?rfc include="reference.RFC.4716.xml"?>
-       <?rfc include="reference.RFC.5280.xml"?>
        <?rfc include="reference.RFC.5425.xml"?>
-       <?rfc include="reference.RFC.7525.xml"?>
-       <?rfc include="reference.RFC.8446.xml"?>
-       <?rfc include="reference.RFC.8773.xml"?>
        <?rfc include="reference.RFC.8907.xml"?>
        <reference anchor="SSHALGS" target="https://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-19">
          <front>
@@ -717,21 +516,9 @@ s.
        </reference>
      </references>
      <references title="Informative References">
-       <xi:include href="http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-tls-external-psk-guidance.xml"/>
-       <?rfc include="reference.RFC.3365.xml"?>
-       <?rfc include="reference.RFC.4020.xml"?>
        <?rfc include="reference.RFC.4251.xml"?>
        <?rfc include="reference.RFC.5952.xml"?>
        <?rfc include="reference.RFC.6242.xml"?>
-       <?rfc include="reference.RFC.6335.xml"?>
-       <?rfc include="reference.RFC.7250.xml"?>
-       <?rfc include="reference.RFC.7605.xml"?>
-       <reference anchor="TLSCSREC" target="https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4">
-         <front>
-           <title>Transport Layer Security (TLS) Parameters</title>
-           <author fullname="IANA"></author>
-         </front>
-       </reference>
      </references>
 
    </back>
