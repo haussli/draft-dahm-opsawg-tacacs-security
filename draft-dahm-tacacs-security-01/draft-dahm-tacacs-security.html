@@ -1304,13 +1304,10 @@ li > p:last-of-type {
                 <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-empty-value" class="xref">Empty Value</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-unsecure-connection" class="xref">Unsecure Connection</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-peer" class="xref">Peer</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-peer" class="xref">Peer</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
-                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="xref">2.5</a>.  <a href="#name-tls-connection" class="xref">TLS Connection</a></p>
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-tls-connection" class="xref">TLS Connection</a></p>
 </li>
             </ul>
 </li>
@@ -1390,8 +1387,7 @@ XXX needs improvement; and mention of the deprecations<a href="#section-1-2" cla
 <p id="section-2-1">
          The Technical Definitions section of the <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> is fully applicable here and will not be repeated, though may be augmented.
          The following terms are also used in this document.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">
-XXX are all of these definitions used?<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-2"></p>
 <section id="section-2.1">
         <h3 id="name-avp">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-avp" class="section-name selfRef">AVP</a>
@@ -1407,26 +1403,18 @@ XXX are all of these definitions used?<a href="#section-2-2" class="pilcrow">¶<
            An empty or zero-length value of an AVP as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span> Sections 8.1.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.3">
-        <h3 id="name-unsecure-connection">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-unsecure-connection" class="section-name selfRef">Unsecure Connection</a>
+        <h3 id="name-peer">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-peer" class="section-name selfRef">Peer</a>
         </h3>
 <p id="section-2.3-1">
-           This is another term for a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.
-           It is a Connection without TLS and therefore being plaintext or possibly using unsecure TACACS+ authentication and obfuscation.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+           This refers to a TACACS+ Server or Client.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.4">
-        <h3 id="name-peer">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-peer" class="section-name selfRef">Peer</a>
+        <h3 id="name-tls-connection">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-tls-connection" class="section-name selfRef">TLS Connection</a>
         </h3>
 <p id="section-2.4-1">
-           This refers to a TACACS+ Server or Client.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-</section>
-<section id="section-2.5">
-        <h3 id="name-tls-connection">
-<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-tls-connection" class="section-name selfRef">TLS Connection</a>
-        </h3>
-<p id="section-2.5-1">
-           A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+           A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
 </section>
 </section>
 <div id="ExtendedAuthenticationPacketType">
