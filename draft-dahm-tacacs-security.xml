@@ -101,13 +101,12 @@
          The protocol provides authentication, authorization and accounting services for TACACS+ clients.
        </t>
        <t>
-XXX needs improvement; and mention of the deprecations
+         Authors of <xref target="RFC8907"/> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of policy when a TACACS+ proxy is used, and adding support for SSH public keys.
+	 These are addressed herein.
        </t>
        <t>
-	 To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
-       </t>
-       <t>
-	 To accomplish that goal and improve security and functionality when a network proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+	 To improve security and functionality when a proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+         For SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
        </t>
      </section>
 

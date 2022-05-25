@@ -1374,11 +1374,11 @@ li > p:last-of-type {
          The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
          The protocol provides authentication, authorization and accounting services for TACACS+ clients.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">
-XXX needs improvement; and mention of the deprecations<a href="#section-1-2" class="pilcrow">¶</a></p>
+         Authors of <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of policy when a TACACS+ proxy is used, and adding support for SSH public keys.
+  These are addressed herein.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">
-  To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">
-  To accomplish that goal and improve security and functionality when a network proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.<a href="#section-1-4" class="pilcrow">¶</a></p>
+  To improve security and functionality when a proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+         For SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2">
       <h2 id="name-technical-definitions">
