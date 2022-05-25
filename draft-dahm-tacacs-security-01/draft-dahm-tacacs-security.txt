@@ -76,7 +76,7 @@ Table of Contents
      2.3.  Unsecure Connection . . . . . . . . . . . . . . . . . . .   3
      2.4.  Peer  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.5.  TLS Connection  . . . . . . . . . . . . . . . . . . . . .   3
-   3.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   3
+   3.  TACACS+ Extended Authentication Packet Types  . . . . . . . .   4
      3.1.  The Extended Authentication START Packet Body . . . . . .   4
      3.2.  The Extension Authentication REPLY Packet Body  . . . . .   6
      3.3.  The Extended Authentication CONTINUE Packet Body  . . . .   7
@@ -101,10 +101,10 @@ Table of Contents
    authentication, authorization and accounting services for TACACS+
    clients.
 
-   XXX needs improvement; and mention of the deprecations To support SSH
-   authentication using public keys, highly desired by the operator
-   community, this document introduces a method to support sending
-   public keys to a TACACS+ client, allowing centralized management.
+   XXX needs improvement; and mention of the deprecations
+
+
+
 
 
 
@@ -114,6 +114,11 @@ Dahm, et al.            Expires 26 November 2022                [Page 2]
 Internet-Draft              TACACS+ Security                    May 2022
 
 
+   To support SSH authentication using public keys, highly desired by
+   the operator community, this document introduces a method to support
+   sending public keys to a TACACS+ client, allowing centralized
+   management.
+
    To accomplish that goal and improve security and functionality when a
    network proxy is involved in a TACACS+ connection, new and uniform
    packet formats are introduced.
@@ -122,8 +127,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
    The Technical Definitions section of the TACACS+ Protocol [RFC8907]
    is fully applicable here and will not be repeated, though may be
-   augmented.  The following terms are also used in this document.  XXX
-   are all of these definitions used?
+   augmented.  The following terms are also used in this document.
+
+   XXX are all of these definitions used?
 
 2.1.  AVP
 
@@ -152,13 +158,7 @@ Internet-Draft              TACACS+ Security                    May 2022
    encryption used by TACACS+ for transport, similar to a Connection as
    defined in TACACS+ Protocol [RFC8907].
 
-3.  TACACS+ Extended Authentication Packet Types
 
-   Versions 1 and 2 of the TACACS+ Protocol, as defined in [RFC8907],
-   specify the TACACS+ Authentication Packets for START, REPLY and
-   CONTINUE which support the credential validation use case but does
-   not accommodate any further arguments which may be used to give
-   context to the request.
 
 
 
@@ -169,6 +169,14 @@ Dahm, et al.            Expires 26 November 2022                [Page 3]
 
 Internet-Draft              TACACS+ Security                    May 2022
 
+
+3.  TACACS+ Extended Authentication Packet Types
+
+   Versions 1 and 2 of the TACACS+ Protocol, as defined in [RFC8907],
+   specify the TACACS+ Authentication Packets for START, REPLY and
+   CONTINUE which support the credential validation use case but does
+   not accommodate any further arguments which may be used to give
+   context to the request.
 
    One use-case where this shortcoming inhibits correct operation is for
    the TACACS+ proxy.  Because the originating client is not encoded in
@@ -191,14 +199,6 @@ Internet-Draft              TACACS+ Security                    May 2022
    minor version in the Packet Header is: 0x2
 
 3.1.  The Extended Authentication START Packet Body
-
-
-
-
-
-
-
-
 
 
 

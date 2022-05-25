@@ -102,6 +102,8 @@
        </t>
        <t>
 XXX needs improvement; and mention of the deprecations
+       </t>
+       <t>
 	 To support SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
        </t>
        <t>
@@ -113,7 +115,8 @@ XXX needs improvement; and mention of the deprecations
        <t>
          The Technical Definitions section of the <xref target="RFC8907">TACACS+ Protocol</xref> is fully applicable here and will not be repeated, though may be augmented.
          The following terms are also used in this document.
-XXX are all of these definitions used?
+       </t>
+       <t>
        </t>
        <section title="AVP">
          <t>
@@ -123,12 +126,6 @@ XXX are all of these definitions used?
        <section title="Empty Value">
          <t>
            An empty or zero-length value of an AVP as defined in <xref target="RFC8907"/> Sections 8.1.
-         </t>
-       </section>
-       <section title="Unsecure Connection">
-         <t>
-           This is another term for a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
-           It is a Connection without TLS and therefore being plaintext or possibly using unsecure TACACS+ authentication and obfuscation.
          </t>
        </section>
        <section title="Peer">
