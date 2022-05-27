@@ -242,7 +242,7 @@ Internet-Draft              TACACS+ Security                  April 2022
 3.2.  TLS Connection
 
    A TACACS+ Client initiates a TLS connection by making a TCP
-   connection to a configured Server on the tacacss well-known port
+   connection to a configured Server on the TACACS+ well-known port
    (Section 3.1).  Once the TCP connection is established, the Client
    MUST immediately begin the TLS negotiation before sending any TACACS+
    protocol data.
