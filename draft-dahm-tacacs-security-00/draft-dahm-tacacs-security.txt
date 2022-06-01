@@ -242,8 +242,8 @@ Internet-Draft              TACACS+ Security                  April 2022
 3.2.  TLS Connection
 
    A TACACS+ Client initiates a TLS connection by making a TCP
-   connection to a configured Server on the tacacss well-known port
-   (Section 3.1).  Once the TCP connection is established, the Client
+   connection to a configured Server on the TACACS+ TLS well-known port 
+   ([TBD]) (Section 3.1).  Once the TCP connection is established, the Client
    MUST immediately begin the TLS negotiation before sending any TACACS+
    protocol data.
 
@@ -1034,7 +1034,8 @@ Internet-Draft              TACACS+ Security                  April 2022
    The authors request that, when this draft is accepted by the working
    group, the OPSAWG Chairs submit a request to IANA for an early
    allocation, per [RFC4020] and [RFC6335], of a new well-known system
-   TCP/IP port number for the service name "tacacss", described as
+   TCP/IP port number for the service name "tacacss" (referenced in this
+   document also as "TACACS+ TLS well-known port ([TBD]"), described as
    "TACACS+ over TLS".  The service name "tacacss" follows the common
    practice of appending an "s" to the name given of the non-TLS well-
    known port.  This allocation is justified in Section 8.2.
