@@ -6,11 +6,11 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8907 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 28 November 2022                                         A. Ota
+Expires: 4 December 2022                                          A. Ota
                                                                         
                                                               J. Heasley
                                                                      NTT
-                                                             27 May 2022
+                                                             2 June 2022
 
 
                   TACACS+ Security and SSH Public Keys
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 November 2022.
+   This Internet-Draft will expire on 4 December 2022.
 
 
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 1]
+Dahm, et al.             Expires 4 December 2022                [Page 1]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
 Copyright Notice
@@ -109,21 +109,22 @@ Table of Contents
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 2]
+Dahm, et al.             Expires 4 December 2022                [Page 2]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    Authors of [RFC8907] and network operators have expressed interest in
    deprecating a few antiquated protocol features, addressing a
-   limitation of policy when a TACACS+ proxy is used, and adding support
-   for SSH public keys.  These are addressed herein.
+   limitation of authentication policy, and adding support for SSH
+   public keys.  These are addressed herein.
 
-   To improve security and functionality when a proxy is involved in a
-   TACACS+ connection, new and uniform packet formats are introduced.
-   For SSH authentication using public keys, highly desired by the
-   operator community, this document introduces a method to support
-   sending public keys to a TACACS+ client, allowing centralized
+   To improve security and functionality of applying policy to the
+   authentication process in a TACACS+ Session, new authentication
+   packet formats are introduced that are uniform to authorization and
+   accounting.  For SSH authentication using public keys, highly desired
+   by the operator community, this document introduces a method to
+   support sending public keys to a TACACS+ client, allowing centralized
    management.
 
 2.  Technical Definitions
@@ -158,16 +159,15 @@ Internet-Draft              TACACS+ Security                    May 2022
    Versions 1 and 2 of the TACACS+ Protocol, as defined in [RFC8907],
    specify the TACACS+ Authentication Packets for START, REPLY and
    CONTINUE which support the credential validation use case but does
-   not accommodate any further arguments which may be used to give
+   not accommodate any further argumentation which may be used to give
    context to the request.
 
 
 
 
-
-Dahm, et al.            Expires 28 November 2022                [Page 3]
+Dahm, et al.             Expires 4 December 2022                [Page 3]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    One use-case where this shortcoming inhibits correct operation is for
@@ -221,9 +221,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 4]
+Dahm, et al.             Expires 4 December 2022                [Page 4]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -277,9 +277,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 5]
+Dahm, et al.             Expires 4 December 2022                [Page 5]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    This represents the number of arguments in the packet.
@@ -305,16 +305,17 @@ Internet-Draft              TACACS+ Security                    May 2022
    to permit the flexibility for the TACACS+ authentication phase that
    has been available previously for authorization and accounting.
    These fields are intended to be used as needed in deployment, they
-   are used in this document in the enhancements for SSH (Section 4),
-   and to support the origin client to enhance TACACS+ Proxy:
+   are used in this document in the enhancements for SSH (Section 4):
 
    origin_client
 
-   The IP-Address of the originating TACACS+ client.  This is text
-   encoded in line with the rest of the TACACS+ protocol, and may be
-   IPv4 or IPv6.  This argument is optional.  IPv4 addresses are
-   specified as octet numeric values separated by dots ('.').  IPv6
-   address text representation is defined in [RFC5952].
+   Contains the IP-Address of the originating TACACS+ client.  This is
+   text encoded in line with the rest of the TACACS+ protocol, and may
+   be IPv4 or IPv6.  This argument is optional and can be included in
+   all TACACS+ protocol START packets, Authentication, Authorization,
+   and Accounting.  IPv4 addresses are specified as quad-octet numeric
+   values separated by dots ('.').  IPv6 address text representation is
+   defined in [RFC5952].
 
 3.2.  The Extension Authentication REPLY Packet Body
 
@@ -332,10 +333,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-
-Dahm, et al.            Expires 28 November 2022                [Page 6]
+Dahm, et al.             Expires 4 December 2022                [Page 6]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -389,9 +389,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 7]
+Dahm, et al.             Expires 4 December 2022                [Page 7]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -445,9 +445,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 8]
+Dahm, et al.             Expires 4 December 2022                [Page 8]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
@@ -501,9 +501,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022                [Page 9]
+Dahm, et al.             Expires 4 December 2022                [Page 9]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
@@ -557,9 +557,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 10]
+Dahm, et al.             Expires 4 December 2022               [Page 10]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
        wants.  The set of permissible values for this AVP are the SSH
@@ -613,9 +613,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 11]
+Dahm, et al.             Expires 4 December 2022               [Page 11]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
        REPLY packet, the server SHOULD set the REPLY packet flag
@@ -669,9 +669,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 12]
+Dahm, et al.             Expires 4 December 2022               [Page 12]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    The set of permissible values for this AVP are the SSH Subsystem
@@ -725,9 +725,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 13]
+Dahm, et al.             Expires 4 December 2022               [Page 13]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
@@ -781,9 +781,9 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 14]
+Dahm, et al.             Expires 4 December 2022               [Page 14]
 
-Internet-Draft              TACACS+ Security                    May 2022
+Internet-Draft              TACACS+ Security                   June 2022
 
 
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
@@ -837,4 +837,4 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires 28 November 2022               [Page 15]
+Dahm, et al.             Expires 4 December 2022               [Page 15]

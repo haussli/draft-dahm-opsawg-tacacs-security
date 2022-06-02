@@ -1191,11 +1191,11 @@ li > p:last-of-type {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">TACACS+ Security</td>
-<td class="right">May 2022</td>
+<td class="right">June 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dahm, et al.</td>
-<td class="center">Expires 28 November 2022</td>
+<td class="center">Expires 4 December 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1209,12 +1209,12 @@ li > p:last-of-type {
 <a href="https://www.rfc-editor.org/rfc/rfcRFC8907" class="eref">RFC8907</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-05-27" class="published">27 May 2022</time>
+<time datetime="2022-06-02" class="published">2 June 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-11-28">28 November 2022</time></dd>
+<dd class="expires"><time datetime="2022-12-04">4 December 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1267,7 +1267,7 @@ li > p:last-of-type {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 November 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1379,10 +1379,10 @@ li > p:last-of-type {
          The <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span> provides device administration for routers, network access servers and other networked computing devices via one or more centralized servers.
          The protocol provides authentication, authorization and accounting services for TACACS+ clients.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">
-         Authors of <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of policy when a TACACS+ proxy is used, and adding support for SSH public keys.
+         Authors of <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of authentication policy, and adding support for SSH public keys.
   These are addressed herein.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">
-  To improve security and functionality when a proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+  To improve security and functionality of applying policy to the authentication process in a TACACS+ Session, new authentication packet formats are introduced that are uniform to authorization and accounting.
          For SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2">
@@ -1428,8 +1428,7 @@ li > p:last-of-type {
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-tacacs-extended-authenticat" class="section-name selfRef">TACACS+ Extended Authentication Packet Types</a>
       </h2>
 <p id="section-3-1">
-                Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
-which may be used to give context to the request.<a href="#section-3-1" class="pilcrow">¶</a></p>
+                Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further argumentation which may be used to give context to the request.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">
          One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
          Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.
@@ -1502,13 +1501,13 @@ s.<a href="#section-3-4" class="pilcrow">¶</a></p>
            Order is significant when processing arguments.<a href="#section-3.1-10" class="pilcrow">¶</a></p>
 <p id="section-3.1-11">
            The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
-           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <span><a href="#SSH" class="xref">SSH</a> (<a href="#SSH" class="xref">Section 4</a>)</span>, and to support the origin client to enhance TACACS+ Proxy:<a href="#section-3.1-11" class="pilcrow">¶</a></p>
+           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <span><a href="#SSH" class="xref">SSH</a> (<a href="#SSH" class="xref">Section 4</a>)</span>:<a href="#section-3.1-11" class="pilcrow">¶</a></p>
 <p id="section-3.1-12">origin_client<a href="#section-3.1-12" class="pilcrow">¶</a></p>
 <p id="section-3.1-13">
-           The IP-Address of the originating TACACS+ client.
+           Contains the IP-Address of the originating TACACS+ client.
            This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
-           This argument is optional.
-           IPv4 addresses are specified as octet numeric values separated by dots ('.').
+           This argument is optional and can be included in all TACACS+ protocol START packets, Authentication, Authorization, and Accounting.
+           IPv4 addresses are specified as quad-octet numeric values separated by dots ('.').
            IPv6 address text representation is defined in <span>[<a href="#RFC5952" class="xref">RFC5952</a>]</span>.<a href="#section-3.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>

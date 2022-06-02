@@ -101,11 +101,11 @@
          The protocol provides authentication, authorization and accounting services for TACACS+ clients.
        </t>
        <t>
-         Authors of <xref target="RFC8907"/> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of policy when a TACACS+ proxy is used, and adding support for SSH public keys.
+         Authors of <xref target="RFC8907"/> and network operators have expressed interest in deprecating a few antiquated protocol features, addressing a limitation of authentication policy, and adding support for SSH public keys.
 	 These are addressed herein.
        </t>
        <t>
-	 To improve security and functionality when a proxy is involved in a TACACS+ connection, new and uniform packet formats are introduced.
+	 To improve security and functionality of applying policy to the authentication process in a TACACS+ Session, new authentication packet formats are introduced that are uniform to authorization and accounting.
          For SSH authentication using public keys, highly desired by the operator community, this document introduces a method to support sending public keys to a TACACS+ client, allowing centralized management.
        </t>
      </section>
@@ -141,8 +141,7 @@
 
      <section title="TACACS+ Extended Authentication Packet Types" anchor="ExtendedAuthenticationPacketType">
        <t>
-                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further arguments
-which may be used to give context to the request.
+                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further argumentation which may be used to give context to the request.
        </t>
        <t>
          One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
@@ -222,15 +221,15 @@ s.
 	       
          <t>
            The addition of arguments to the authentication packets is intended to permit the flexibility for the TACACS+ authentication phase that has been available previously for authorization and accounting.
-           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <xref target="SSH">SSH</xref>, and to support the origin client to enhance TACACS+ Proxy:
+           These fields are intended to be used as needed in deployment, they are used in this document in the enhancements for <xref target="SSH">SSH</xref>:
          </t>
 
          <t>origin_client</t>
          <t>
-           The IP-Address of the originating TACACS+ client.
+           Contains the IP-Address of the originating TACACS+ client.
            This is text encoded in line with the rest of the TACACS+ protocol, and may be IPv4 or IPv6.
-           This argument is optional.
-           IPv4 addresses are specified as octet numeric values separated by dots ('.').
+           This argument is optional and can be included in all TACACS+ protocol START packets, Authentication, Authorization, and Accounting.
+           IPv4 addresses are specified as quad-octet numeric values separated by dots ('.').
            IPv6 address text representation is defined in <xref target="RFC5952"/>.
          </t>
        </section>
