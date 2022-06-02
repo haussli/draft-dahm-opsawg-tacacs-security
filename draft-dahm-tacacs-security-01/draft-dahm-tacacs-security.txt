@@ -4,10 +4,13 @@
 
 Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
-Updates: RFC8097 (if approved)                                   D. Gash
+Updates: RFC8907 (if approved)                                   D. Gash
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: 26 November 2022                                         A. Ota
-                                                             25 May 2022
+Expires: 28 November 2022                                         A. Ota
+                                                                        
+                                                              J. Heasley
+                                                                     NTT
+                                                             27 May 2022
 
 
                   TACACS+ Security and SSH Public Keys
@@ -44,19 +47,21 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 November 2022.
+   This Internet-Draft will expire on 28 November 2022.
+
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 1]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
 Copyright Notice
 
    Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 1]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
@@ -79,18 +84,18 @@ Table of Contents
      3.1.  The Extended Authentication START Packet Body . . . . . .   4
      3.2.  The Extension Authentication REPLY Packet Body  . . . . .   6
      3.3.  The Extended Authentication CONTINUE Packet Body  . . . .   7
-   4.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+   4.  SSH . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   9
      4.1.  New Enumerated TACACS+ Protocol Values and well-known
-           AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .   9
-     4.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  11
-   5.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  12
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
-     6.1.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  12
+           AVPs  . . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     4.2.  SSH Public Key Support  . . . . . . . . . . . . . . . . .  10
+     4.3.  SSH Authorization and Accounting  . . . . . . . . . . . .  12
+   5.  Protocol Deprecations . . . . . . . . . . . . . . . . . . . .  13
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
+     6.1.  SSH Public Key Caching  . . . . . . . . . . . . . . . . .  13
    7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  13
    8.  Normative References  . . . . . . . . . . . . . . . . . . . .  13
-   9.  Informative References  . . . . . . . . . . . . . . . . . . .  13
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
+   9.  Informative References  . . . . . . . . . . . . . . . . . . .  14
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
 
 1.  Introduction
 
@@ -100,19 +105,19 @@ Table of Contents
    authentication, authorization and accounting services for TACACS+
    clients.
 
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 2]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
    Authors of [RFC8907] and network operators have expressed interest in
    deprecating a few antiquated protocol features, addressing a
    limitation of policy when a TACACS+ proxy is used, and adding support
    for SSH public keys.  These are addressed herein.
-
-
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 2]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
 
    To improve security and functionality when a proxy is involved in a
    TACACS+ connection, new and uniform packet formats are introduced.
@@ -156,19 +161,21 @@ Internet-Draft              TACACS+ Security                    May 2022
    not accommodate any further arguments which may be used to give
    context to the request.
 
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 3]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
    One use-case where this shortcoming inhibits correct operation is for
    the TACACS+ proxy.  Because the originating client is not encoded in
    the regular Authentication START Packet, TACACS+ Servers generally
    attempt to determine the client from the TCP connection.  This is
    effective only for the first step: proxied TACACS+ servers can no
    longer securely enforce policy based upon the end client IP-Address.
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 3]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
 
    Further, advanced use cases (such as SSH key distribution) would
    otherwise rely on embedding structured information into the single
@@ -184,6 +191,40 @@ Internet-Draft              TACACS+ Security                    May 2022
    minor version in the Packet Header is: 0x2
 
 3.1.  The Extended Authentication START Packet Body
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 4]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -218,14 +259,6 @@ Internet-Draft              TACACS+ Security                    May 2022
 
                                   Figure 1
 
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 4]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
    The action, priv_level, authen_type, authen_service, user_len,
    port_len, rem_addr_len, data_len, user, port, rem_addr and data
    fields are used exactly as defined in the Authentication START Packet
@@ -241,6 +274,13 @@ Internet-Draft              TACACS+ Security                    May 2022
    The new fields are as follows:
 
    arg_cnt
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 5]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
    This represents the number of arguments in the packet.
 
@@ -270,18 +310,6 @@ Internet-Draft              TACACS+ Security                    May 2022
 
    origin_client
 
-
-
-
-
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 5]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
    The IP-Address of the originating TACACS+ client.  This is text
    encoded in line with the rest of the TACACS+ protocol, and may be
    IPv4 or IPv6.  This argument is optional.  IPv4 addresses are
@@ -292,6 +320,23 @@ Internet-Draft              TACACS+ Security                    May 2022
 
    The TACACS+ server sends only one type of extended authentication
    packet to the client.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 6]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -330,18 +375,24 @@ Internet-Draft              TACACS+ Security                    May 2022
    are used as defined in The Extended Authentication START Packet Body
    (Section 3.1).
 
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 6]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
 3.3.  The Extended Authentication CONTINUE Packet Body
 
    This packet is sent from the client to the server following the
    receipt of an Extended REPLY packet.
+
+
+
+
+
+
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 7]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
    +----------------+----------------+----------------+----------------+
@@ -387,14 +438,17 @@ Internet-Draft              TACACS+ Security                    May 2022
 
    *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ERROR := 04
 
+   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05
 
 
-Dahm, et al.            Expires 26 November 2022                [Page 7]
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 8]
 
 Internet-Draft              TACACS+ Security                    May 2022
 
-
-   *  TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT := 05
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_ABORT MUST be used when the Extended
@@ -440,19 +494,17 @@ Internet-Draft              TACACS+ Security                    May 2022
       Extended Authentication REPLY Packet flag indicating the REPLY is
       incomplete.
 
-
-
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 8]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_PASS := 0x01
       Extended Authentication CONTINUE Packet flag indicating
       authentication success.
+
+
+
+
+Dahm, et al.            Expires 28 November 2022                [Page 9]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
       Extended Authentication CONTINUE Packet flag indicating
@@ -498,18 +550,18 @@ Internet-Draft              TACACS+ Security                    May 2022
        Authentication START Packet.  The START packet MUST include a
        non-zero-length username and the server MUST send an
        Authentication REPLY Packet with status
-
-
-
-Dahm, et al.            Expires 26 November 2022                [Page 9]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
        TAC_PLUS_AUTHEN_STATUS_ERROR, if the client fails to do so.
 
        The client MAY include one or more instances of the
        ssh_pubkey_type AVP, indicating the SSH public key types that it
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 10]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
        wants.  The set of permissible values for this AVP are the SSH
        public algorithm names defined in the IANA SSH Protocol
        Parameters Registry [SSHALGS], which are case-sensitive as
@@ -554,18 +606,18 @@ Internet-Draft              TACACS+ Security                    May 2022
        Format [RFC4716].  As such, the client MUST be prepared to accept
        keys with Key File Markers.  To address concatenation of multiple
        ssh_pubkey AVPs or multiple keys in a single AVP, the server MUST
-
-
-
-Dahm, et al.            Expires 26 November 2022               [Page 10]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
        terminate each key file End Marker with a Line Termination
        sequence as specified in RFC4716 Section 3.1.
 
        Since it is possible to have more ssh_pubkey AVPs than fit in a
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 11]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
+
        REPLY packet, the server SHOULD set the REPLY packet flag
        TAC_PLUS_REPLY_FLAG_FRAGMENT if two or more packets are required,
        indicating that the client SHOULD request the remainder.
@@ -610,17 +662,17 @@ Internet-Draft              TACACS+ Security                    May 2022
    The new authen_method TAC_PLUS_AUTHEN_METH_SSHPUBKEY indicates that
    the user was authenticated with a SSH public key.
 
-
-
-
-Dahm, et al.            Expires 26 November 2022               [Page 11]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
    The well-known ssh_subsystem AVP defines the SSH subsystem for which
    the authorization is requested and MUST be present any time the
    authorization is for a SSH connection.
+
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 12]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
    The set of permissible values for this AVP are the SSH Subsystem
    Names defined in the IANA SSH Connection Protocol Subsystem Names
@@ -661,19 +713,6 @@ Internet-Draft              TACACS+ Security                    May 2022
    key, except by not offering the key in future authentication
    sessions.
 
-
-
-
-
-
-
-
-
-Dahm, et al.            Expires 26 November 2022               [Page 12]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
 7.  Acknowledgments
 
    The author(s) would like to thank Russ Housley, Steven M.  Bellovin,
@@ -682,6 +721,14 @@ Internet-Draft              TACACS+ Security                    May 2022
    as a basis for the approach to TLS.
 
 8.  Normative References
+
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 13]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -722,14 +769,6 @@ Internet-Draft              TACACS+ Security                    May 2022
 
 9.  Informative References
 
-
-
-
-Dahm, et al.            Expires 26 November 2022               [Page 13]
-
-Internet-Draft              TACACS+ Security                    May 2022
-
-
    [RFC4251]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Protocol Architecture", RFC 4251, DOI 10.17487/RFC4251,
               January 2006, <https://www.rfc-editor.org/info/rfc4251>.
@@ -738,6 +777,14 @@ Internet-Draft              TACACS+ Security                    May 2022
               Address Text Representation", RFC 5952,
               DOI 10.17487/RFC5952, August 2010,
               <https://www.rfc-editor.org/info/rfc5952>.
+
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 14]
+
+Internet-Draft              TACACS+ Security                    May 2022
+
 
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
@@ -761,6 +808,10 @@ Authors' Addresses
    Email: andrej@ota.si
 
 
+   John Heasley
+   NTT
+
+   Email: heas@shrubbery.net
 
 
 
@@ -781,4 +832,9 @@ Authors' Addresses
 
 
 
-Dahm, et al.            Expires 26 November 2022               [Page 14]
+
+
+
+
+
+Dahm, et al.            Expires 28 November 2022               [Page 15]
