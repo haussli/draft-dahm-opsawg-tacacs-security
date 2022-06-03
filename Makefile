@@ -1,4 +1,4 @@
-BASENAME= draft-dahm-tacacs-security
+BASENAME= draft-dahm-opsawg-tacacs-security
 VERSION=01
 
 EXT=.xml
