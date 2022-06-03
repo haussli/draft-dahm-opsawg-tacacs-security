@@ -17,7 +17,7 @@
     " name="description">
 <meta content="xml2rfc 3.12.1" name="generator">
 <meta content="TACACS+" name="keyword">
-<meta content="draft-dahm-tacacs-security-01" name="ietf.draft">
+<meta content="draft-dahm-opsawg-tacacs-security-01" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.12.1
     Python 3.7.13
@@ -1420,16 +1420,12 @@ li > p:last-of-type {
 <p id="section-3-1">
          Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further augmentation which may be used to give context to the request.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">
-         One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
-         Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.
-         This is effective only for the first step: proxied TACACS+ servers can no longer securely enforce policy based upon the end client IP-Address.<a href="#section-3-2" class="pilcrow">¶</a></p>
+         Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, thus obfuscating the content of the protocol, can instead augment the arguments.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">
-         Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">
          To support these use cases, and allow clients to add environment information to the request, the Extended Authentication Packets brings the Authentication phase of the protocol inline with the Authorization and Accounting Phase by incorporating extensible argument
-s.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">
-         The server should expect Extended Authentication Packet Bodies if the minor version in the Packet Header is: 0x2<a href="#section-3-5" class="pilcrow">¶</a></p>
+s.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">
+         The server should expect Extended Authentication Packet Bodies if the minor version in the Packet Header is: 0x2<a href="#section-3-4" class="pilcrow">¶</a></p>
 <div id="ExtendedAuthenticationSTARTPacketBody">
 <section id="section-3.1">
         <h3 id="name-the-extended-authentication">

@@ -9,7 +9,7 @@
   <!ENTITY nbhy   "&#8209;">
   <!ENTITY wj     "&#8288;">
 ]>
-<rfc docName="draft-dahm-tacacs-security-01"
+<rfc docName="draft-dahm-opsawg-tacacs-security-01"
      category="info"
      ipr="trust200902"
      submissionType='IETF'
@@ -139,12 +139,7 @@
          Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further augmentation which may be used to give context to the request.
        </t>
        <t>
-         One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
-         Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.
-         This is effective only for the first step: proxied TACACS+ servers can no longer securely enforce policy based upon the end client IP-Address.
-       </t>
-       <t>
-         Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, obfuscating the content of the protocol.
+         Further, advanced use cases (such as SSH key distribution) would otherwise rely on embedding structured information into the single data fields, thus obfuscating the content of the protocol, can instead augment the arguments.
        </t>
        <t>
          To support these use cases, and allow clients to add environment information to the request, the Extended Authentication Packets brings the Authentication phase of the protocol inline with the Authorization and Accounting Phase by incorporating extensible argument
