@@ -9,7 +9,7 @@
   <!ENTITY nbhy   "&#8209;">
   <!ENTITY wj     "&#8288;">
 ]>
-<rfc docName="draft-dahm-opsawg-tacacs-security-01"
+<rfc docName="draft-dahm-opsawg-tacacs-security-00"
      category="info"
      ipr="trust200902"
      submissionType='IETF'
