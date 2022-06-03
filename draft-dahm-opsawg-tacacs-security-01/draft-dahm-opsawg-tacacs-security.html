@@ -1311,9 +1311,6 @@ li > p:last-of-type {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
                 <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-peer" class="xref">Peer</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-tls-connection" class="xref">TLS Connection</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
@@ -1414,13 +1411,6 @@ li > p:last-of-type {
 <p id="section-2.3-1">
            This refers to a TACACS+ Server or Client.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 </section>
-<section id="section-2.4">
-        <h3 id="name-tls-connection">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-tls-connection" class="section-name selfRef">TLS Connection</a>
-        </h3>
-<p id="section-2.4-1">
-           A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <span><a href="#RFC8907" class="xref">TACACS+ Protocol</a> [<a href="#RFC8907" class="xref">RFC8907</a>]</span>.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-</section>
 </section>
 <div id="ExtendedAuthenticationPacketType">
 <section id="section-3">
@@ -1428,7 +1418,7 @@ li > p:last-of-type {
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-tacacs-extended-authenticat" class="section-name selfRef">TACACS+ Extended Authentication Packet Types</a>
       </h2>
 <p id="section-3-1">
-                Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further argumentation which may be used to give context to the request.<a href="#section-3-1" class="pilcrow">¶</a></p>
+         Versions 1 and 2 of the TACACS+ Protocol, as defined in <span>[<a href="#RFC8907" class="xref">RFC8907</a>]</span>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further augmentation which may be used to give context to the request.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">
          One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
          Because the originating client is not encoded in the regular Authentication START Packet, TACACS+ Servers generally attempt to determine the client from the TCP connection.

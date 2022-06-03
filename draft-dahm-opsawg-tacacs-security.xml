@@ -132,16 +132,11 @@
            This refers to a TACACS+ Server or Client.
          </t>
        </section>
-       <section title="TLS Connection">
-         <t>
-           A TLS Connection is a TCP/IP connection with TLS authentication and encryption used by TACACS+ for transport, similar to a Connection as defined in <xref target="RFC8907">TACACS+ Protocol</xref>.
-         </t>
-       </section>
      </section>
 
      <section title="TACACS+ Extended Authentication Packet Types" anchor="ExtendedAuthenticationPacketType">
        <t>
-                Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further argumentation which may be used to give context to the request.
+         Versions 1 and 2 of the TACACS+ Protocol, as defined in <xref target="RFC8907"/>, specify the TACACS+ Authentication Packets for START, REPLY and CONTINUE which support the credential validation use case but does not accommodate any further augmentation which may be used to give context to the request.
        </t>
        <t>
          One use-case where this shortcoming inhibits correct operation is for the TACACS+ proxy.
