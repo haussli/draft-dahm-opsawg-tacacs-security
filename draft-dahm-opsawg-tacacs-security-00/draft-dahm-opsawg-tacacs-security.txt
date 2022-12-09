@@ -6,11 +6,11 @@ Operations and Management Area Working Group                     T. Dahm
 Internet-Draft                                                          
 Updates: RFC8907 (if approved)                                   D. Gash
 Intended status: Standards Track                     Cisco Systems, Inc.
-Expires: 13 January 2023                                          A. Ota
+Expires: 12 June 2023                                             A. Ota
                                                                         
                                                               J. Heasley
                                                                      NTT
-                                                            12 July 2022
+                                                         9 December 2022
 
 
                   TACACS+ Security and SSH Public Keys
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 January 2023.
+   This Internet-Draft will expire on 12 June 2023.
 
 
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 1]
+Dahm, et al.              Expires 12 June 2023                  [Page 1]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 2]
+Dahm, et al.              Expires 12 June 2023                  [Page 2]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    Authors of [RFC8907] and network operators have expressed interest in
@@ -165,9 +165,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 3]
+Dahm, et al.              Expires 12 June 2023                  [Page 3]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    To support these use cases, and allow clients to add environment
@@ -221,9 +221,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 4]
+Dahm, et al.              Expires 12 June 2023                  [Page 4]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    The following fields contain the arguments that may be used to extend
@@ -277,9 +277,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 5]
+Dahm, et al.              Expires 12 June 2023                  [Page 5]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
 3.2.  The Extension Authentication REPLY Packet Body
@@ -333,9 +333,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 6]
+Dahm, et al.              Expires 12 June 2023                  [Page 6]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
     1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8  1 2 3 4 5 6 7 8
@@ -389,9 +389,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 7]
+Dahm, et al.              Expires 12 June 2023                  [Page 7]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_NONE or
@@ -445,9 +445,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 8]
+Dahm, et al.              Expires 12 June 2023                  [Page 8]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    TAC_PLUS_AUTHEN_CONTINUE_STATUS_FAIL := 0x08
@@ -501,9 +501,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023                [Page 9]
+Dahm, et al.              Expires 12 June 2023                  [Page 9]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
        wants.  The set of permissible values for this AVP are the SSH
@@ -557,9 +557,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023               [Page 10]
+Dahm, et al.              Expires 12 June 2023                 [Page 10]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
        REPLY packet, the server SHOULD set the REPLY packet flag
@@ -613,9 +613,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023               [Page 11]
+Dahm, et al.              Expires 12 June 2023                 [Page 11]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    The set of permissible values for this AVP are the SSH Subsystem
@@ -669,9 +669,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023               [Page 12]
+Dahm, et al.              Expires 12 June 2023                 [Page 12]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
@@ -725,9 +725,9 @@ Internet-Draft              TACACS+ Security                   July 2022
 
 
 
-Dahm, et al.             Expires 13 January 2023               [Page 13]
+Dahm, et al.              Expires 12 June 2023                 [Page 13]
 
-Internet-Draft              TACACS+ Security                   July 2022
+Internet-Draft              TACACS+ Security               December 2022
 
 
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
@@ -737,24 +737,20 @@ Internet-Draft              TACACS+ Security                   July 2022
 Authors' Addresses
 
    Thorsten Dahm
-
    Email: thorsten.dahm@gmail.com
 
 
    Douglas Gash
    Cisco Systems, Inc.
-
    Email: dcmgash@cisco.com
 
 
    Andrej Ota
-
    Email: andrej@ota.si
 
 
    John Heasley
    NTT
-
    Email: heas@shrubbery.net
 
 
@@ -781,4 +777,8 @@ Authors' Addresses
 
 
 
-Dahm, et al.             Expires 13 January 2023               [Page 14]
+
+
+
+
+Dahm, et al.              Expires 12 June 2023                 [Page 14]
